@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "@prisma/client": "4.13.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-oas-generator": "^1.0.46",
@@ -11,6 +12,7 @@
     "@types/node": "^18.15.11",
     "concurrently": "^8.0.1",
     "nodemon": "^2.0.22",
+    "prisma": "^4.13.0",
     "rome": "12.0.0"
   },
   "scripts": {
