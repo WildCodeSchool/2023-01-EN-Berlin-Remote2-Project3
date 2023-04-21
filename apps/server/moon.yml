@@ -1,0 +1,23 @@
+type: 'tool'
+language: 'typescript'
+
+project:
+  name: 'Restaurant Backend'
+  description: 'The backend for the restaurant POS application.'
+  # channel: '#'
+  # owner: ''
+  # maintainers: ['']
+
+tasks:
+  build:
+    command: 'tsc'
+    deps: 
+      - 'generate-prisma-client'
+  generate-prisma-client:
+    command: 'prisma generate'
+  build-docker:
+    command: 'docker image rm --force restaurant-backend; docker build . --tag restaurant-backend'
+  start:
+    command: 'node dist/index.js'
+  clean:
+    command: 'rm -r ./dist'

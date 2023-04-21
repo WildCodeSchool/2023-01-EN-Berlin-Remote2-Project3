@@ -1,0 +1,9 @@
+tasks:
+  format:
+    command: 'rome format ./src'
+  lint:
+    command: 'rome check ./src'
+  fix:
+    command: 'rome check --apply ./src'
+  fix-unsafe:
+    command: 'rome check --apply-unsafe ./src'
