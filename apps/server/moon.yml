@@ -1,12 +1,19 @@
-type: 'tool'
+type: 'application'
 language: 'typescript'
 
 project:
   name: 'Restaurant Backend'
   description: 'The backend for the restaurant POS application.'
-  # channel: '#'
-  # owner: ''
-  # maintainers: ['']
+  channel: '#0109-REMOTE-JS-Resources'
+  owner: 'diraneyya'
+  maintainers: ['diraneyya, denigogov, surmavagit']
+
+fileGroups:
+    files:
+        - 'src/**/*'
+        - 'env.d.ts'
+        - 'index.html'
+        - 'vite.config.*'
 
 tasks:
   build:

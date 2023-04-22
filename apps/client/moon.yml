@@ -1,0 +1,51 @@
+type: 'application'
+language: 'typescript'
+
+project:
+  name: 'Restaurant POS (Frontend)'
+  description: 'The point-of-sale (POS) frontend web application for the restaurant.'
+  channel: '#0109-REMOTE-JS-Resources'
+  owner: 'diraneyya'
+  maintainers: ['diraneyya, denigogov, surmavagit']
+
+fileGroups:
+    vite:
+        - 'src/**/*'
+        - 'env.d.ts'
+        - 'index.html'
+        - 'vite.config.*'
+
+tasks:
+    # Development server
+    dev:
+        command: 'vite dev'
+        local: true
+
+    # Production build
+    build:
+        command: 'vite build'
+        inputs:
+            - '@group(vite)'
+        outputs:
+            - 'dist'
+
+    # Preview production build locally
+    preview:
+        command: 'vite preview'
+        deps:
+            - '~:build'
+        local: true
+
+    # Unit testing (if using Vitest)
+    test:
+        command:
+            - 'vitest'
+            - 'run'
+            # Always run code coverage
+            - '--coverage'
+            # Dont fail if a project has no tests
+            - '--passWithNoTests'
+        inputs:
+            - '@group(vite)'
+            - 'tests/**/*'
+            - 'vitest.config.*'
