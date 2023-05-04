@@ -28,3 +28,5 @@ tasks:
     command: 'node dist/index.js'
   clean:
     command: 'rm -r ./dist'
+  dev:
+    command: 'conc "tsc --watch" "nodemon ./src/index.js"'

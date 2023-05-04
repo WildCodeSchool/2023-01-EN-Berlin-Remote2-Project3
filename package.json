@@ -5,5 +5,8 @@
   },
   "devDependencies": {
     "rome": "^12.0.0"
+  },
+  "engines": {
+    "node": "18.15.0"
   }
 }
