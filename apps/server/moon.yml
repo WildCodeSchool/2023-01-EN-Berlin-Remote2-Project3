@@ -18,15 +18,32 @@ fileGroups:
 tasks:
   build:
     command: 'tsc'
-    deps: 
-      - 'generate-prisma-client'
+    outputs:
+      - 'dist/'
   generate-prisma-client:
     command: 'prisma generate'
   build-docker:
     command: 'docker image rm --force restaurant-backend; docker build . --tag restaurant-backend'
   start:
     command: 'node dist/index.js'
+    env:
+      NODE_ENV: 'production'
+    deps:
+      - '~:build'
   clean:
     command: 'rm -r ./dist'
+  dev-tsc:
+    command: 'tsc --watch'
+    options:
+      outputStyle: 'stream'
+  dev-nodemon:
+    command: 'nodemon ./dist/index.js'
+    env:
+      NODE_ENV: 'development'
+    options:
+      outputStyle: 'stream'
   dev:
-    command: 'conc "tsc --watch" "nodemon ./src/index.js"'
+    command: 'noop'
+    deps:
+      - '~:dev-nodemon'
+      - '~:dev-tsc'

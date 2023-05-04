@@ -12,7 +12,7 @@ expressOasGenerator.init(app, {});
 const port = process.env.PORT;
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server. This is cool 😬");
+  res.send("Express + TypeScript Server. This is amayzing 😬😬");
 });
 
 app.get("/users", (req: Request, res: Response) => {

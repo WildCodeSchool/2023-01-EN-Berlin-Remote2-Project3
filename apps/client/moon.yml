@@ -18,7 +18,7 @@ fileGroups:
 tasks:
     # Development server
     dev:
-        command: 'vite dev'
+        command: 'vite dev --host --port 3000'
         local: true
 
     # Production build
