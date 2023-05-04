@@ -20,6 +20,8 @@ tasks:
     command: 'tsc'
     outputs:
       - 'dist/'
+    deps:
+      - '~:generate-prisma-client:'
   generate-prisma-client:
     command: 'prisma generate'
   build-docker:
@@ -45,5 +47,6 @@ tasks:
   dev:
     command: 'noop'
     deps:
+      - '~:generate-prisma-client:'
       - '~:dev-nodemon'
       - '~:dev-tsc'
