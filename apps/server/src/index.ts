@@ -9,7 +9,7 @@ dotenv.config();
 
 const app: Express = express();
 expressOasGenerator.init(app, {});
-const port = process.env.PORT;
+const port = process.env.PORT ?? 4500;
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
