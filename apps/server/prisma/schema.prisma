@@ -92,13 +92,13 @@ model tablestatus {
 model users {
   user_id      Int       @id @default(autoincrement())
   usertype_id  Int
-  username     String    @db.VarChar(50)
-  userpassword String    @db.VarChar(255)
-  useremail    String    @db.VarChar(50)
+  username     String    @db.VarChar(50) @unique
+  userpassword String    @db.VarChar(255) 
+  useremail    String    @db.VarChar(50) @unique
   orders       orders[]
   usertypes    usertypes @relation(fields: [usertype_id], references: [usertype_id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
 
-  @@unique([username, useremail], map: "UC_User")
+
   @@index([usertype_id], map: "usertype_id")
 }
 
