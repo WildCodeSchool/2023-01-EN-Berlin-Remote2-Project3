@@ -3,17 +3,17 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model categories {
-  category_id   Int          @id @default(autoincrement())
-  category_name String       @unique(map: "category_name") @db.VarChar(30)
-  parent_id     Int?
-  parent        categories?  @relation("parentCategoryRelationship", fields: [parent_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "categories_ibfk_1")
-  children      categories[] @relation("parentCategoryRelationship")
-  menuitems     menuitems[]
+  category_id      Int          @id @default(autoincrement())
+  category_name    String       @unique(map: "category_name") @db.VarChar(30)
+  parent_id        Int?
+  categories       categories?  @relation("categoriesTocategories", fields: [parent_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "categories_ibfk_1")
+  other_categories categories[] @relation("categoriesTocategories")
+  menuitems        menuitems[]
 
   @@index([parent_id], map: "parent_id")
 }
@@ -24,8 +24,8 @@ model menuitems {
   price       Decimal?     @db.Decimal(7, 2)
   category_id Int
   station_id  Int
-  category    categories   @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
-  station     stations     @relation(fields: [station_id], references: [station_id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
+  categories  categories   @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
+  stations    stations     @relation(fields: [station_id], references: [station_id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
   orderitems  orderitems[]
 
   @@index([category_id], map: "category_id")
@@ -37,10 +37,10 @@ model orderitems {
   order_id      Int
   item_id       Int
   quantity      Int
-  order_time    DateTime  @db.DateTime(0)
-  served_time   DateTime? @db.DateTime(0)
-  order         orders    @relation(fields: [order_id], references: [order_id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_1")
-  menuitem      menuitems @relation(fields: [item_id], references: [item_id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_2")
+  order_time    DateTime 
+  served_time   DateTime?
+  orders        orders    @relation(fields: [order_id], references: [order_id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_1")
+  menuitems     menuitems @relation(fields: [item_id], references: [item_id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_2")
 
   @@index([item_id], map: "item_id")
   @@index([order_id], map: "order_id")
@@ -51,10 +51,10 @@ model orders {
   orderstatus_id Int
   waiter_id      Int
   table_id       Int
-  orderitem      orderitems[]
+  orderitems     orderitems[]
   orderstatus    orderstatus  @relation(fields: [orderstatus_id], references: [orderstatus_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_1")
-  user           users        @relation(fields: [waiter_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_2")
-  table          tables       @relation(fields: [table_id], references: [table_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_3")
+  users          users        @relation(fields: [waiter_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_2")
+  tables         tables       @relation(fields: [table_id], references: [table_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_3")
 
   @@index([orderstatus_id], map: "orderstatus_id")
   @@index([table_id], map: "table_id")
@@ -64,7 +64,7 @@ model orders {
 model orderstatus {
   orderstatus_id   Int      @id @default(autoincrement())
   orderstatus_name String   @unique(map: "orderstatus_name") @db.VarChar(30)
-  order            orders[]
+  orders           orders[]
 }
 
 model stations {
@@ -93,11 +93,10 @@ model users {
   user_id      Int       @id @default(autoincrement())
   usertype_id  Int
   username     String    @db.VarChar(50)
-  userage      Int       @default(0)
   userpassword String    @db.VarChar(255)
   useremail    String    @db.VarChar(50)
   orders       orders[]
-  usertype     usertypes @relation(fields: [usertype_id], references: [usertype_id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  usertypes    usertypes @relation(fields: [usertype_id], references: [usertype_id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
 
   @@unique([username, useremail], map: "UC_User")
   @@index([usertype_id], map: "usertype_id")
