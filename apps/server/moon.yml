@@ -8,24 +8,19 @@ project:
   owner: 'diraneyya'
   maintainers: ['diraneyya, denigogov, surmavagit']
 
-fileGroups:
-    files:
-        - 'src/**/*'
-        - 'env.d.ts'
-        - 'index.html'
-        - 'vite.config.*'
-
 tasks:
+  # Pre-requisite tasks
+  generate-prisma-client:
+    command: 'prisma generate'
+    outputs:
+      - 'node_modules/@prisma/client'
+  # Productions tasks
   build:
     command: 'tsc'
     outputs:
       - 'dist/'
     deps:
       - '~:generate-prisma-client'
-  generate-prisma-client:
-    command: 'prisma generate'
-  build-docker:
-    command: 'docker image rm --force restaurant-backend; docker build . --tag restaurant-backend'
   start:
     command: 'node dist/index.js'
     env:
@@ -34,19 +29,22 @@ tasks:
       - '~:build'
   clean:
     command: 'rm -r ./dist'
-  dev-tsc:
+  # Development tasks (to be run locally)
+  dev-build:
     command: 'tsc --watch'
-    options:
-      outputStyle: 'stream'
-  dev-nodemon:
+    local: true
+    deps:
+      - '~:generate-prisma-client'
+  dev-start:
     command: 'nodemon ./dist/index.js'
+    local: true
     env:
       NODE_ENV: 'development'
-    options:
-      outputStyle: 'stream'
   dev:
     command: 'noop'
     deps:
-      - '~:generate-prisma-client'
-      - '~:dev-nodemon'
-      - '~:dev-tsc'
+      - '~:dev-build'
+      - '~:dev-start'
+  # Tasks under development
+  build-docker:
+    command: 'docker image rm --force restaurant-backend; docker build . --tag restaurant-backend'
