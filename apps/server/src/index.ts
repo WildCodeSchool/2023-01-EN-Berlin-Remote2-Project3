@@ -14,31 +14,34 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
 });
 
-app.get("/users", (req: Request, res: Response) => {
-  prisma.users.findMany({}).then((users) => {
-    let html = "<ul>";
-    for (let i = 0; i < users.length; i++) {
-      html += `<li>Username ${users[i].username} has a password of "${users[i].userpassword}".</li>`;
-    }
-    html += "</ul>";
-
-    res.send(html);
-  });
-});
-
+app.use(express.json());
 const { verifyPassword } = require("./auth");
 app.post(
   "/api/login",
-  (req, res, next) => {
-    const { email } = req.body;
+  async (req, res, next) => {
+    //Validating the request body
+    if (req.body?.email === undefined || req.body?.password === undefined) {
+      res.status(400).send("Invalid request: no email or password provided");
+    } else {
+      next();
+    }
+  },
+  async (req, res, next) => {
+    //Quering the database. Checking if the email exists
     prisma.users
-      .findUniqueOrThrow({ where: { useremail: email } })
-      .then(([users]) => {
-        if (users[0] != null) {
-          req.user = users[0];
-          next();
+      .findUnique({
+        select: { useremail: true },
+        where: { useremail: req.body.email },
+      })
+      .then((found) => {
+        console.log(found)
+        if (found == null) {
+          res.status(404).send('No user is registered with the provided email');
         } else {
-          res.sendStatus(401);
+          // now we have the user and can proceed with the verification
+          //after adding the userpassword to the response
+          console.log('User found');
+          next();
         }
       })
       .catch((err) => {
