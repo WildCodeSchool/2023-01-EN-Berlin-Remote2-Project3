@@ -8,43 +8,80 @@ project:
   owner: 'diraneyya'
   maintainers: ['diraneyya, denigogov, surmavagit']
 
+fileGroups:
+  prismaClient:
+    - "node_modules/@prisma/client"
+  prismaSchema:
+    - "prisma/schema.prisma"
+  tsSources:
+    - "src/**/*"
+  jsBundle:
+    - "dist/"
+
 tasks:
-  # Pre-requisite tasks
+  # Pre-requisite tasks (created an issue https://github.com/moonrepo/moon/discussions/830)
   generate-prisma-client:
     command: 'prisma generate'
+    inputs:
+      - "@group(prismaSchema)"
     outputs:
-      - 'node_modules/@prisma/client'
+      - "@group(prismaClient)"
+    options:
+      outputStyle: 'buffer-only-failure'
   # Productions tasks
   build:
     command: 'tsc'
+    inputs:
+      - '@group(tsSources)'
     outputs:
-      - 'dist/'
+      - '@group(jsBundle)'
     deps:
-      - '~:generate-prisma-client'
+      - "~:generate-prisma-client"
+    options:
+      outputStyle: 'hash'
   start:
     command: 'node dist/index.js'
     env:
       NODE_ENV: 'production'
     deps:
       - '~:build'
+    options:
+      outputStyle: 'stream'
   clean:
     command: 'rm -r ./dist'
+    options:
+      outputStyle: 'stream'
   # Development tasks (to be run locally)
   dev-build:
     command: 'tsc --watch'
     local: true
     deps:
-      - '~:generate-prisma-client'
+      - "~:generate-prisma-client"
+    inputs:
+      - '@group(tsSources)'
+    outputs:
+      - '@group(jsBundle)'
+    options:
+      outputStyle: 'none'
   dev-start:
     command: 'nodemon ./dist/index.js'
     local: true
+    inputs:
+      - 'dist/index.js'
+    outputs:
+    # no outputs
     env:
       NODE_ENV: 'development'
+    options:
+      outputStyle: 'stream'
   dev:
-    command: 'noop'
-    deps:
-      - '~:dev-build'
-      - '~:dev-start'
+    command: 'moon run server:dev-build server:dev-start'
+    options:
+      outputStyle: 'stream'
+    # command: 'noop'
+    # deps:
+    #   - '~:dev-build'
+    #   - '~:dev-start'
   # Tasks under development
   build-docker:
     command: 'docker image rm --force restaurant-backend; docker build . --tag restaurant-backend'
