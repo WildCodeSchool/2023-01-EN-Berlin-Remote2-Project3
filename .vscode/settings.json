@@ -2,5 +2,8 @@
   "editor.defaultFormatter": "rome.rome",
   "files.associations": {
     "*.json": "json"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
