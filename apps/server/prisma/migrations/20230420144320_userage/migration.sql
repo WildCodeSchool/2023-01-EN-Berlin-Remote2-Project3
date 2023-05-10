@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `users` ADD COLUMN `userage` INTEGER NOT NULL DEFAULT 0;
