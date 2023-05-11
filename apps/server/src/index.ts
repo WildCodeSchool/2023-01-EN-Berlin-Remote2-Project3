@@ -29,7 +29,7 @@ app.post(
   },
   async (req, res, next) => {
     //Quering the database. Checking if the email exists
-    prisma.users
+    prisma.user
       .findUnique({
         select: { userpassword: true },
         where: { useremail: req.body.email },
