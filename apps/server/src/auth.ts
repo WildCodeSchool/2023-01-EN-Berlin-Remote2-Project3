@@ -30,7 +30,10 @@ const verifyPassword = async (req: Request, res: Response) => {
   //     console.error(err);
   //     res.sendStatus(500);
   //   });
-  res.send("Verifying the password");
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ1LCJuYW1lIjoiTHVrYSIsImlhdCI6MTY4MzY0MzExMCwiZXhwIjoxNjgzNjQzNzEwfQ.VLCNJTQpzH4Khne_GoijkAH2QRGEqVHamrfXZwPuQns";
+
+  res.status(200).send({ token });
 };
 
 module.exports = {

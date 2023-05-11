@@ -30,17 +30,16 @@ app.post(
     //Quering the database. Checking if the email exists
     prisma.users
       .findUnique({
-        select: { useremail: true },
+        select: { userpassword: true },
         where: { useremail: req.body.email },
       })
       .then((found) => {
-        console.log(found)
         if (found == null) {
-          res.status(404).send('No user is registered with the provided email');
+          res.status(404).send("Wrong email or password");
         } else {
           // now we have the user and can proceed with the verification
           //after adding the userpassword to the response
-          console.log('User found');
+          console.log("User found");
           next();
         }
       })
