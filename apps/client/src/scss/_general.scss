@@ -1,0 +1,29 @@
+@use "./colors";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+$spacing: 0.2rem;
+$transition: all 0.3s linear;
+$primary-font: "Poppins", sans-serif;
+
+@mixin button() {
+  background-color: colors.$primary;
+  padding: 13px;
+  border-radius: 20px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background-color: colors.$primary-darker;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: translateY(-3px);
+  }
+}
+
+@mixin buttonHover($btnHoverColor: colors.$primary-darker) {
+  background-color: $btnHoverColor;
+}

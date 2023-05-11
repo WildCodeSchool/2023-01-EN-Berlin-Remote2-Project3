@@ -1,6 +1,7 @@
 import { useState } from "react";
-// import userLoginIcon from "../assets/icon-user.svg";
+import userLoginIcon from "../assets/icon-user.svg";
 import PropTypes from "prop-types";
+import "../scss/_login.scss";
 
 const Login = ({ setToken }: any) => {
   const [email, setEmail] = useState([]);
@@ -14,11 +15,11 @@ const Login = ({ setToken }: any) => {
       },
       body: JSON.stringify(credentials),
     });
+
     if (!response.ok) return;
+
     const data = (await response).json();
-
     console.log(response);
-
     return data;
   };
 
@@ -44,16 +45,28 @@ const Login = ({ setToken }: any) => {
   };
 
   return (
-    <div>
-      <div>{/* <img src={userLoginIcon} alt="" />> */}</div>
-      <form onSubmit={submitForm}>
-        <input onChange={emailHandler} type="email" placeholder="username" />
+    <div className="user__login">
+      <div className="user_login--icon">
+        <img src={userLoginIcon} alt="login icon" />
+      </div>
+
+      <form className="user__login--form" onSubmit={submitForm}>
+        <input
+          onChange={emailHandler}
+          type="email"
+          placeholder="username"
+          className="user__login--form-username"
+        />
+
         <input
           onChange={passwordHandler}
           type="password"
           placeholder="password"
+          className="user__login--form-password"
         />
-        <button type="submit">login</button>
+        <button className="user__login--form--btn" type="submit">
+          login
+        </button>
       </form>
     </div>
   );
