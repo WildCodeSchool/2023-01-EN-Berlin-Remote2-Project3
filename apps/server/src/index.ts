@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import expressOasGenerator from "express-oas-generator";
 import dotenv from "dotenv";
-
+import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
@@ -9,6 +9,7 @@ dotenv.config();
 
 const app: Express = express();
 expressOasGenerator.init(app, {});
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
