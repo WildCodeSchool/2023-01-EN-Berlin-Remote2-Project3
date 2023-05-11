@@ -31,8 +31,8 @@ app.post(
     //Quering the database. Checking if the email exists
     prisma.user
       .findUnique({
-        select: { userpassword: true },
-        where: { useremail: req.body.email },
+        select: { password: true },
+        where: { email: req.body.email },
       })
       .then((found) => {
         if (found == null) {
