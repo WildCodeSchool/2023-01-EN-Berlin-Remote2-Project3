@@ -3,12 +3,12 @@ import expressOasGenerator from "express-oas-generator";
 import dotenv from "dotenv";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
-dotenv.config();
+const { verifyPassword } = require("./auth");
 
 const app: Express = express();
+const prisma = new PrismaClient();
 expressOasGenerator.init(app, {});
+
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use(express.json());
-const { verifyPassword } = require("./auth");
+
 app.post(
   "/api/login",
   async (req, res, next) => {
@@ -41,6 +41,7 @@ app.post(
           // now we have the user and can proceed with the verification
           //after adding the userpassword to the response
           console.log("User found");
+          req.body.hashed = found;
           next();
         }
       })
@@ -52,6 +53,11 @@ app.post(
   verifyPassword
 );
 
+// app.use((err, req, res, next) => {
+//   console.error(err)
+// })
+
+dotenv.config();
 const port = process.env.PORT ?? 4500;
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}⚡️`);

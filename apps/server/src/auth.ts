@@ -10,8 +10,17 @@ const hashingOptions = {
 };
 
 const verifyPassword = async (req: Request, res: Response) => {
-  // const hash = req.user.hashedPassword;
-  // const pass = req.body.password;
+  const pass = req.body.password;
+  const hash = req.body.hashed.password;
+  if (pass === hash) {
+    console.log("Sending the dummy token");
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ1LCJuYW1lIjoiTHVrYSIsImlhdCI6MTY4MzY0MzExMCwiZXhwIjoxNjgzNjQzNzEwfQ.VLCNJTQpzH4Khne_GoijkAH2QRGEqVHamrfXZwPuQns";
+    res.status(200).send({ token });
+  } else {
+    console.log("Wrong password");
+    res.status(404).send("Wrong email or password");
+  }
   // argon2
   //   .verify(hash, pass)
   //   .then((isVerified) => {
@@ -30,10 +39,6 @@ const verifyPassword = async (req: Request, res: Response) => {
   //     console.error(err);
   //     res.sendStatus(500);
   //   });
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ1LCJuYW1lIjoiTHVrYSIsImlhdCI6MTY4MzY0MzExMCwiZXhwIjoxNjgzNjQzNzEwfQ.VLCNJTQpzH4Khne_GoijkAH2QRGEqVHamrfXZwPuQns";
-
-  res.status(200).send({ token });
 };
 
 module.exports = {
