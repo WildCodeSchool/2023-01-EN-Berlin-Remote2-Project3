@@ -8,94 +8,94 @@ datasource db {
 }
 
 model Category {
-  category_id      Int        @id @default(autoincrement())
-  category_name    String     @unique(map: "category_name") @db.VarChar(30)
-  parent_id        Int?
-  categories       Category?  @relation("categoriesTocategories", fields: [parent_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "categories_ibfk_1")
-  other_categories Category[] @relation("categoriesTocategories")
-  menuitems        MenuItem[]
+  id              Int        @id @default(autoincrement()) @map("category_id")
+  name            String     @unique(map: "category_name") @db.VarChar(30)
+  parentId        Int?       @map("parent_id")
+  parentCategory  Category?  @relation("categoriesTocategories", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "categories_ibfk_1")
+  childCategories Category[] @relation("categoriesTocategories")
+  menuitems       MenuItem[]
 
-  @@index([parent_id], map: "parent_id")
+  @@index([parentId], map: "parent_id")
   @@map("categories")
 }
 
 model MenuItem {
-  item_id     Int         @id @default(autoincrement())
-  item_name   String      @unique(map: "item_name") @db.VarChar(50)
-  price       Decimal?    @db.Decimal(7, 2)
-  category_id Int
-  station_id  Int
-  categories  Category    @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
-  stations    Station     @relation(fields: [station_id], references: [station_id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
-  orderitems  OrderItem[]
+  id         Int         @id @default(autoincrement()) @map("item_id")
+  name       String      @unique(map: "item_name") @db.VarChar(50)
+  price      Decimal?    @db.Decimal(7, 2)
+  categoryId Int         @map("category_id")
+  stationId  Int         @map("station_id")
+  category   Category    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
+  station    Station     @relation(fields: [stationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
+  orderitems OrderItem[]
 
-  @@index([category_id], map: "category_id")
-  @@index([station_id], map: "station_id")
+  @@index([categoryId], map: "category_id")
+  @@index([stationId], map: "station_id")
   @@map("menuitems")
 }
 
 model OrderItem {
-  orderitems_id Int       @id @default(autoincrement())
-  order_id      Int
-  item_id       Int
-  quantity      Int
-  order_time    DateTime
-  served_time   DateTime?
-  orders        Order     @relation(fields: [order_id], references: [order_id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_1")
-  menuitems     MenuItem  @relation(fields: [item_id], references: [item_id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_2")
+  id         Int       @id @default(autoincrement()) @map("orderitems_id")
+  orderId    Int       @map("order_id")
+  itemId     Int       @map("item_id")
+  quantity   Int
+  orderTime  DateTime  @map("order_time")
+  servedTime DateTime? @map("served_time")
+  order      Order     @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_1")
+  menuitem   MenuItem  @relation(fields: [itemId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_2")
 
-  @@index([item_id], map: "item_id")
-  @@index([order_id], map: "order_id")
+  @@index([itemId], map: "item_id")
+  @@index([orderId], map: "order_id")
   @@map("orderitems")
 }
 
 model Order {
-  order_id       Int           @id @default(autoincrement())
-  orderstatus_id Int
-  waiter_id      Int
-  table_id       Int
-  orderitems     OrderItem[]
-  orderstatus    OrderStatus   @relation(fields: [orderstatus_id], references: [orderstatus_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_1")
-  users          User          @relation(fields: [waiter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_2")
-  tables         TablePhysical @relation(fields: [table_id], references: [table_id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_3")
+  id         Int           @id @default(autoincrement()) @map("order_id")
+  statusId   Int           @map("orderstatus_id")
+  waiterId   Int           @map("waiter_id")
+  tableId    Int           @map("table_id")
+  orderitems OrderItem[]
+  status     OrderStatus   @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_1")
+  waiter     User          @relation(fields: [waiterId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_2")
+  table      TablePhysical @relation(fields: [tableId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_3")
 
-  @@index([orderstatus_id], map: "orderstatus_id")
-  @@index([table_id], map: "table_id")
-  @@index([waiter_id], map: "waiter_id")
+  @@index([statusId], map: "orderstatus_id")
+  @@index([tableId], map: "table_id")
+  @@index([waiterId], map: "waiter_id")
   @@map("orders")
 }
 
 model OrderStatus {
-  orderstatus_id   Int     @id @default(autoincrement())
-  orderstatus_name String  @unique(map: "orderstatus_name") @db.VarChar(30)
-  orders           Order[]
+  id     Int     @id @default(autoincrement()) @map("orderstatus_id")
+  name   String  @unique(map: "orderstatus_name") @db.VarChar(30)
+  orders Order[]
 
   @@map("orderstatus")
 }
 
 model Station {
-  station_id   Int        @id @default(autoincrement())
-  station_name String     @unique(map: "station_name") @db.VarChar(30)
-  menuitems    MenuItem[]
+  id        Int        @id @default(autoincrement()) @map("station_id")
+  name      String     @unique(map: "station_name") @db.VarChar(30)
+  menuitems MenuItem[]
 
   @@map("stations")
 }
 
 model TablePhysical {
-  table_id       Int         @id @default(autoincrement())
-  table_name     String      @unique(map: "table_name") @db.VarChar(30)
-  tablestatus_id Int
-  orders         Order[]
-  tablestatus    TableStatus @relation(fields: [tablestatus_id], references: [tablestatus_id], onDelete: NoAction, onUpdate: NoAction, map: "tables_ibfk_1")
+  id          Int         @id @default(autoincrement()) @map("table_id")
+  name        String      @unique(map: "table_name") @map("table_name") @db.VarChar(30)
+  statusId    Int         @map("tablestatus_id")
+  orders      Order[]
+  tablestatus TableStatus @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_ibfk_1")
 
-  @@index([tablestatus_id], map: "tablestatus_id")
+  @@index([statusId], map: "tablestatus_id")
   @@map("tables")
 }
 
 model TableStatus {
-  tablestatus_id   Int             @id @default(autoincrement())
-  tablestatus_name String          @unique(map: "tablestatus_name") @db.VarChar(30)
-  tables           TablePhysical[]
+  id     Int             @id @default(autoincrement()) @map("tablestatus_id")
+  name   String          @unique(map: "tablestatus_name") @db.VarChar(30)
+  tables TablePhysical[]
 
   @@map("tablestatus")
 }
@@ -115,7 +115,7 @@ model User {
 
 model UserType {
   id    Int    @id @default(autoincrement()) @map("usertype_id")
-  name  String @unique(map: "usertype_name") @db.VarChar(30) //@map("usertype_name")
+  name  String @unique(map: "usertype_name") @db.VarChar(30)
   users User[]
 
   @@map("usertypes")
