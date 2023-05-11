@@ -7,22 +7,26 @@ const Login = ({ setToken }: any) => {
   const [password, setPassword] = useState([]);
 
   const loginUser = async (credentials: any) => {
-    return fetch("http://localhost:4000/api/login", {
+    const response = fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    }).then((data) => data.json());
+    });
+    if (!response.ok) return;
+    const data = (await response).json();
+
+    console.log(response);
+
+    return data;
   };
 
   const emailHandler = (e: any) => {
     setEmail(e.target.value);
   };
   const passwordHandler = (e: any) => {
-    if (e.target.value === "") {
-      console.log("heeeeeeepepepep");
-    } else setPassword(e.target.value);
+    setPassword(e.target.value);
   };
 
   const submitForm = async (e: any) => {
@@ -32,9 +36,11 @@ const Login = ({ setToken }: any) => {
       email,
       password,
     });
-
-    console.log(token);
     setToken(token);
+
+    if (password || email === undefined) {
+      throw new Error("what happne?");
+    }
   };
 
   return (
