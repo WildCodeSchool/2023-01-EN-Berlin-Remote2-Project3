@@ -107,16 +107,16 @@ model User {
   password String   @map("userpassword") @db.VarChar(255)
   email    String   @unique @map("useremail") @db.VarChar(50)
   orders   Order[]
-  type     UserType @relation(fields: [typeId], references: [usertype_id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  type     UserType @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
 
   @@index([typeId], map: "usertype_id")
   @@map("users")
 }
 
 model UserType {
-  usertype_id   Int    @id @default(autoincrement())
-  usertype_name String @unique(map: "usertype_name") @db.VarChar(30)
-  users         User[]
+  id    Int    @id @default(autoincrement()) @map("usertype_id")
+  name  String @unique(map: "usertype_name") @db.VarChar(30) //@map("usertype_name")
+  users User[]
 
   @@map("usertypes")
 }
