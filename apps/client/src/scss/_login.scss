@@ -11,8 +11,8 @@
 }
 
 .user_login--icon {
-  width: 100px;
-  height: 100px;
+  width: 115px;
+  height: 115px;
   border: 1px solid colors.$primary;
   border-radius: 50%;
   padding: 20px;
@@ -29,8 +29,8 @@
   border: 1px solid $borderColor;
   border-radius: 10px;
   background-size: 13px;
-  background-position: right 10px top 8px;
-  padding: 8px 25px;
+  background-position: right 10px top 11px;
+  padding: 13px 40px;
 }
 
 .user__login--form-username {
@@ -45,5 +45,5 @@
 
 .user__login--form--btn {
   @include general.button;
-  margin: 20px 50px 0 50px;
+  margin: 24px 45px 0 45px;
 }

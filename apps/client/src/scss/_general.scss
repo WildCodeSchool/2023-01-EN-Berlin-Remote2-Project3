@@ -7,7 +7,7 @@ $primary-font: "Poppins", sans-serif;
 
 @mixin button() {
   background-color: colors.$primary;
-  padding: 13px;
+  padding: 15px;
   border-radius: 20px;
   border: none;
   color: #fff;

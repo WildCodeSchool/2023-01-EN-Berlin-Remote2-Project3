@@ -11,7 +11,7 @@ const Login = ({ setToken }: any) => {
     email: string;
     password: string;
   }) => {
-    const response = fetch("http://localhost:4000/api/login", {
+    const response = await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,9 +20,8 @@ const Login = ({ setToken }: any) => {
     });
 
     if (!response.ok) return;
-
     const data = (await response).json();
-    console.log(response);
+
     return data;
   };
 
@@ -42,8 +41,10 @@ const Login = ({ setToken }: any) => {
     });
     setToken(token);
 
-    if (password || email === undefined) {
-      throw new Error("what happne?");
+    console.log(token);
+
+    if (!password || !email) {
+      throw new Error("error happen?");
     }
   };
 

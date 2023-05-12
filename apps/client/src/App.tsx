@@ -11,7 +11,7 @@ const App = () => {
   }
 
   return (
-    <div className="wrapper">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Dashboard />} />
