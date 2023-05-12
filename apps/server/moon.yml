@@ -22,10 +22,10 @@ tasks:
   # Pre-requisite tasks (created an issue https://github.com/moonrepo/moon/discussions/830)
   generate-prisma-client:
     command: 'prisma generate'
-    inputs:
-      - "@group(prismaSchema)"
-    outputs:
-      - "@group(prismaClient)"
+    # inputs:
+    #   - "@group(prismaSchema)"
+    # outputs:
+    #   - "@group(prismaClient)"
     options:
       outputStyle: 'buffer-only-failure'
   # Productions tasks
