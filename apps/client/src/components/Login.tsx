@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 import "../scss/_login.scss";
 
 const Login = ({ setToken }: any) => {
-  const [email, setEmail] = useState([]);
-  const [password, setPassword] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const loginUser = async (credentials: any) => {
+  const loginUser = async (credentials: {
+    email: string;
+    password: string;
+  }) => {
     const response = fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
@@ -23,14 +26,14 @@ const Login = ({ setToken }: any) => {
     return data;
   };
 
-  const emailHandler = (e: any) => {
-    setEmail(e.target.value);
+  const emailHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setEmail(e.currentTarget.value);
   };
-  const passwordHandler = (e: any) => {
-    setPassword(e.target.value);
+  const passwordHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
   };
 
-  const submitForm = async (e: any) => {
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const token = await loginUser({
