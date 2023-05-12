@@ -8,6 +8,7 @@ const { verifyPassword } = require("./auth");
 const app: Express = express();
 const prisma = new PrismaClient();
 expressOasGenerator.init(app, {});
+dotenv.config();
 
 app.use(cors());
 
@@ -31,7 +32,7 @@ app.post(
     //Quering the database. Checking if the email exists
     prisma.user
       .findUnique({
-        select: { password: true },
+        select: { id: true, password: true },
         where: { email: req.body.email },
       })
       .then((found) => {
@@ -41,7 +42,7 @@ app.post(
           // now we have the user and can proceed with the verification
           //after adding the userpassword to the response
           console.log("User found");
-          req.body.hashed = found;
+          req.body.user = found;
           next();
         }
       })
@@ -57,7 +58,6 @@ app.post(
 //   console.error(err)
 // })
 
-dotenv.config();
 const port = process.env.PORT ?? 4500;
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}⚡️`);

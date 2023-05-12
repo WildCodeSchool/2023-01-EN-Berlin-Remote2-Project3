@@ -1,5 +1,5 @@
 import * as argon2 from "argon2";
-const jwt = require("jsonwebtoken");
+import * as jwt from "jsonwebtoken";
 import express, { Express, Request, Response } from "express";
 
 const hashingOptions = {
@@ -9,13 +9,35 @@ const hashingOptions = {
   parallelism: 1,
 };
 
+// Should it be a function?
+
+// const checkJwtSecretKey = (): string => {
+//   const envSecret = process.env.JWT_SECRET;
+//   if (envSecret === undefined) {
+//     console.error("No JWT_SECRET defined in .env file");
+//     return "";
+//   } else {
+//     return envSecret;
+//   }
+// };
+
+let jwtSecretKey = "";
+const envSecret = process.env.JWT_SECRET;
+if (envSecret === undefined) {
+  console.error("No JWT_SECRET defined in .env file");
+} else {
+  jwtSecretKey = envSecret;
+}
+
 const verifyPassword = async (req: Request, res: Response) => {
   const pass = req.body.password;
-  const hash = req.body.hashed.password;
+  const hash = req.body.user.password;
   if (pass === hash) {
-    console.log("Sending the dummy token");
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ1LCJuYW1lIjoiTHVrYSIsImlhdCI6MTY4MzY0MzExMCwiZXhwIjoxNjgzNjQzNzEwfQ.VLCNJTQpzH4Khne_GoijkAH2QRGEqVHamrfXZwPuQns";
+    console.log("Sending the token");
+    const payload = { sub: req.body.user.id };
+    const token = jwt.sign(payload, jwtSecretKey, {
+      expiresIn: "8h",
+    });
     res.status(200).send({ token });
   } else {
     console.log("Wrong password");
