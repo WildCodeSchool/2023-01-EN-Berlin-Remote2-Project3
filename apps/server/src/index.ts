@@ -3,12 +3,13 @@ import expressOasGenerator from "express-oas-generator";
 import dotenv from "dotenv";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
-dotenv.config();
+const { verifyPassword } = require("./auth");
 
 const app: Express = express();
+const prisma = new PrismaClient();
 expressOasGenerator.init(app, {});
+dotenv.config();
+
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
@@ -16,7 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use(express.json());
-const { verifyPassword } = require("./auth");
+
 app.post(
   "/api/login",
   async (req, res, next) => {
@@ -29,10 +30,10 @@ app.post(
   },
   async (req, res, next) => {
     //Quering the database. Checking if the email exists
-    prisma.users
+    prisma.user
       .findUnique({
-        select: { userpassword: true },
-        where: { useremail: req.body.email },
+        select: { id: true, password: true },
+        where: { email: req.body.email },
       })
       .then((found) => {
         if (found == null) {
@@ -41,6 +42,7 @@ app.post(
           // now we have the user and can proceed with the verification
           //after adding the userpassword to the response
           console.log("User found");
+          req.body.user = found;
           next();
         }
       })
@@ -51,6 +53,10 @@ app.post(
   },
   verifyPassword
 );
+
+// app.use((err, req, res, next) => {
+//   console.error(err)
+// })
 
 const port = process.env.PORT ?? 4500;
 app.listen(port, () => {

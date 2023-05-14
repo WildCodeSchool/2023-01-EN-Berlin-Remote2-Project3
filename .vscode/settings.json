@@ -6,10 +6,15 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }
