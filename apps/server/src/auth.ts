@@ -1,6 +1,10 @@
-import * as argon2 from "argon2";
+import { Request, Response, NextFunction } from "express";
+import { PrismaClient } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
-import express, { Express, Request, Response } from "express";
+import * as argon2 from "argon2";
+
+
+const prisma = new PrismaClient();
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -9,27 +13,52 @@ const hashingOptions = {
   parallelism: 1,
 };
 
-// Should it be a function?
+export const getUserByEmailPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //Quering the database. Checking if the email exists
+  prisma.user
+    .findUnique({
+      select: { id: true, password: true },
+      where: { email: req.body.email },
+    })
+    .then((found) => {
+      if (found == null) {
+        res.status(404).send("Wrong email or password");
+      } else {
+        // now we have the user and can proceed with the verification
+        //after adding the userpassword to the response
+        console.log("User found");
+        req.body.user = found;
+        next();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error retrieving data from the database");
+    });
+};
 
-// const checkJwtSecretKey = (): string => {
-//   const envSecret = process.env.JWT_SECRET;
-//   if (envSecret === undefined) {
-//     console.error("No JWT_SECRET defined in .env file");
-//     return "";
-//   } else {
-//     return envSecret;
-//   }
-// };
+export const validateRequestEmailPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //Validating the request body
+  if (req.body?.email === undefined || req.body?.password === undefined) {
+    res.status(400).send("Invalid request: no email or password provided");
+  } else {
+    next();
+  }
+};
 
-let jwtSecretKey = "";
-const envSecret = process.env.JWT_SECRET;
-if (envSecret === undefined) {
-  console.error("No JWT_SECRET defined in .env file");
-} else {
-  jwtSecretKey = envSecret;
-}
-
-const verifyPassword = async (req: Request, res: Response) => {
+export const verifyPassword = async (req: Request, res: Response) => {
+  const jwtSecretKey = process.env.JWT_SECRET ?? "";
+  if (!jwtSecretKey) {
+    console.error("No JWT_SECRET defined in .env file");
+  }
   const pass = req.body.password;
   const hash = req.body.user.password;
   if (pass === hash) {
@@ -61,8 +90,4 @@ const verifyPassword = async (req: Request, res: Response) => {
   //     console.error(err);
   //     res.sendStatus(500);
   //   });
-};
-
-module.exports = {
-  verifyPassword,
 };
