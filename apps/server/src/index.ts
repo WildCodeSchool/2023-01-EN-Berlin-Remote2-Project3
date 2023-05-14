@@ -4,7 +4,7 @@ dotenv.config();
 import express from "express";
 import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
-import { validateRequestEmailPassword, getUserByEmailPassword, verifyPassword } from "./auth";
+import { loginRouter } from "./routes/login";
 
 const app = express();
 expressOasGenerator.init(app, {});
@@ -16,12 +16,7 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 
-app.post(
-  "/api/login",
-  validateRequestEmailPassword,
-  getUserByEmailPassword,
-  verifyPassword
-);
+app.use("/api/login", loginRouter);
 
 // app.use((err, req, res, next) => {
 //   console.error(err)
