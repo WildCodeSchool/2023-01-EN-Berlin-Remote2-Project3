@@ -69,7 +69,6 @@ const Login = ({
               : "user__login--form-username"
           }
         />
-
         <input
           onChange={passwordHandler}
           type="password"

@@ -1,13 +1,9 @@
-const Dashboard = () => {
-  const deleteLocalStorage = () => {
-    localStorage.removeItem("token");
-    location.reload();
-  };
+import DashboardHeader from "./DashboardHeader";
 
+const Dashboard = () => {
   return (
     <>
-      <h2>DashBoard</h2>
-      <button onClick={deleteLocalStorage}>logout</button>
+      <DashboardHeader />
     </>
   );
 };

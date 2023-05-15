@@ -1,0 +1,44 @@
+@use "./colors";
+@use "./general";
+@import "./main";
+
+.header {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid colors.$borderLine;
+  align-items: center;
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.header__restaurantName {
+  p {
+    color: colors.$primary;
+  }
+}
+
+.header__username {
+  text-align: center;
+  font-weight: 200;
+
+  img {
+    border: 1px solid colors.$primary;
+    border-radius: 50%;
+    padding: 3px;
+  }
+}
+
+.header__logout {
+  cursor: pointer;
+  &:hover {
+    transform: scale(0.9);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
