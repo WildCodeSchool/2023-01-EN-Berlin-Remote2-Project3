@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import useToken from "./useToken";
+
 const App = () => {
   const { token, setToken } = useToken();
 
@@ -18,7 +19,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </div>

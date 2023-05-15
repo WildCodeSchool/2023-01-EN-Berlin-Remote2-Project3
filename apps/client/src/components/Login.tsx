@@ -23,9 +23,9 @@ const Login = ({
       },
       body: JSON.stringify(credentials),
     });
-
     if (!response.ok) setShowError(true);
     const data = await response.json();
+
     return data;
   };
 

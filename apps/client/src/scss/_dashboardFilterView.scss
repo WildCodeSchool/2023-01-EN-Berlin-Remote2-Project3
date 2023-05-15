@@ -1,0 +1,43 @@
+@use "./colors";
+@use "./general";
+@import "./main";
+
+.dashboard__filter {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 23px;
+}
+
+.dashboard__filter--sections {
+  select {
+    width: 170px;
+    height: 30px;
+    border-color: colors.$borderLine;
+    border-radius: 7px;
+    padding: 0 10px;
+
+    option {
+      font-family: general.$primary-font;
+      &:hover {
+        outline: none;
+      }
+    }
+  }
+}
+
+.dashboard__filter--tableStatus {
+  img {
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+  }
+  &:hover {
+    animation: rotate 3s infinite linear;
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
