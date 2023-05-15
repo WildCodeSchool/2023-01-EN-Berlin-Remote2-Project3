@@ -10,6 +10,7 @@ const Login = ({
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const loginUser = async (credentials: {
     email: string;
@@ -22,11 +23,9 @@ const Login = ({
       },
       body: JSON.stringify(credentials),
     });
-    if (!response.ok) return;
 
+    if (!response.ok) setShowError(true);
     const data = await response.json();
-
-    console.log(data, "only token");
     return data;
   };
 
@@ -53,7 +52,9 @@ const Login = ({
 
   return (
     <div className="user__login">
-      <div className="user_login--icon">
+      <div
+        className={showError ? "user_login--icon error" : "user_login--icon"}
+      >
         <img src={userLoginIcon} alt="login icon" />
       </div>
 
@@ -62,19 +63,41 @@ const Login = ({
           onChange={emailHandler}
           type="email"
           placeholder="username"
-          className="user__login--form-username"
+          className={
+            showError
+              ? "user__login--form-username error"
+              : "user__login--form-username"
+          }
         />
 
         <input
           onChange={passwordHandler}
           type="password"
           placeholder="password"
-          className="user__login--form-password"
+          className={
+            showError
+              ? "user__login--form-password error"
+              : "user__login--form-password"
+          }
         />
-        <button className="user__login--form--btn" type="submit">
+        <button
+          className={
+            showError
+              ? "user__login--form--btn errorBtn"
+              : "user__login--form--btn"
+          }
+          type="submit"
+        >
           login
         </button>
       </form>
+
+      <p
+        className="errorText"
+        style={showError ? { display: "block" } : { display: "none" }}
+      >
+        wrong password or email, please try again
+      </p>
     </div>
   );
 };

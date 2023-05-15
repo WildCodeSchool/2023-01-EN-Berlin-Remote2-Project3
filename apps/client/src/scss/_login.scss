@@ -47,3 +47,20 @@
   @include general.button;
   margin: 24px 45px 0 45px;
 }
+
+// WHEN USER TYPE WRONG PASS OR USERNAME!
+.error {
+  border-color: colors.$error;
+  transition: general.$transition;
+}
+.errorBtn {
+  background-color: colors.$error !important;
+  transition: general.$transition;
+}
+
+.errorText {
+  margin-top: 20px;
+  color: colors.$error;
+  display: none;
+  transition: general.$transition;
+}
