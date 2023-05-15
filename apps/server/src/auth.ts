@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import * as argon2 from "argon2";
 import { prisma } from "./index";
+import { validateEmail, validatePassword } from "./validators";
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -26,16 +27,12 @@ export const validateRequestEmailPassword = async (
 ) => {
   const email = req.body?.email;
   const password = req.body?.password;
-  if (!email || !password) {
-    res.status(400).send("Invalid request: no email or password provided");
-  } else if (typeof email !== "string" || typeof password !== "string") {
-    res
-      .status(400)
-      .send("Invalid request: forbidden value provided as email or password");
-  } else {
+  if (validateEmail(email) && validatePassword(password)) {
     // Cleanup request body in case unnecessary properties are present
     req.body = { email: email, password: password };
     next();
+  } else {
+    res.status(400).send("Wrong email or password");
   }
 };
 
