@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 import * as argon2 from "argon2";
 import { prisma } from "./index";
 import { validateEmail, validatePassword } from "./validators";
+import { LoginRequest, LoginRequestWithData } from "./types";
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -10,15 +11,6 @@ const hashingOptions = {
   timeCost: 5,
   parallelism: 1,
 };
-
-export interface LoginRequest extends Request {
-  body: { email: string; password: string };
-  user?: { id: number; typeId: number; password: string };
-}
-
-export interface LoginRequestWithData extends LoginRequest {
-  user: { id: number; typeId: number; password: string };
-}
 
 export const validateRequestEmailPassword = async (
   req: Request,
