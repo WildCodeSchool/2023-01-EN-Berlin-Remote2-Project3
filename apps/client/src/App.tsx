@@ -4,7 +4,7 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 
 const App = () => {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState("");
 
   if (!token) {
     return <Login setToken={setToken} />;
