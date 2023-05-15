@@ -1,10 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
+import useToken from "./useToken";
 
 const App = () => {
-  const [token, setToken] = useState("");
+  const { token, setToken } = useToken();
+
+  window.onbeforeunload = function (e) {
+    console.log(e);
+    return "";
+  };
 
   if (!token) {
     return <Login setToken={setToken} />;

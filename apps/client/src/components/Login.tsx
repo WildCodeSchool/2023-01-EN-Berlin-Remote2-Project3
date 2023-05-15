@@ -25,6 +25,8 @@ const Login = ({
     if (!response.ok) return;
 
     const data = await response.json();
+
+    console.log(data, "only token");
     return data;
   };
 
@@ -43,8 +45,6 @@ const Login = ({
       password,
     });
     setToken(token);
-
-    console.log(token);
 
     if (!password || !email) {
       throw new Error("error happen?");
