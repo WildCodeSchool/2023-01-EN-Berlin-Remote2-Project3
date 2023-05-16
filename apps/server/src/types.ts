@@ -3,6 +3,7 @@ import { Request } from "express";
 interface UserData {
   id: number;
   typeId: number;
+  name: string;
   password: string;
 }
 

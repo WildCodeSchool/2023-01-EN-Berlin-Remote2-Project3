@@ -36,7 +36,7 @@ export const getUserByEmailPassword = async (
   //Quering the database. Checking if the email exists
   prisma.user
     .findUnique({
-      select: { id: true, typeId: true, password: true },
+      select: { id: true, typeId: true, name: true, password: true },
       where: { email: req.body.email },
     })
     .then((found) => {
@@ -72,8 +72,8 @@ export const verifyPassword = async (
     const token = jwt.sign(payload, jwtSecretKey, {
       expiresIn: "8h",
     });
-    const { password, ...info } = req.user;
-    res.status(200).send({ token, info });
+    const { password, ...user } = req.user;
+    res.status(200).send({ token, user });
   } else {
     console.log("Wrong password");
     res.status(404).send("Wrong email or password");
@@ -87,8 +87,8 @@ export const verifyPassword = async (
   //       const token = jwt.sign(payload, jwtSecretKey, {
   //         expiresIn: "8h",
   //       });
-  //       const { password, ...info } = req.body.user;
-  //       res.send({ token, info });
+  //       const { password, ...user } = req.body.user;
+  //       res.send({ token, user });
   //     } else {
   //       console.log("Wrong password");
   //       res.status(404).send("Wrong email or password");
