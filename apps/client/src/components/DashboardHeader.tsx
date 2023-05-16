@@ -1,11 +1,16 @@
 import "../scss/_dashboardHeader.scss";
 import logoutIcon from "../assets/logout.svg";
 import userIcon from "../assets/icon-user.svg";
+import { useNavigate } from "react-router-dom";
 
 const DashboardHeader = () => {
+  const navigator = useNavigate();
+
   const deleteLocalStorage = () => {
     localStorage.removeItem("token");
     location.reload();
+
+    navigator("/login");
   };
 
   return (
