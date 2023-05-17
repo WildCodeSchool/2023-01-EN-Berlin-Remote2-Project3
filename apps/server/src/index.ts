@@ -6,7 +6,7 @@ import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
 import { loginRouter } from "./routes/login";
 import { PrismaClient } from "@prisma/client";
-import { menuItems } from "./mock/menuitems.data";
+import { mockData } from "./mock/menuitems.data";
 
 const app = express();
 expressOasGenerator.init(app, {});
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 // TODO @george.surmava please replace this with actual implementation
 app.get("/menuitems", (req, res) => {
-  res.json(menuItems);
+  res.json(mockData);
 })
 
 app.use(express.json());
