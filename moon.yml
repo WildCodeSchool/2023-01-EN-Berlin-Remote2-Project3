@@ -1,0 +1,8 @@
+tasks:
+  dev:
+    command: 'noop'
+    options:
+      runDepsInParallel: true
+    deps:
+      - 'client:dev'
+      - 'server:dev'

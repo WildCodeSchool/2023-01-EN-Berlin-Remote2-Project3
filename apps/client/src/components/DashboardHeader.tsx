@@ -10,7 +10,7 @@ const DashboardHeader = ({ userInfo }) => {
     localStorage.removeItem("token");
     location.reload();
 
-    navigator("/login");
+    navigator("/");
   };
 
   return (
