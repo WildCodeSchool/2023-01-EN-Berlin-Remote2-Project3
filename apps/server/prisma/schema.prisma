@@ -13,7 +13,7 @@ model Category {
   parentId        Int?       @map("parent_id")
   parentCategory  Category?  @relation("categoriesTocategories", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "categories_ibfk_1")
   childCategories Category[] @relation("categoriesTocategories")
-  menuitems       MenuItem[]
+  menuItems       MenuItem[]
 
   @@index([parentId], map: "parent_id")
   @@map("categories")
@@ -76,7 +76,7 @@ model OrderStatus {
 model Station {
   id        Int        @id @default(autoincrement()) @map("station_id")
   name      String     @unique(map: "station_name") @map("station_name") @db.VarChar(30)
-  menuitems MenuItem[]
+  menuItems MenuItem[]
 
   @@map("stations")
 }
