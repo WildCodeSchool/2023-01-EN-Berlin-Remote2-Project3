@@ -3,9 +3,9 @@ import logoutIcon from "../assets/logout.svg";
 import userIcon from "../assets/icon-user.svg";
 import { useNavigate } from "react-router-dom";
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ userInfo }) => {
   const navigator = useNavigate();
-
+  console.log(userInfo);
   const deleteLocalStorage = () => {
     localStorage.removeItem("token");
     location.reload();
@@ -21,7 +21,7 @@ const DashboardHeader = () => {
 
       <div className="header__username">
         <img src={userIcon} alt="user icon" />
-        <p>username</p>
+        <p>{userInfo.name}</p>
       </div>
       <div className="header__logout">
         <img

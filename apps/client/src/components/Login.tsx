@@ -2,12 +2,14 @@ import { useState } from "react";
 import userLoginIcon from "../assets/icon-user.svg";
 import PropTypes from "prop-types";
 import "../scss/_login.scss";
-import { useNavigate } from "react-router-dom";
+
+import { Token } from "../useToken";
 
 const Login = ({
   setToken,
+  setUserInfo,
 }: {
-  setToken: React.Dispatch<React.SetStateAction<string>>;
+  setToken: (userToken: Token) => void;
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +28,7 @@ const Login = ({
     });
     if (!response.ok) setShowError(true);
     const data = await response.json();
-
+    setUserInfo(data.user);
     return data;
   };
 

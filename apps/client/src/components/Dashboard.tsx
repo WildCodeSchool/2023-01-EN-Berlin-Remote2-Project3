@@ -1,10 +1,10 @@
 import DashboardHeader from "./DashboardHeader";
 import DashboardFilterView from "./DashboarFilterView";
 
-const Dashboard = () => {
+const Dashboard = ({ userInfo }) => {
   return (
     <>
-      <DashboardHeader />
+      <DashboardHeader userInfo={userInfo} />
       <DashboardFilterView />
     </>
   );

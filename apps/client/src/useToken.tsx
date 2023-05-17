@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type Token = {
+export type Token = {
   token: string;
 };
 
