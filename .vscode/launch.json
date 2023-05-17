@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "Launch Fullstack Application",
+      "command": "moon run :dev"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Frontend (Launching Fullstack App First)",
+      "url": "http://localhost:3000"
+    }
+  ]
+}
