@@ -2,8 +2,10 @@ import "../scss/_dashboardHeader.scss";
 import logoutIcon from "../assets/logout.svg";
 import userIcon from "../assets/icon-user.svg";
 import { useNavigate } from "react-router-dom";
+import { UserInfo } from "../App";
 
-const DashboardHeader = ({ userInfo }) => {
+
+const DashboardHeader = ({ userInfo } : {userInfo : UserInfo}) => {
   const navigator = useNavigate();
   console.log(userInfo);
   const deleteLocalStorage = () => {

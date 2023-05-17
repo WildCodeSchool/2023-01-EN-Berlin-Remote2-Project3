@@ -28,6 +28,10 @@ tasks:
     #   - "@group(prismaClient)"
     options:
       outputStyle: 'buffer-only-failure'
+  studio:
+    command: 'prisma studio'
+    options:
+      outputStyle: 'stream'
   # Productions tasks
   build:
     command: 'tsc'

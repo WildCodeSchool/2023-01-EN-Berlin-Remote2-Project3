@@ -6,7 +6,7 @@ import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
 import { loginRouter } from "./routes/login";
 import { PrismaClient } from "@prisma/client";
-import { menuItems } from "./mock/menuitems.data";
+import { mockData } from "./mock/menuitems.data";
 
 const app = express();
 expressOasGenerator.init(app, {});
@@ -21,8 +21,45 @@ app.get("/", (req, res) => {
 });
 
 // TODO @george.surmava please replace this with actual implementation
-app.get("/menuitems", (req, res) => {
-  res.json(menuItems);
+app.get("/api/menu", (req, res) => {
+  prisma.category.findMany({
+    select: {
+      id: true,
+      name: true,
+      menuItems: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+        },
+      },
+      childCategories: {
+        select: {
+          id: true,
+          name: true,
+          menuItems: {
+            select: {
+              id: true,
+              name: true,
+              price: true,
+            },
+          },
+          childCategories: {}, //supposed to be an empty array, so no fields selected
+        },
+      },
+    },
+    where: {
+      parentId: {
+        equals: null,
+      },
+    },
+  }).then((found) => {
+    res.status(200).json(found)
+  }).catch((err) => {
+    console.error(err);
+    res.status(500).send("Error retrieving data from the database");
+  })
+  // res.json(mockData);
 })
 
 app.use(express.json());

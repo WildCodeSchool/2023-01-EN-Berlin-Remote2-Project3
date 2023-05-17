@@ -3,8 +3,35 @@ const prisma = new PrismaClient();
 
 const fetchCategories = async () => {
   return await prisma.category.findMany({
-    include: {
-      menuitems: {},
+    select: {
+      id: true,
+      name: true,
+      menuItems: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+        },
+      },
+      childCategories: {
+        select: {
+          id: true,
+          name: true,
+          menuItems: {
+            select: {
+              id: true,
+              name: true,
+              price: true,
+            },
+          },
+          childCategories: {}, //supposed to be an empty array
+        },
+      },
+    },
+    where: {
+      parentId: {
+        equals: null,
+      },
     },
   });
 };

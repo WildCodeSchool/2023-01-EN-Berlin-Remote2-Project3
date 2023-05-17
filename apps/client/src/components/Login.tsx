@@ -3,13 +3,14 @@ import userLoginIcon from "../assets/icon-user.svg";
 import PropTypes from "prop-types";
 import "../scss/_login.scss";
 
-import { Token } from "../useToken";
+import { UserInfo } from "../App";
 
 const Login = ({
   setToken,
   setUserInfo,
 }: {
-  setToken: (userToken: Token) => void;
+  setToken: (userToken: string) => void;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,9 +28,9 @@ const Login = ({
       body: JSON.stringify(credentials),
     });
     if (!response.ok) setShowError(true);
-    const data = await response.json();
+    const data: { token: string; user: UserInfo } = await response.json();
     setUserInfo(data.user);
-    return data;
+    return data.token;
   };
 
   const emailHandler = (e: React.FormEvent<HTMLInputElement>) => {

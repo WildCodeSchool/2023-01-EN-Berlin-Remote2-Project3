@@ -1,11 +1,13 @@
 import DashboardHeader from "./DashboardHeader";
-import DashboardFilterView from "./DashboarFilterView";
+// import DashboardFilterView from "./DashboarFilterView";
+import { UserInfo } from "../App";
 
-const Dashboard = ({ userInfo }) => {
+
+const Dashboard = ({ userInfo } : {userInfo : UserInfo}) => {
   return (
     <>
       <DashboardHeader userInfo={userInfo} />
-      <DashboardFilterView />
+      {/* <DashboardFilterView /> */}
     </>
   );
 };
