@@ -1,0 +1,128 @@
+export const menuItems = [
+  {
+    id: 1,
+    name: "Appetizers",
+    parentId: null,
+    menuitems: [
+      { id: 1, name: "Loaded Nachos", price: "10", categoryId: 1, stationId: 2 },
+      { id: 2, name: "Vegetable Spring Rolls", price: "10", categoryId: 1, stationId: 1 },
+      { id: 3, name: "Tomato Bruschetta", price: "12", categoryId: 1, stationId: 2 },
+    ],
+  },
+  {
+    id: 2,
+    name: "Soups/Salads",
+    parentId: null,
+    menuitems: [
+      { id: 4, name: "Creamy Tomato Soup", price: "9", categoryId: 2, stationId: 1 },
+      { id: 5, name: "Classic Caesar Salad", price: "8", categoryId: 2, stationId: 1 },
+      { id: 6, name: "Miso Soup", price: "9", categoryId: 2, stationId: 1 },
+    ],
+  },
+  {
+    id: 3,
+    name: "Entrees/Main",
+    parentId: null,
+    menuitems: [
+      { id: 7, name: "Grilled Salmon", price: "15", categoryId: 3, stationId: 2 },
+      { id: 8, name: "Beef Stew", price: "20", categoryId: 3, stationId: 2 },
+      { id: 9, name: "Vegetable Curry", price: "15", categoryId: 3, stationId: 2 },
+    ],
+  },
+  {
+    id: 4,
+    name: "Pasta/Noodles",
+    parentId: null,
+    menuitems: [
+      { id: 10, name: "Spaghetti Carbonara", price: "11", categoryId: 4, stationId: 2 },
+      { id: 11, name: "Pad Thai", price: "14", categoryId: 4, stationId: 2 },
+      { id: 12, name: "Vegetable Lasagna", price: "13", categoryId: 4, stationId: 2 },
+    ],
+  },
+  {
+    id: 5,
+    name: "Seafood",
+    parentId: null,
+    menuitems: [
+      { id: 13, name: "Grilled Halibut", price: "17", categoryId: 5, stationId: 2 },
+      { id: 14, name: "Shrimp Scampi", price: "14", categoryId: 5, stationId: 1 },
+      { id: 15, name: "Fish Tacos", price: "14", categoryId: 5, stationId: 2 },
+    ],
+  },
+  {
+    id: 6,
+    name: "Beef/Pork",
+    parentId: null,
+    menuitems: [
+      { id: 16, name: "Filet Mignon", price: "25", categoryId: 6, stationId: 2 },
+      { id: 17, name: "BBQ Pork Ribs", price: "21", categoryId: 6, stationId: 2 },
+      { id: 18, name: "Sautéed Beef and Broccoli", price: "23", categoryId: 6, stationId: 2 },
+    ],
+  },
+  {
+    id: 7,
+    name: "Vegetarian/Vegan",
+    parentId: null,
+    menuitems: [
+      { id: 19, name: "Vegetable Stir-Fry", price: "14", categoryId: 7, stationId: 2 },
+      { id: 20, name: "Lentil Curry", price: "13", categoryId: 7, stationId: 2 },
+    ],
+  },
+  {
+    id: 8,
+    name: "Desserts",
+    parentId: null,
+    menuitems: [
+      { id: 21, name: "Creme Brulee", price: "12", categoryId: 8, stationId: 1 },
+      { id: 22, name: "Apple Pie", price: "6", categoryId: 8, stationId: 1 },
+      { id: 23, name: "Chocolate Lava Cake", price: "10", categoryId: 8, stationId: 1 },
+      { id: 24, name: "Tiramisu", price: "5", categoryId: 8, stationId: 1 },
+    ],
+  },
+  {
+    id: 9,
+    name: "kidsMenu",
+    parentId: null,
+    menuitems: [
+      { id: 25, name: "Pizza Margarita", price: "6", categoryId: 9, stationId: 3 },
+      { id: 26, name: "Pizza capricciosa", price: "10", categoryId: 9, stationId: 3 },
+      { id: 27, name: "French fries", price: "5", categoryId: 9, stationId: 2 },
+      { id: 28, name: "Chiken fingers", price: "6", categoryId: 9, stationId: 2 },
+    ],
+  },
+  { id: 10, name: "Beverages", parentId: null, menuitems: [] },
+  {
+    id: 11,
+    name: "nonAlcoholic",
+    parentId: 10,
+    menuitems: [
+      { id: 29, name: "Coca-Cola", price: "3", categoryId: 11, stationId: 6 },
+      { id: 30, name: "Fanta", price: "3", categoryId: 11, stationId: 6 },
+      { id: 31, name: "Sprite", price: "3", categoryId: 11, stationId: 6 },
+      { id: 32, name: "Dr.Pepper", price: "3", categoryId: 11, stationId: 6 },
+      { id: 33, name: "Orange Juice", price: "3", categoryId: 11, stationId: 6 },
+      { id: 34, name: "Fresh", price: "5", categoryId: 11, stationId: 4 },
+      { id: 35, name: "Apple Juice", price: "3", categoryId: 11, stationId: 6 },
+      { id: 36, name: "Cranberry Juice", price: "3", categoryId: 11, stationId: 6 },
+      { id: 37, name: "Espresso", price: "2", categoryId: 11, stationId: 5 },
+      { id: 38, name: "macchiato", price: "3", categoryId: 11, stationId: 5 },
+      { id: 39, name: "late macchiato", price: "4", categoryId: 11, stationId: 5 },
+      { id: 40, name: "Cappuccino", price: "3", categoryId: 11, stationId: 5 },
+      { id: 41, name: "Mocha", price: "4", categoryId: 11, stationId: 5 },
+      { id: 42, name: "Cold Brew", price: "3", categoryId: 11, stationId: 5 },
+    ],
+  },
+  {
+    id: 12,
+    name: "alcoholic",
+    parentId: 10,
+    menuitems: [
+      { id: 43, name: "Margarita", price: "5", categoryId: 12, stationId: 4 },
+      { id: 44, name: "Mojito", price: "5", categoryId: 12, stationId: 4 },
+      { id: 45, name: "Old Fashioned", price: "6", categoryId: 12, stationId: 4 },
+      { id: 46, name: "Cosmopolitan", price: "6", categoryId: 12, stationId: 4 },
+      { id: 47, name: "Daiquiri", price: "6", categoryId: 12, stationId: 4 },
+      { id: 48, name: "Manhattan", price: "6", categoryId: 12, stationId: 4 },
+    ],
+  },
+];
