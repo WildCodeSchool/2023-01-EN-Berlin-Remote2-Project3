@@ -12,9 +12,7 @@ const app = express();
 expressOasGenerator.init(app, {});
 app.use(cors());
 
-export const prisma = new PrismaClient({
-  log: ["query", "info", "warn", "error"],
-});
+export const prisma = new PrismaClient();
 
 app.get("/", (req, res) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");

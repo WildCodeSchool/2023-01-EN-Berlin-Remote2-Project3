@@ -1,14 +1,10 @@
-import {
-  RouterProvider,
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useToken from "./useToken";
 import Menu from "./routes/Menu";
 import { menuData, Category } from "./api";
 import { LoginPage } from "./routes/LoginPage";
+import MenuContent from "./components/MenuContent";
 
 export interface UserInfo {
   id: number;
@@ -40,26 +36,17 @@ const App = () => {
           <Route
             path="/"
             errorElement={<h1>Error mada faka :</h1>}
-            element={<LoginPage setToken={setToken} setUserInfo={setUserInfo} userInfo={userInfo} token={token} />
-            }
+            element={<LoginPage setToken={setToken} setUserInfo={setUserInfo} userInfo={userInfo} token={token} />}
           >
-            <Route
-              path="menu"
-              errorElement={<h1>another error</h1>}
-              element={<Menu menuDataApi={menuDataApi} activeCategory={-1} />}
-            >
-              {menuDataApi.map((category, index) => (
-                <Route
-                  path={encodeURIComponent(category.name)}
-                  errorElement={<h1>yet another error</h1>}
-                  element={
-                    <Menu menuDataApi={menuDataApi} activeCategory={index} />
-                  }
-                />
-              ))}
+            <Route path="menu" errorElement={<h1>another error</h1>} element={<Menu menuDataApi={menuDataApi} />}>
+              <Route
+                path=":menuCategory"
+                element={<MenuContent data={menuDataApi} />}
+                errorElement={<h1>yet another error</h1>}
+              />
             </Route>
-          </Route>
-        )
+          </Route>,
+        ),
       )}
     />
   );

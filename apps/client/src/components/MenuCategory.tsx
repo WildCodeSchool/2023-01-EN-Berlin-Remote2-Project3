@@ -2,8 +2,8 @@ const MenuCategory = ({ dataArr }) => {
   return (
     <ul>
       {dataArr.map((item) => (
-        <li>
-          <h3>{item.name}</h3>
+        <li >
+          <h5>{item.name}</h5>
           <p>{item.price}</p>
         </li>
       ))}

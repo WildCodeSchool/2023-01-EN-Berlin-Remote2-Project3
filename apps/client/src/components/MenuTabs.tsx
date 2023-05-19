@@ -1,4 +1,4 @@
-const MenuTabs = ({ active, data }: { active: number; data: string[] }) => {
+const MenuTabs = ({  data }: {  data: string[] }) => {
   return <div>{data}</div>;
 };
 
