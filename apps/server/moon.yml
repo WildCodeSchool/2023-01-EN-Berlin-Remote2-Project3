@@ -4,43 +4,29 @@ language: 'typescript'
 project:
   name: 'Restaurant Backend'
   description: 'The backend for the restaurant POS application.'
-  channel: '#0109-REMOTE-JS-Resources'
+  channel: '#0109-REMOTE-JS-Project3'
   owner: 'diraneyya'
-  maintainers: ['diraneyya, denigogov, surmavagit']
+  maintainers: ['diraneyya', 'denigogov', 'surmavagit']
 
+dependsOn:
+  - "prisma"
+  
 fileGroups:
-  prismaClient:
-    - "node_modules/@prisma/client"
-  prismaSchema:
-    - "prisma/schema.prisma"
   tsSources:
     - "src/**/*"
   jsBundle:
     - "dist/"
 
 tasks:
-  # Pre-requisite tasks (created an issue https://github.com/moonrepo/moon/discussions/830)
-  generate-prisma-client:
-    command: 'prisma generate'
-    # inputs:
-    #   - "@group(prismaSchema)"
-    # outputs:
-    #   - "@group(prismaClient)"
-    options:
-      outputStyle: 'buffer-only-failure'
-  studio:
-    command: 'prisma studio'
-    options:
-      outputStyle: 'stream'
   # Productions tasks
   build:
     command: 'tsc'
+    deps:
+      - '^:build'
     inputs:
       - '@group(tsSources)'
     outputs:
       - '@group(jsBundle)'
-    deps:
-      - "~:generate-prisma-client"
     options:
       outputStyle: 'hash'
   start:
@@ -60,7 +46,7 @@ tasks:
     command: 'tsc --watch'
     local: true
     deps:
-      - "~:generate-prisma-client"
+      - '^:build'
     inputs:
       - '@group(tsSources)'
     outputs:
