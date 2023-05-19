@@ -4,10 +4,9 @@ import userIcon from "../assets/icon-user.svg";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "../App";
 
-
-const DashboardHeader = ({ userInfo } : {userInfo : UserInfo}) => {
+const DashboardHeader = ({ userInfo }: { userInfo: UserInfo }) => {
   const navigator = useNavigate();
-  console.log(userInfo);
+
   const deleteLocalStorage = () => {
     localStorage.removeItem("token");
     location.reload();

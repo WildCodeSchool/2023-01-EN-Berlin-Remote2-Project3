@@ -2,7 +2,6 @@ import { useState } from "react";
 import userLoginIcon from "../assets/icon-user.svg";
 import PropTypes from "prop-types";
 import "../scss/_login.scss";
-
 import { UserInfo } from "../App";
 
 const Login = ({
@@ -28,6 +27,7 @@ const Login = ({
       body: JSON.stringify(credentials),
     });
     if (!response.ok) setShowError(true);
+
     const data: { token: string; user: UserInfo } = await response.json();
     setUserInfo(data.user);
     return data.token;
