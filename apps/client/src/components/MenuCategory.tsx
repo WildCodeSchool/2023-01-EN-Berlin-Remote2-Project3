@@ -1,4 +1,6 @@
-const MenuCategory = ({ dataArr }) => {
+import { MenuItem } from "../api";
+
+const MenuCategory = ({ dataArr } : {dataArr : MenuItem[]}) => {
   return (
     <ul>
       {dataArr.map((item) => (
