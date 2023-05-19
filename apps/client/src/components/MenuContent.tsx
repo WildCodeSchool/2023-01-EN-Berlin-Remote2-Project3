@@ -20,7 +20,7 @@ const MenuContent = ({ data }: { data: Category[] }) => {
       {activeCat.childCategories.map((category) => (
         <> 
           <h3>{category.name}</h3>
-          <MenuCategory  dataArr={category.menuItems} />
+          <MenuCategory  dataArr={category.menuItems} key={category.id} />
         </>
       ))}
     </ul> : <h1>No active category {menuCategory ?? "undefined"}</h1>

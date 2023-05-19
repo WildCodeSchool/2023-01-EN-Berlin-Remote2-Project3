@@ -4,7 +4,7 @@ const MenuCategory = ({ dataArr } : {dataArr : MenuItem[]}) => {
   return (
     <ul>
       {dataArr.map((item) => (
-        <li >
+        <li key={item.id} >
           <h5>{item.name}</h5>
           <p>{item.price}</p>
         </li>
