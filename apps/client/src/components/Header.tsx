@@ -1,4 +1,4 @@
-import "../scss/_dashboardHeader.scss";
+import "../scss/_header.scss";
 import logoutIcon from "../assets/logout.svg";
 import userIcon from "../assets/icon-user.svg";
 import { useNavigate } from "react-router-dom";

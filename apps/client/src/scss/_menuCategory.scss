@@ -1,0 +1,22 @@
+@use "./colors";
+@use "./general";
+@import "./main";
+
+.menuItems__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 120px);
+  gap: 20px;
+  justify-content: center;
+  margin: 30px 10px;
+  li {
+    border: 1px solid colors.$borderLine;
+    border-radius: 20px;
+    padding: 25px 10px;
+    text-align: center;
+    word-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
