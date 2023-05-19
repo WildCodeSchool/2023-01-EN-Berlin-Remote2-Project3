@@ -18,10 +18,10 @@ const MenuContent = ({ data }: { data: Category[] }) => {
     <ul>
       <MenuCategory dataArr={activeCat.menuItems} />
       {activeCat.childCategories.map((category) => (
-        <> 
+        <div key={category.id}> 
           <h3>{category.name}</h3>
-          <MenuCategory  dataArr={category.menuItems} key={category.id} />
-        </>
+          <MenuCategory  dataArr={category.menuItems} />
+        </div>
       ))}
     </ul> : <h1>No active category {menuCategory ?? "undefined"}</h1>
   );
