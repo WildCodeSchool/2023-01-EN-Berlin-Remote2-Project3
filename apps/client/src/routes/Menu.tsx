@@ -1,6 +1,6 @@
 import "../scss/_MenuItems.scss";
-import MenuTabs from "./MenuTabs";
-import MenuContent from "./MenuContent";
+import MenuTabs from "../components/MenuTabs";
+import MenuContent from "../components/MenuContent";
 import { Category } from "../api";
 
 const Menu = ({

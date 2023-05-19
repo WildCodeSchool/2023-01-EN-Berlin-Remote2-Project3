@@ -6,10 +6,9 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useToken from "./useToken";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import Menu from "./components/Menu";
+import Menu from "./routes/Menu";
 import { menuData, Category } from "./api";
+import { LoginPage } from "./routes/LoginPage";
 
 export interface UserInfo {
   id: number;
@@ -41,12 +40,7 @@ const App = () => {
           <Route
             path="/"
             errorElement={<h1>Error mada faka :</h1>}
-            element={
-              !token ? (
-                <Login setToken={setToken} setUserInfo={setUserInfo} />
-              ) : (
-                <Dashboard userInfo={userInfo} />
-              )
+            element={<LoginPage setToken={setToken} setUserInfo={setUserInfo} userInfo={userInfo} token={token} />
             }
           >
             <Route
@@ -57,6 +51,7 @@ const App = () => {
               {menuDataApi.map((category, index) => (
                 <Route
                   path={encodeURIComponent(category.name)}
+                  errorElement={<h1>yet another error</h1>}
                   element={
                     <Menu menuDataApi={menuDataApi} activeCategory={index} />
                   }
