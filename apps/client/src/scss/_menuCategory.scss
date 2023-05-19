@@ -18,5 +18,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    cursor: pointer;
+    transition: general.$transition;
+
+    &:hover {
+      border: 1px solid colors.$primary;
+    }
+
+    &:active {
+      transform: translateY(-5px);
+    }
   }
 }
