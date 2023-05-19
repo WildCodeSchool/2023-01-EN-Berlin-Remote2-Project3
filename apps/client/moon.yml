@@ -4,9 +4,9 @@ language: "typescript"
 project:
   name: "Restaurant POS (Frontend)"
   description: "The point-of-sale (POS) frontend web application for the restaurant."
-  channel: "#0109-REMOTE-JS-Resources"
-  owner: "diraneyya"
-  maintainers: ["diraneyya, denigogov, surmavagit"]
+  channel: '#0109-REMOTE-JS-Project3'
+  owner: 'diraneyya'
+  maintainers: ['diraneyya', 'denigogov', 'surmavagit']
 
 fileGroups:
   vite:

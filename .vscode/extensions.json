@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "rome.rome",
-        "moonrepo.moon-console"
+        "moonrepo.moon-console",
+        "Prisma.prisma"
     ]
 }

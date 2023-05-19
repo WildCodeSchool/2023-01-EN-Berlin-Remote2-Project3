@@ -1,0 +1,25 @@
+type: "tool"
+language: "typescript"
+
+project:
+  name: "Prisma Client"
+  description: "The prisma client contains the generated TypeScript types matching the database schema."
+  channel: "#0109-REMOTE-JS-Project3"
+  owner: "diraneyya"
+  maintainers: ["diraneyya"]
+
+fileGroups:
+  prismaClient:
+    - "node_modules/@prisma/client"
+  prismaSchema:
+    - "prisma/schema.prisma"
+
+tasks:
+  build:
+    command: "prisma generate"
+    inputs:
+      - "@group(prismaSchema)"
+    outputs:
+      - "@group(prismaClient)"
+    options:
+      outputStyle: "buffer-only-failure"
