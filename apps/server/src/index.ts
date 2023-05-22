@@ -6,6 +6,7 @@ import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
 import { loginRouter } from "./routes/login";
 import { PrismaClient } from "@prisma/client";
+import { verifyToken, getUserById } from "./auth";
 
 const app = express();
 expressOasGenerator.init(app, {});
@@ -17,9 +18,10 @@ app.get("/", (req, res) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
 });
 
-// TODO @george.surmava please replace this with actual implementation
+app.get("/api/verification", verifyToken, getUserById);
+
 app.get("/api/menu", (req, res) => {
-  prisma.category.findMany({
+  const prismaQuery = {
     select: {
       id: true,
       name: true,
@@ -41,7 +43,7 @@ app.get("/api/menu", (req, res) => {
               price: true,
             },
           },
-          childCategories: {}, //supposed to be an empty array, so no fields selected
+          childCategories: {},
         },
       },
     },
@@ -50,14 +52,18 @@ app.get("/api/menu", (req, res) => {
         equals: null,
       },
     },
-  }).then((found) => {
-    res.status(200).json(found)
-  }).catch((err) => {
-    console.error(err);
-    res.status(500).send("Error retrieving data from the database");
-  })
+  };
+  prisma.category
+    .findMany(prismaQuery)
+    .then((found) => {
+      res.status(200).json(found);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error retrieving data from the database");
+    });
   // res.json(mockData);
-})
+});
 
 app.use(express.json());
 
