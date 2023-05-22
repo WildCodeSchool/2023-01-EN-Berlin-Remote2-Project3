@@ -23,3 +23,5 @@ tasks:
       - "@group(prismaClient)"
     options:
       outputStyle: "buffer-only-failure"
+  studio:
+    command: "prisma studio"
