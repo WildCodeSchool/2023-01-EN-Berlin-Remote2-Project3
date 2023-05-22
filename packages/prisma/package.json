@@ -2,7 +2,6 @@
   "private": true,
   "name": "prisma",
   "main": "index.ts",
-  "type": "module",
   "dependencies": {
     "@prisma/client": "4.13.0"
   },

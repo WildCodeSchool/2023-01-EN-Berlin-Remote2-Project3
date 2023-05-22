@@ -66,36 +66,36 @@ export const verifyPassword = async (
   }
   const pass = req.body.password;
   const hash = req.user.password;
-  if (pass === hash) {
-    console.log("Sending the token");
-    const payload = { sub: req.user.id };
-    const token = jwt.sign(payload, jwtSecretKey, {
-      expiresIn: "8h",
-    });
-    const { password, ...user } = req.user;
-    res.status(200).send({ token, user });
-  } else {
-    console.log("Wrong password");
-    res.status(404).send("Wrong email or password");
-  }
-  // argon2
-  //   .verify(hash, pass)
-  //   .then((isVerified) => {
-  //     if (isVerified) {
-  //       console.log("Password is correct");
-  //       const payload = { sub: req.body.user.id };
-  //       const token = jwt.sign(payload, jwtSecretKey, {
-  //         expiresIn: "8h",
-  //       });
-  //       const { password, ...user } = req.body.user;
-  //       res.send({ token, user });
-  //     } else {
-  //       console.log("Wrong password");
-  //       res.status(404).send("Wrong email or password");
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //     res.sendStatus(500);
+  // if (pass === hash) {
+  //   console.log("Sending the token");
+  //   const payload = { sub: req.user.id };
+  //   const token = jwt.sign(payload, jwtSecretKey, {
+  //     expiresIn: "8h",
   //   });
+  //   const { password, ...user } = req.user;
+  //   res.status(200).send({ token, user });
+  // } else {
+  //   console.log("Wrong password");
+  //   res.status(404).send("Wrong email or password");
+  // }
+  argon2
+    .verify(hash, pass)
+    .then((isVerified) => {
+      if (isVerified) {
+        console.log("Password is correct");
+        const payload = { sub: req.user.id };
+        const token = jwt.sign(payload, jwtSecretKey, {
+          expiresIn: "8h",
+        });
+        const { password, ...user } = req.user;
+        res.send({ token, user });
+      } else {
+        console.log("Wrong password");
+        res.status(404).send("Wrong email or password");
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
 };

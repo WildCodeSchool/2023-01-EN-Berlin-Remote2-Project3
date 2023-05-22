@@ -6,7 +6,6 @@ import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
 import { loginRouter } from "./routes/login";
 import { PrismaClient } from "@prisma/client";
-import { mockData } from "./mock/menuitems.data";
 
 const app = express();
 expressOasGenerator.init(app, {});
