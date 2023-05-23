@@ -4,13 +4,19 @@
     {
       "type": "node-terminal",
       "request": "launch",
-      "name": "Launch Fullstack Application",
-      "command": "moon run :dev"
+      "name": "Debug Backend",
+      "command": "moon run server:dev"
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "Debug Frontend",
+      "command": "moon run client:dev"
     },
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Debug Frontend (Launching Fullstack App First)",
+      "name": "Open Browser to Debug Frontend",
       "url": "http://localhost:3000"
     },
     {
