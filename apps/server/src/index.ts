@@ -20,6 +20,12 @@ app.get("/", (req, res) => {
 
 app.get("/api/verification", verifyToken, getUserById);
 
+app.get("/api/tables", (_, res) => {
+  prisma.tablePhysical.findMany().then((tableData) => {
+    res.json(tableData);
+  });
+});
+
 app.get("/api/menu", (req, res) => {
   const prismaQuery = {
     select: {

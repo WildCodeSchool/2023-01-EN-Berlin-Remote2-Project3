@@ -12,8 +12,6 @@ const MenuContent = ({ data }: { data: Category[] }) => {
     return false;
   });
 
-
-
   return ( activeCat ?
     <ul>
       <MenuCategory dataArr={activeCat.menuItems} />
