@@ -5,22 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { TableInterface } from "../api";
 
 const WaiterView = () => {
-  const [tableDataApi, setTableDataApi] = useState([]);
-  const [selectedTable, setSelectedTable] = useState([]);
+  const [tableDataApi, setTableDataApi] = useState([] as TableInterface[]);
+  const [selectedTable, setSelectedTable] = useState({});
 
   const navigator = useNavigate();
 
   useEffect(() => {
     const data = async () => {
       const res = await tableData();
-      setTableDataApi(res);
+      if (res === undefined) {
+        //do something
+      } else {
+        setTableDataApi(res);
+      }
     };
     data();
   }, []);
 
   const tableHandler = (table: TableInterface) => {
     setSelectedTable(table);
-    // navigator("/menu");
+    navigator("/menu");
   };
   console.log(selectedTable);
 

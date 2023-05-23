@@ -27,7 +27,7 @@ export interface Category {
 export const tableData = async () => {
   try {
     const res = await fetch("http://localhost:4000/api/tables");
-    const data: TableInterface = await res.json();
+    const data: TableInterface[] = await res.json();
     if (!res.ok) return;
 
     return data;
