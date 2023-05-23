@@ -7,6 +7,8 @@ $schema: 'https://moonrepo.dev/schemas/toolchain.json'
 node:
   version: '18.15.0'
   packageManager: 'pnpm'
+  pnpm:
+    version: '8.5.1'
 
 typescript:
   syncProjectReferences: false
