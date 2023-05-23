@@ -3,6 +3,7 @@ import userLoginIcon from "../assets/icon-user.svg";
 import PropTypes from "prop-types";
 import "../scss/_login.scss";
 import { UserInfo } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({
   setToken,
@@ -14,6 +15,8 @@ const Login = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
+
+  const navigate = useNavigate();
 
   const loginUser = async (credentials: {
     email: string;
@@ -51,6 +54,8 @@ const Login = ({
     if (!password || !email) {
       throw new Error("error happen?");
     }
+
+    navigate("/dashboard");
   };
 
   return (
