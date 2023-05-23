@@ -5,6 +5,8 @@ import { prisma } from "./index";
 import { validateEmail, validatePassword } from "./validators";
 import { LoginRequest, LoginRequestWithData } from "./types";
 
+const jwtSecretKey = process.env.JWT_SECRET ?? "";
+
 const hashingOptions = {
   type: argon2.argon2id,
   memoryCost: 2 ** 16,
@@ -60,9 +62,8 @@ export const verifyPassword = async (
   req: LoginRequestWithData,
   res: Response
 ) => {
-  const jwtSecretKey = process.env.JWT_SECRET ?? "";
-  if (!jwtSecretKey) {
-    console.error("No JWT_SECRET defined in .env file");
+  if (jwtSecretKey === "") {
+    throw new Error("No JWT_SECRET defined in .env file");
   }
   const pass = req.body.password;
   const hash = req.user.password;
@@ -97,5 +98,68 @@ export const verifyPassword = async (
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
+    });
+};
+
+export const verifyToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const authorizationHeader = req.get("Authorization");
+    if (authorizationHeader === undefined) {
+      res.status(401).send("Authorization header is missing");
+    } else {
+      const [type, token] = authorizationHeader.split(" ");
+      if (type !== "Bearer") {
+        res
+          .status(401)
+          .send("Authorization header is not of the 'Bearer' type");
+      } else {
+        if (jwtSecretKey === "") {
+          throw new Error("No JWT_SECRET defined in .env file");
+        } else {
+          try {
+            req.decodedToken = jwt.verify(token, jwtSecretKey);
+            next();
+          } catch (err) {
+            res.status(401).json({ success: false, payload: "Invalid token" });
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(401);
+  }
+};
+
+export const getUserById = async (req: Request, res: Response) => {
+  prisma.user
+    .findUniqueOrThrow({
+      where: { id: req.decodedToken.sub },
+      select: {
+        id: true,
+        name: true,
+        typeId: true,
+        type: { select: { name: true } },
+      },
+    })
+    .then((found) => {
+      const resPayload = {
+        id: found.id,
+        name: found.name,
+        typeId: found.typeId,
+        type: found.type.name,
+      };
+      res.json({
+        success: true,
+        payload: resPayload,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error retrieving data from the database");
     });
 };
