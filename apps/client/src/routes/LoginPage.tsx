@@ -17,9 +17,10 @@ export const LoginPage = ({
   return !token ? (
     <Login setToken={setToken} setUserInfo={setUserInfo} />
   ) : (
-    <>
-      <Header userInfo={userInfo} />
+    <div>
+      <Header userInfo={userInfo} setToken={setToken} />
+
       <Outlet />
-    </>
+    </div>
   );
 };
