@@ -3,7 +3,6 @@ import KitchenView from "./KitchenView";
 import WaiterView from "./WaiterView";
 
 const Dashboard = ({ userInfo }: { userInfo: UserInfo }) => {
-  console.log(userInfo);
   switch (userInfo.typeId) {
     case 1:
       return <WaiterView />;

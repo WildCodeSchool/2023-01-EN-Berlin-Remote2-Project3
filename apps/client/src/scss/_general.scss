@@ -27,3 +27,7 @@ $primary-font: "Poppins", sans-serif;
 @mixin buttonHover($btnHoverColor: colors.$primary-darker) {
   background-color: $btnHoverColor;
 }
+
+.hidden {
+  display: none;
+}
