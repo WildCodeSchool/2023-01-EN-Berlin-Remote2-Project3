@@ -5,6 +5,7 @@ import express from "express";
 import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
 import { loginRouter } from "./routes/login";
+import { tablesRouter } from "./routes/tables";
 import { PrismaClient } from "@prisma/client";
 import { verifyToken, getUserById } from "./auth";
 
@@ -14,19 +15,15 @@ app.use(cors());
 
 export const prisma = new PrismaClient();
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
 });
 
 app.get("/api/verification", verifyToken, getUserById);
 
-app.get("/api/tables", (_, res) => {
-  prisma.tablePhysical.findMany().then((tableData) => {
-    res.json(tableData);
-  });
-});
+app.use("/api/tables", tablesRouter);
 
-app.get("/api/menu", (req, res) => {
+const getMenuItemsSortedByCategory = async (req, res) => {
   const prismaQuery = {
     select: {
       id: true,
@@ -68,8 +65,9 @@ app.get("/api/menu", (req, res) => {
       console.error(err);
       res.status(500).send("Error retrieving data from the database");
     });
-  // res.json(mockData);
-});
+};
+
+app.get("/api/menu", getMenuItemsSortedByCategory);
 
 app.use(express.json());
 
