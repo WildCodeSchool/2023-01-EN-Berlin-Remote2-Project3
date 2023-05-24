@@ -67,7 +67,7 @@ model Order {
 
 model OrderStatus {
   id     Int     @id @default(autoincrement()) @map("orderstatus_id")
-  name   String  @unique(map: "orderstatus_name") @db.VarChar(30)
+  name   String  @unique(map: "orderstatus_name") @map("orderstatus_name") @db.VarChar(30)
   orders Order[]
 
   @@map("orderstatus")
