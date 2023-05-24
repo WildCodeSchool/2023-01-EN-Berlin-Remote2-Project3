@@ -1,11 +1,16 @@
 @use "./colors";
 @use "./general";
+
 .waiterViewTables {
   display: grid;
   grid-template-columns: repeat(auto-fill, 120px);
   gap: 20px;
   justify-content: center;
-  margin: 30px 10px;
+  margin: 30px 4px;
+
+  // for the new layout
+  // font-size: 10px;
+  // grid-template-columns: repeat(auto-fill, 70px);
 
   ul {
     display: grid;
@@ -24,6 +29,9 @@
       cursor: pointer;
       transition: general.$transition;
 
+      // for the new layout
+      // padding: 10px 5px;
+
       &:hover {
         border: 1px solid colors.$primary;
       }
@@ -34,3 +42,40 @@
     }
   }
 }
+
+//just for testing
+
+// .tableStatusId1 {
+//   border: 1px solid greenyellow !important;
+
+//   &::before {
+//     content: "available";
+//     color: greenyellow;
+//   }
+// }
+// .tableStatusId2 {
+//   border: 1px solid red !important;
+
+//   &::before {
+//     content: "occupied";
+//     color: red;
+//   }
+// }
+
+// .tableStatusId3 {
+//   border: 1px solid blue !important;
+
+//   &::before {
+//     content: "reserved";
+//     color: blue;
+//   }
+// }
+
+// .tableStatusId4 {
+//   border: 1px solid rgb(123, 123, 174) !important;
+
+//   &::before {
+//     content: "requested";
+//     color: rgb(123, 123, 174);
+//   }
+// }
