@@ -27,7 +27,7 @@ model MenuItem {
   stationId  Int         @map("station_id")
   category   Category    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
   station    Station     @relation(fields: [stationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
-  orderitems OrderItem[]
+  orderItems OrderItem[]
 
   @@index([categoryId], map: "category_id")
   @@index([stationId], map: "station_id")
@@ -42,7 +42,7 @@ model OrderItem {
   orderTime  DateTime  @map("order_time")
   servedTime DateTime? @map("served_time")
   order      Order     @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_1")
-  menuitem   MenuItem  @relation(fields: [itemId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_2")
+  menuItem   MenuItem  @relation(fields: [itemId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_2")
 
   @@index([itemId], map: "item_id")
   @@index([orderId], map: "order_id")
@@ -54,7 +54,7 @@ model Order {
   statusId   Int           @map("orderstatus_id")
   waiterId   Int           @map("waiter_id")
   tableId    Int           @map("table_id")
-  orderitems OrderItem[]
+  orderItems OrderItem[]
   status     OrderStatus   @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_1")
   waiter     User          @relation(fields: [waiterId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_2")
   table      TablePhysical @relation(fields: [tableId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_3")
@@ -86,7 +86,7 @@ model TablePhysical {
   name        String      @unique(map: "table_name") @map("table_name") @db.VarChar(30)
   statusId    Int         @map("tablestatus_id")
   orders      Order[]
-  tablestatus TableStatus @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_ibfk_1")
+  tableStatus TableStatus @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_ibfk_1")
 
   @@index([statusId], map: "tablestatus_id")
   @@map("tables")

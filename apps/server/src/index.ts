@@ -7,7 +7,7 @@ import cors from "cors";
 import { loginRouter } from "./routes/login";
 import { tablesRouter } from "./routes/tables";
 import { PrismaClient } from "@prisma/client";
-import { verifyToken, getUserById } from "./auth";
+import { verifyToken, getUserByIdAndNext, sendUserInfo } from "./auth";
 
 const app = express();
 expressOasGenerator.init(app, {});
@@ -19,7 +19,7 @@ app.get("/", async (req, res) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
 });
 
-app.get("/api/verification", verifyToken, getUserById);
+app.get("/api/verification", verifyToken, getUserByIdAndNext, sendUserInfo);
 
 app.use("/api/tables", tablesRouter);
 
