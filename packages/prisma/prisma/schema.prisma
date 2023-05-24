@@ -20,22 +20,22 @@ model Category {
 }
 
 model MenuItem {
-  id         Int         @id @default(autoincrement()) @map("item_id")
-  name       String      @unique(map: "item_name") @map("item_name") @db.VarChar(50)
-  price      Decimal?    @db.Decimal(7, 2)
-  categoryId Int         @map("category_id")
-  stationId  Int         @map("station_id")
-  category   Category    @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
-  station    Station     @relation(fields: [stationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
-  orderItems OrderItem[]
+  id         Int      @id @default(autoincrement()) @map("item_id")
+  name       String   @unique(map: "item_name") @map("item_name") @db.VarChar(50)
+  price      Decimal? @db.Decimal(7, 2)
+  categoryId Int      @map("category_id")
+  stationId  Int      @map("station_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_1")
+  station    Station  @relation(fields: [stationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menuitems_ibfk_2")
+  orders     Order[]
 
   @@index([categoryId], map: "category_id")
   @@index([stationId], map: "station_id")
   @@map("menuitems")
 }
 
-model OrderItem {
-  id         Int           @id @default(autoincrement()) @map("orderitems_id")
+model Order {
+  id         Int           @id @default(autoincrement()) @map("order_id")
   itemId     Int           @map("item_id")
   orderTime  DateTime      @map("order_time")
   servedTime DateTime?     @map("served_time")
@@ -48,13 +48,13 @@ model OrderItem {
   table      TablePhysical @relation(fields: [tableId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orderitems_ibfk_5")
 
   @@index([itemId], map: "item_id")
-  @@map("orderitems")
+  @@map("orders")
 }
 
 model OrderStatus {
-  id        Int         @id @default(autoincrement()) @map("orderstatus_id")
-  name      String      @unique(map: "orderstatus_name") @map("orderstatus_name") @db.VarChar(30)
-  OrderItem OrderItem[]
+  id     Int     @id @default(autoincrement()) @map("orderstatus_id")
+  name   String  @unique(map: "orderstatus_name") @map("orderstatus_name") @db.VarChar(30)
+  orders Order[]
 
   @@map("orderstatus")
 }
@@ -72,7 +72,7 @@ model TablePhysical {
   name        String      @unique(map: "table_name") @map("table_name") @db.VarChar(30)
   statusId    Int         @map("tablestatus_id")
   tableStatus TableStatus @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_ibfk_1")
-  OrderItem   OrderItem[]
+  orders      Order[]
 
   @@index([statusId], map: "tablestatus_id")
   @@map("tables")
@@ -87,13 +87,13 @@ model TableStatus {
 }
 
 model User {
-  id        Int         @id @default(autoincrement()) @map("user_id")
-  typeId    Int         @map("usertype_id")
-  name      String      @unique @map("username") @db.VarChar(50)
-  password  String      @map("userpassword") @db.VarChar(255)
-  email     String      @unique @map("useremail") @db.VarChar(50)
-  type      UserType    @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
-  OrderItem OrderItem[]
+  id       Int      @id @default(autoincrement()) @map("user_id")
+  typeId   Int      @map("usertype_id")
+  name     String   @unique @map("username") @db.VarChar(50)
+  password String   @map("userpassword") @db.VarChar(255)
+  email    String   @unique @map("useremail") @db.VarChar(50)
+  type     UserType @relation(fields: [typeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  orders   Order[]
 
   @@index([typeId], map: "usertype_id")
   @@map("users")

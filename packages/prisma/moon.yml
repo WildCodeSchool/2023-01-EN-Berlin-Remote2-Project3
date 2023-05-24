@@ -35,3 +35,5 @@ tasks:
     command: "prisma migrate deploy"
   status:
     command: "prisma migrate status"
+  reset:
+    command: "prisma migrate reset"
