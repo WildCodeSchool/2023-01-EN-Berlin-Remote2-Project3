@@ -13,16 +13,16 @@
   display: inline-block;
   border-radius: 25px;
   width: 330px;
-  height: 360px;
-  overflow: scroll;
+  // height: 360px;
+  // overflow: scroll;
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 10px 0;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
 .cardHeader {
@@ -51,6 +51,12 @@
   display: flex;
   justify-content: space-between;
   gap: 30px;
+  height: 200px;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   li {
     font-size: 13px;

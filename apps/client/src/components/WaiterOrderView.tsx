@@ -56,7 +56,7 @@ const WaiterOrderView = ({ token }: { token: string }) => {
                 </ul>
               </div>
 
-              <p className="totalPrice">total price: {totalPrice}</p>
+              <p className="totalPrice">total price: {totalPrice}.00 €</p>
             </div>
 
             <div className="itemOrder--btn">
