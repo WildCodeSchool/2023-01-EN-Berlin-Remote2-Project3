@@ -27,9 +27,9 @@ tasks:
     command: "prisma studio"
   migrate:
     command: "prisma migrate dev --name"
-  migrate-create:
+  migrate-start:
     command: "prisma migrate dev --create-only --name"
-  migrate-complete:
+  migrate-end:
     command: "prisma migrate dev"
   deploy:
     command: "prisma migrate deploy"

@@ -76,15 +76,20 @@ export const fetchMyTables = async (token: string) => {
   }
 };
 
-export interface Item {
-  id: number;
-  name: string;
-  status: string;
-  price: number;
-  waiter?: string;
-}
 export interface Order {
   id: number;
   name: string;
-  orders: Item[];
+  status: string;
+  statusId: number;
+  price: number;
+  waiter: string;
+  waiterId: number;
+  orderTime: string;
+}
+export interface TableWithOrders {
+  id: number;
+  name: string;
+  status: string;
+  statusId: number;
+  orders: Order[];
 }
