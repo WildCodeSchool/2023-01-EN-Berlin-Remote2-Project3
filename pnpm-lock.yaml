@@ -17,6 +17,9 @@ importers:
 
   apps/client:
     dependencies:
+      '@prisma/client':
+        specifier: workspace:prisma@*
+        version: link:../../packages/prisma
       axios:
         specifier: ^1.4.0
         version: 1.4.0
