@@ -2,7 +2,7 @@ import { UserInfo } from "os";
 import { prisma } from "..";
 import { NextFunction, Request, Response } from "express";
 import { RequestTableId, RequestUserInfo } from "../types";
-import { queryMyTablesWithOrders } from "prisma-queries";
+import { queryMyTablesWithOrders, mapMyTablesWithOrders } from "prisma-queries";
 
 export const getAllTables = async (_: Request, res: Response) => {
   prisma.tablePhysical
@@ -17,26 +17,14 @@ export const getAllTables = async (_: Request, res: Response) => {
 };
 
 export const getMyTablesWithOrders = async (req: Request & RequestUserInfo, res: Response) => {
-  const prismaQuery = queryMyTablesWithOrders(req.userInfo.id);
+  const prismaQuery = {
+    ...queryMyTablesWithOrders(req.userInfo.id)
+  };
+  const resultMapping = mapMyTablesWithOrders;
   prisma.tablePhysical
     .findMany(prismaQuery)
-    .then((found) => {
-      const result = found.map((table) => ({
-        id: table.id,
-        name: table.name,
-        statusId: table.statusId,
-        status: table.tableStatus.name,
-        orders: table.orders.map((order) => ({
-          id: order.id,
-          name: order.menuItem.name,
-          price: order.menuItem.price,
-          orderTime: order.orderTime,
-          statusId: order.statusId,
-          status: order.status.name,
-          waiterId: order.waiterId,
-          waiter: order.waiter.name,
-        })),
-      }));
+    .then(resultMapping)
+    .then((result) => {
       res.json(result);
     })
     .catch((err) => {

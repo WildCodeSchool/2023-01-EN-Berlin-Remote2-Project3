@@ -22,3 +22,10 @@ tasks:
       - "@group(indexFile)"
     outputs:
       - "@group(exportFiles)"
+  dev:
+    command: "tsc --watch"
+    local: true
+    inputs:
+      - "@group(indexFile)"
+    outputs:
+      - "@group(exportFiles)"
