@@ -1,7 +1,7 @@
 import { tableData } from "../api";
 import { useEffect, useState } from "react";
 import "../scss/_WaiterView.scss";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { TableInterface } from "../api";
 import WaiterOrderView from "./WaiterOrderView";
 
@@ -10,7 +10,7 @@ const WaiterView = ({ token, menuData }: { token: string; menuData: any }) => {
   const [selectedTable, setSelectedTable] = useState({});
   const [hideTables, setHideTables] = useState(true);
 
-  const navigator = useNavigate();
+  // const navigator = useNavigate();
 
   useEffect(() => {
     const data = async () => {
@@ -25,9 +25,12 @@ const WaiterView = ({ token, menuData }: { token: string; menuData: any }) => {
   }, []);
 
   const tableHandler = (table: TableInterface) => {
-    setSelectedTable(!table);
     // navigator("/menu");
     setHideTables(true);
+  };
+
+  const selectTableHandler = (table: TableInterface) => {
+    setSelectedTable(table);
   };
 
   return (
@@ -38,7 +41,7 @@ const WaiterView = ({ token, menuData }: { token: string; menuData: any }) => {
       <div className={hideTables ? "hidden" : "waiterViewTables "}>
         {tableDataApi.map((table) => {
           return (
-            <ul key={table.id}>
+            <ul onClick={() => selectTableHandler(table)} key={table.id}>
               <li
                 // className={
                 //   // Just for testing
@@ -60,7 +63,11 @@ const WaiterView = ({ token, menuData }: { token: string; menuData: any }) => {
           );
         })}
       </div>
-      <WaiterOrderView token={token} menuData={menuData} />
+      <WaiterOrderView
+        token={token}
+        menuData={menuData}
+        selectedTable={selectedTable}
+      />
     </div>
   );
 };
