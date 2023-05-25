@@ -2,11 +2,16 @@ import { UserInfo } from "../App";
 import KitchenView from "./KitchenView";
 import WaiterView from "./WaiterView";
 
-const Dashboard = ({ userInfo }: { userInfo: UserInfo }) => {
-  console.log(userInfo);
+const Dashboard = ({
+  userInfo,
+  token,
+}: {
+  userInfo: UserInfo;
+  token: string;
+}) => {
   switch (userInfo.typeId) {
     case 1:
-      return <WaiterView />;
+      return <WaiterView token={token} />;
     case 2:
       return <div>some user</div>;
     case 3:

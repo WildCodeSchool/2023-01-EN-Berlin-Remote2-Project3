@@ -135,7 +135,11 @@ export const verifyToken = async (
   }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserByIdAndNext = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   prisma.user
     .findUniqueOrThrow({
       where: { id: req.decodedToken.sub },
@@ -147,19 +151,23 @@ export const getUserById = async (req: Request, res: Response) => {
       },
     })
     .then((found) => {
-      const resPayload = {
+      req.userInfo = {
         id: found.id,
         name: found.name,
         typeId: found.typeId,
         type: found.type.name,
       };
-      res.json({
-        success: true,
-        payload: resPayload,
-      });
+      next();
     })
     .catch((err) => {
       console.error(err);
       res.status(500).send("Error retrieving data from the database");
     });
+};
+
+export const sendUserInfo = async (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    payload: req.userInfo,
+  });
 };

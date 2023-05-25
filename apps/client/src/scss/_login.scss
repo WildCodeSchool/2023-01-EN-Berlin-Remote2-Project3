@@ -24,7 +24,7 @@
   flex-direction: column;
   gap: 13px;
 }
-
+// need to take to the general or make new file _mixing
 @mixin inputFields($borderColor: colors.$borderLine) {
   border: 1px solid $borderColor;
   border-radius: 10px;

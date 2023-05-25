@@ -14,19 +14,17 @@ export const fetchMenuData = async () => {
 };
 
 // if the token is valid, this will return the user information
-export const fetchTokenValidation = async (token : string) => {
+export const fetchTokenValidation = async (token: string) => {
   try {
     const res = await fetch("http://localhost:4000/api/verification", {
       headers: {
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const data = await res.json();
-    if (data.success === true)
-      return data.payload as UserInfo;
-    else
-      return null;
+    if (data.success === true) return data.payload as UserInfo;
+    else return null;
   } catch (err) {
     console.log(err, "Token validation failed (Endpoint: /api/validation).");
   }
@@ -61,4 +59,37 @@ export interface TableInterface {
   id: number;
   name: string;
   statusId: number;
+}
+
+export const fetchMyTables = async (token: string) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/tables/mine", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log("error happen fetchMyTables API");
+  }
+};
+
+export interface Order {
+  id: number;
+  name: string;
+  status: string;
+  statusId: number;
+  price: number;
+  waiter: string;
+  waiterId: number;
+  orderTime: string;
+}
+export interface TableWithOrders {
+  id: number;
+  name: string;
+  status: string;
+  statusId: number;
+  orders: Order[];
 }

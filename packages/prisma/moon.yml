@@ -25,3 +25,15 @@ tasks:
       outputStyle: "buffer-only-failure"
   studio:
     command: "prisma studio"
+  migrate:
+    command: "prisma migrate dev --name"
+  migrate-start:
+    command: "prisma migrate dev --create-only --name"
+  migrate-end:
+    command: "prisma migrate dev"
+  deploy:
+    command: "prisma migrate deploy"
+  status:
+    command: "prisma migrate status"
+  reset:
+    command: "prisma migrate reset"

@@ -1,0 +1,82 @@
+@use "./colors";
+@use "./general";
+
+.waiterOrderview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cardContainer {
+  border: 1px solid colors.$primary-darker;
+  margin: 10px;
+  display: inline-block;
+  border-radius: 25px;
+  width: 330px;
+  // height: 360px;
+  // overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+}
+
+.cardHeader {
+  text-align: center;
+  font-weight: 500;
+  padding: 10px 0;
+}
+
+.itemOrder {
+  border-top: 2px solid colors.$borderLine;
+  border-radius: 10px 10px 0 0;
+
+  div {
+    padding: 0px 5px;
+  }
+}
+
+.itemOrder--title {
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.itemOrder--items {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  height: 200px;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  li {
+    font-size: 13px;
+    font-weight: 300;
+  }
+}
+
+.itemOrder--btn {
+  display: flex;
+  justify-content: space-around;
+
+  p {
+    @include general.button;
+    padding: 10px 25px;
+    font-size: 10px;
+  }
+}
+
+.totalPrice {
+  font-size: 14px;
+  text-align: right;
+  padding: 15px;
+}
