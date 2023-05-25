@@ -20,42 +20,67 @@ tablesRouter.get("/", getPhysicalTables);
 
 tablesRouter.use(verifyToken, getUserByIdAndNext);
 
-const getOrderItemsSortedByTable = async (req, res) => {
-  prisma.order
-    .findMany({
-      where: {
-        waiterId: req.userInfo.id,
-      },
-      select: {
-        table: {
-          select: {
-            id: true,
-            name: true,
-          },
+const getOrdersSortedByTable = async (req, res) => {
+  const prismaQuery = {
+    where: {
+      orders: {
+        some: {
+          waiterId: req.userInfo.id,
         },
-        orderItems: {
-          select: {
-            id: true,
-            menuItem: {
-              select: {
-                name: true,
-                price: true,
-              },
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      statusId: true,
+      tableStatus: {
+        select: {
+          name: true,
+        },
+      },
+      orders: {
+        select: {
+          id: true,
+          menuItem: {
+            select: {
+              name: true,
+              price: true,
+            },
+          },
+          orderTime: true,
+          statusId: true,
+          status: {
+            select: {
+              name: true,
+            },
+          },
+          waiterId: true,
+          waiter: {
+            select: {
+              name: true,
             },
           },
         },
       },
-    })
+    },
+  };
+  prisma.tablePhysical
+    .findMany(prismaQuery)
     .then((found) => {
-      //Data needs to be restructured, since we haven't made the DB migration yet
-      const result = found.map((orderObject) => ({
-        id: orderObject.table.id,
-        name: orderObject.table.name,
-        orders: orderObject.orderItems.map((orderItem) => ({
-          id: orderItem.id,
-          name: orderItem.menuItem.name,
-          status: "status not implemented",
-          price: orderItem.menuItem.price,
+      const result = found.map((table) => ({
+        id: table.id,
+        name: table.name,
+        statusId: table.statusId,
+        status: table.tableStatus.name,
+        orders: table.orders.map((order) => ({
+          id: order.id,
+          name: order.menuItem.name,
+          price: order.menuItem.price,
+          orderTime: order.orderTime,
+          statusId: order.statusId,
+          status: order.status.name,
+          waiterId: order.waiterId,
+          waiter: order.waiter.name,
         })),
       }));
       res.json(result);
@@ -66,4 +91,4 @@ const getOrderItemsSortedByTable = async (req, res) => {
     });
 };
 
-tablesRouter.get("/mine", getOrderItemsSortedByTable);
+tablesRouter.get("/mine", getOrdersSortedByTable);
