@@ -4,7 +4,13 @@ import { fetchMyTables, TableWithOrders } from "../api";
 import { useState, useEffect } from "react";
 import WaiterPopUpMenu from "./WaiterPopUpMenu";
 
-const WaiterOrderView = ({ token }: { token: string }) => {
+const WaiterOrderView = ({
+  token,
+  menuData,
+}: {
+  token: string;
+  menuData: any;
+}) => {
   const [myTables, setMyTables] = useState([] as TableWithOrders[]);
   const [showPopUp, setShowPopUp] = useState(false);
 
@@ -71,7 +77,11 @@ const WaiterOrderView = ({ token }: { token: string }) => {
           </div>
         );
       })}
-      <WaiterPopUpMenu showPopUp={showPopUp} setShowPopUp={setShowPopUp} />
+      <WaiterPopUpMenu
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUp}
+        menuData={menuData}
+      />
     </div>
   );
 };

@@ -66,7 +66,13 @@ const App = () => {
           >
             <Route
               path="dashboard"
-              element={<Dashboard token={token} userInfo={userInfo} />}
+              element={
+                <Dashboard
+                  token={token}
+                  userInfo={userInfo}
+                  menuData={menuDataApi}
+                />
+              }
             />
             <Route
               path="menu"

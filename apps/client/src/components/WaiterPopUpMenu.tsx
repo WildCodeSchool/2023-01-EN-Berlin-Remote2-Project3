@@ -1,16 +1,19 @@
 import "../scss/_waiterPopUpMenu.scss";
+import Menu from "../routes/Menu";
 
 const WaiterPopUpMenu = ({
   showPopUp,
   setShowPopUp,
+  menuData,
 }: {
   showPopUp: boolean;
-  setShowPopUp: boolean;
+  setShowPopUp: React.Dispatch<React.SetStateAction<boolean>>;
+  menuData: any;
 }) => {
   return (
     <div>
       <div className={showPopUp ? "popUpWindow" : "hidden"}>
-        <h1>Menu ?</h1>
+        <Menu menuData={menuData} />
       </div>
 
       <div
