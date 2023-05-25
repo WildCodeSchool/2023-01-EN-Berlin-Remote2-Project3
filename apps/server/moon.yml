@@ -65,13 +65,15 @@ tasks:
     options:
       outputStyle: 'stream'
   dev:
-    command: 'moon run server:dev-build server:dev-start'
+    # This was required prior to moon 1.6
+    # command: 'moon run server:dev-build server:dev-start'
+    local: true
+    command: 'noop'
+    deps:
+      - '~:dev-build'
+      - '~:dev-start'
     options:
       outputStyle: 'stream'
-    # command: 'noop'
-    # deps:
-    #   - '~:dev-build'
-    #   - '~:dev-start'
   # Tasks under development
   build-docker:
     command: 'docker image rm --force restaurant-backend; docker build . --tag restaurant-backend'
