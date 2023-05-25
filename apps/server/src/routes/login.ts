@@ -3,7 +3,7 @@ import {
   validateRequestEmailPassword,
   getUserByEmailPassword,
   verifyPassword,
-} from "../auth";
+} from "../authHandlers";
 
 export const loginRouter = express.Router();
 

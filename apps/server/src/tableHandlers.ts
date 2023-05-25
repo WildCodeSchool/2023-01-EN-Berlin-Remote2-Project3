@@ -1,10 +1,6 @@
-import express from "express";
-import { verifyToken, getUserByIdAndNext } from "../auth";
-import { prisma } from "../index";
+import { prisma } from ".";
 
-export const tablesRouter = express.Router();
-
-const getPhysicalTables = async (_, res) => {
+export const getPhysicalTables = async (_, res) => {
   prisma.tablePhysical
     .findMany()
     .then((tableData) => {
@@ -16,11 +12,7 @@ const getPhysicalTables = async (_, res) => {
     });
 };
 
-tablesRouter.get("/", getPhysicalTables);
-
-tablesRouter.use(verifyToken, getUserByIdAndNext);
-
-const getOrdersSortedByTable = async (req, res) => {
+export const getAllOrdersSortedByTable = async (req, res) => {
   const prismaQuery = {
     where: {
       orders: {
@@ -91,9 +83,7 @@ const getOrdersSortedByTable = async (req, res) => {
     });
 };
 
-tablesRouter.get("/mine", getOrdersSortedByTable);
-
-tablesRouter.param("id", async (req, res, next) => {
+export const validateParamTableId = async (req, res, next) => {
   const { id: idParam } = req.params;
   const id = Number.parseInt(idParam);
   if (Number.isNaN(id)) {
@@ -108,7 +98,11 @@ tablesRouter.param("id", async (req, res, next) => {
         } else if (count === 0) {
           res.status(404).send("No table exists for the provided id");
         } else {
-          res.status(500).send("Corrupted database records: multiple tables for the provided id");
+          res
+            .status(500)
+            .send(
+              "Corrupted database records: multiple tables for the provided id"
+            );
         }
       })
       .catch((err) => {
@@ -116,9 +110,9 @@ tablesRouter.param("id", async (req, res, next) => {
         res.status(500).send("Error retrieving data from the database");
       });
   }
-});
+};
 
-const getOrdersByTable = async (req, res) => {
+export const getOrdersByTable = async (req, res) => {
   const prismaQuery = {
     where: {
       tableId: req.tableId,
@@ -166,5 +160,3 @@ const getOrdersByTable = async (req, res) => {
       res.status(500).send("Error retrieving data from the database");
     });
 };
-
-tablesRouter.get("/:id", getOrdersByTable);
