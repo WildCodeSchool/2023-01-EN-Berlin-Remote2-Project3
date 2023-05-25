@@ -18,6 +18,7 @@ const WaiterOrderView = ({ token }: { token: string }) => {
     validateToken();
   }, []);
 
+  console.log(itemDataApi);
   return (
     <div className="waiterOrderview">
       {itemDataApi.map((data, i) => {
@@ -42,12 +43,12 @@ const WaiterOrderView = ({ token }: { token: string }) => {
                     <li key={item.id}>{item.name} </li>
                   ))}
                 </ul>
-
                 <ul>
                   status
-                  <li>completed</li>
+                  {items.map((item) => (
+                    <li key={item.id}>{item.status} </li>
+                  ))}
                 </ul>
-
                 <ul>
                   price
                   {items.map((item) => (
