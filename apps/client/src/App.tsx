@@ -41,12 +41,10 @@ const App = () => {
     const validateToken = async () => {
       if (typeof token === "string") {
         const userInfo = await fetchTokenValidation(token);
-        if (userInfo)
-          setUserInfo(userInfo);
-        else
-          setToken("");
+        if (userInfo) setUserInfo(userInfo);
+        else setToken("");
       }
-    }
+    };
     validateToken();
   }, []);
 
@@ -68,7 +66,7 @@ const App = () => {
           >
             <Route
               path="dashboard"
-              element={<Dashboard userInfo={userInfo} />}
+              element={<Dashboard token={token} userInfo={userInfo} />}
             />
             <Route
               path="menu"

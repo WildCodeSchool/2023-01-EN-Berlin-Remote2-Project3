@@ -1,185 +1,71 @@
 import "../scss/_waiterOrderView.scss";
+import { fetchMyTables, Order } from "../api";
+import { useState, useEffect } from "react";
 
-const WaiterOrderView = () => {
+const WaiterOrderView = ({ token }: { token: string }) => {
+  const [itemDataApi, setItemDataApi] = useState([] as Order[]);
+
+  useEffect(() => {
+    const validateToken = async () => {
+      const res = await fetchMyTables(token);
+
+      if (!res) {
+        console.error("error reading the tableDataApi");
+      } else {
+        setItemDataApi(res);
+      }
+    };
+    validateToken();
+  }, []);
+
   return (
     <div className="waiterOrderview">
-      <div className="cardContainer">
-        <div className="cardHeader">
-          <p>Table:L-5</p>
-        </div>
+      {itemDataApi.map((data, i) => {
+        const items = data.orders;
+        let totalPrice = 0;
+        items.forEach((item) => {
+          console.log(item.price);
+          totalPrice += Number(item.price); // Add item price to total price
+        });
+        return (
+          <div key={i} className="cardContainer">
+            <div className="cardHeader">
+              <p>{data.name}</p>
+            </div>
+            <div className="itemOrder">
+              <p className="itemOrder--title">Item Order:</p>
 
-        <div className="itemOrder">
-          <p className="itemOrder--title">Item Order:</p>
-
-          <div className="itemOrder--items">
-            <ul>
-              <li className="itemOrder--items__title">
-                <p>
+              <div className="itemOrder--items">
+                <ul>
                   item
-                  <li>Espresso</li>
-                  <li>Pizza Margarita</li>
-                  <li>Pizza Margarita</li>
-                  <li>Lorem ipsum dolor sit.</li>
-                </p>
-                <p>
+                  {items.map((item) => (
+                    <li key={item.id}>{item.name} </li>
+                  ))}
+                </ul>
+
+                <ul>
                   status
                   <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                </p>
-                <p>
+                </ul>
+
+                <ul>
                   price
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                </p>
-              </li>
-            </ul>
-            <p className="totalPrice">total price: 150 $</p>
+                  {items.map((item) => (
+                    <li key={item.id}>{item.price} €</li>
+                  ))}
+                </ul>
+              </div>
+
+              <p className="totalPrice">total price: {totalPrice}</p>
+            </div>
+
+            <div className="itemOrder--btn">
+              <p className="itemOrder--menuBtn">Menu</p>
+              <p className="itemOrder--orderBtn">Order</p>
+            </div>
           </div>
-        </div>
-        <div className="itemOrder--btn">
-          <p className="itemOrder--menuBtn">Menu</p>
-          <p className="itemOrder--orderBtn">Order</p>
-        </div>
-      </div>
-
-      {/* 2 */}
-      <div className="cardContainer">
-        <div className="cardHeader">
-          <p>Table:L-5</p>
-        </div>
-
-        <div className="itemOrder">
-          <p className="itemOrder--title">Item Order:</p>
-
-          <div className="itemOrder--items">
-            <ul>
-              <li className="itemOrder--items__title">
-                <p>
-                  item
-                  <li>Espresso</li>
-                  <li>Pizza Margarita</li>
-                  <li>Pizza Margarita</li>
-                  <li>Lorem ipsum dolor sit.</li>
-                </p>
-                <p>
-                  status
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                </p>
-                <p>
-                  price
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                </p>
-              </li>
-            </ul>
-            <p className="totalPrice">total price: 150 $</p>
-          </div>
-        </div>
-        <div className="itemOrder--btn">
-          <p className="itemOrder--menuBtn">Menu</p>
-          <p className="itemOrder--orderBtn">Order</p>
-        </div>
-      </div>
-
-      {/* 3 */}
-
-      <div className="cardContainer">
-        <div className="cardHeader">
-          <p>Table:L-5</p>
-        </div>
-
-        <div className="itemOrder">
-          <p className="itemOrder--title">Item Order:</p>
-
-          <div className="itemOrder--items">
-            <ul>
-              <li className="itemOrder--items__title">
-                <p>
-                  item
-                  <li>Espresso</li>
-                  <li>Pizza Margarita</li>
-                  <li>Pizza Margarita</li>
-                  <li>Lorem ipsum dolor sit.</li>
-                </p>
-                <p>
-                  status
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                </p>
-                <p>
-                  price
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                </p>
-              </li>
-            </ul>
-            <p className="totalPrice">total price: 150 $</p>
-          </div>
-        </div>
-        <div className="itemOrder--btn">
-          <p className="itemOrder--menuBtn">Menu</p>
-          <p className="itemOrder--orderBtn">Order</p>
-        </div>
-      </div>
-
-      {/* 4 */}
-
-      <div className="cardContainer">
-        <div className="cardHeader">
-          <p>Table:L-5</p>
-        </div>
-
-        <div className="itemOrder">
-          <p className="itemOrder--title">Item Order:</p>
-
-          <div className="itemOrder--items">
-            <ul>
-              <li className="itemOrder--items__title">
-                <p>
-                  item
-                  <li>Espresso</li>
-                  <li>Pizza Margarita</li>
-                  <li>Pizza Margarita</li>
-                  <li>Lorem ipsum dolor sit.</li>
-                </p>
-                <p>
-                  status
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                  <li>completed</li>
-                </p>
-                <p>
-                  price
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                  <li> 30$</li>
-                </p>
-              </li>
-            </ul>
-            <p className="totalPrice">total price: 150 $</p>
-          </div>
-        </div>
-        <div className="itemOrder--btn">
-          <p className="itemOrder--menuBtn">Menu</p>
-          <p className="itemOrder--orderBtn">Order</p>
-        </div>
-      </div>
-      {/* end */}
+        );
+      })}
     </div>
   );
 };

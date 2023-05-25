@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TableInterface } from "../api";
 import WaiterOrderView from "./WaiterOrderView";
 
-const WaiterView = () => {
+const WaiterView = ({ token }: { token: string }) => {
   const [tableDataApi, setTableDataApi] = useState([] as TableInterface[]);
   const [selectedTable, setSelectedTable] = useState({});
   const [hideTables, setHideTables] = useState(false);
@@ -61,7 +61,7 @@ const WaiterView = () => {
           );
         })}
       </div>
-      <WaiterOrderView />
+      <WaiterOrderView token={token} />
     </div>
   );
 };
