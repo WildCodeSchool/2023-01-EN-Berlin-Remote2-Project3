@@ -13,9 +13,14 @@ fileGroups:
     - "node_modules/@prisma/client"
   prismaSchema:
     - "prisma/schema.prisma"
+  indexFile:
+    - "index.ts"
+  exportFiles:
+    - "./index.js"
+    - "./index.d.ts"
 
 tasks:
-  build:
+  build-client:
     command: "prisma generate"
     inputs:
       - "@group(prismaSchema)"
@@ -23,6 +28,14 @@ tasks:
       - "@group(prismaClient)"
     options:
       outputStyle: "buffer-only-failure"
+  build:
+    command: "tsc"
+    inputs:
+      - "@group(indexFile)"
+    outputs:
+      - "@group(exportFiles)"
+    deps:
+      - "~:build-client"
   studio:
     command: "prisma studio"
   migrate:

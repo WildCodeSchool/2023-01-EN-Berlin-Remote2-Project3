@@ -1,7 +1,8 @@
 {
   "private": true,
   "name": "prisma",
-  "main": "index.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "dependencies": {
     "@prisma/client": "4.13.0"
   },

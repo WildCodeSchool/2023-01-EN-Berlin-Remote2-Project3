@@ -1,13 +1,17 @@
 {
-  "include": ["./mock/*.ts"],
+  "include": ["./src/*.ts"],
+  "exclude": [],
   "compilerOptions": {
     "target": "ES2015",
-    "module": "commonjs",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "lib": ["ES2020.BigInt", "ES2015"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist"
+    "declaration": true,
+    "outDir": "./"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Recommended"
