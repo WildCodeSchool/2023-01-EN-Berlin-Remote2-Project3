@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import * as argon2 from "argon2";
-import { prisma } from "./index";
-import { validateEmail, validatePassword } from "./validators";
-import { LoginRequest, LoginRequestWithData } from "./types";
+import { prisma } from "../index";
+import { validateEmail, validatePassword } from "../validators";
+import { LoginRequest, LoginRequestWithData, RequestDecodedToken, RequestUserInfo } from "../types";
 
 const jwtSecretKey = process.env.JWT_SECRET ?? "";
 
@@ -102,7 +102,7 @@ export const verifyPassword = async (
 };
 
 export const verifyToken = async (
-  req: Request,
+  req: Request & RequestDecodedToken,
   res: Response,
   next: NextFunction
 ) => {
@@ -136,13 +136,13 @@ export const verifyToken = async (
 };
 
 export const getUserByIdAndNext = async (
-  req: Request,
+  req: Request & RequestUserInfo & RequestDecodedToken,
   res: Response,
   next: NextFunction
 ) => {
   prisma.user
     .findUniqueOrThrow({
-      where: { id: req.decodedToken.sub },
+      where: { id: +(req.decodedToken.sub ?? 0) },
       select: {
         id: true,
         name: true,
@@ -165,7 +165,7 @@ export const getUserByIdAndNext = async (
     });
 };
 
-export const sendUserInfo = async (req: Request, res: Response) => {
+export const sendUserInfo = async (req: Request & RequestUserInfo, res: Response) => {
   res.json({
     success: true,
     payload: req.userInfo,

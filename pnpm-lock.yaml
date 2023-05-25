@@ -18,8 +18,8 @@ importers:
   apps/client:
     dependencies:
       '@prisma/client':
-        specifier: workspace:prisma@*
-        version: link:../../packages/prisma
+        specifier: workspace:prisma-client@*
+        version: link:../../packages/prisma-client
       axios:
         specifier: ^1.4.0
         version: 1.4.0
@@ -64,8 +64,8 @@ importers:
   apps/server:
     dependencies:
       '@prisma/client':
-        specifier: workspace:prisma@*
-        version: link:../../packages/prisma
+        specifier: workspace:prisma-client@*
+        version: link:../../packages/prisma-client
       argon2:
         specifier: ^0.30.3
         version: 0.30.3
@@ -84,9 +84,12 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.0
         version: 9.0.0
-      prisma:
+      prisma-client:
         specifier: workspace:*
-        version: link:../../packages/prisma
+        version: link:../../packages/prisma-client
+      prisma-queries:
+        specifier: workspace:*
+        version: link:../../packages/prisma-queries
     devDependencies:
       '@types/cors':
         specifier: ^2.8.13
@@ -107,7 +110,7 @@ importers:
         specifier: ^2.0.22
         version: 2.0.22
 
-  packages/prisma:
+  packages/prisma-client:
     dependencies:
       '@prisma/client':
         specifier: 4.13.0
@@ -116,6 +119,12 @@ importers:
       prisma:
         specifier: ^4.13.0
         version: 4.13.0
+
+  packages/prisma-queries:
+    dependencies:
+      '@prisma/client':
+        specifier: workspace:prisma-client@*
+        version: link:../prisma-client
 
 packages:
 

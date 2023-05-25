@@ -1,0 +1,9 @@
+{
+    "private": "true",
+    "name": "prisma-queries",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "dependencies": {
+        "@prisma/client": "workspace:prisma-client@*"
+    }
+}
