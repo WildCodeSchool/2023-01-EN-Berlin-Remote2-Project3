@@ -2,13 +2,20 @@ import { useState } from "react";
 import menuAddIcon from "../assets/menuIcon.svg";
 import "../scss/_waiterOrderView.scss";
 import WaiterPopUpMenu from "./WaiterPopUpMenu";
+import { Category, TableWithOrders } from "../api";
 
-const TableOrders = ({ tableOrders, menuData }) => {
+const TableOrders = ({
+  tableOrders,
+  menuData,
+}: {
+  tableOrders: TableWithOrders;
+  menuData: Category[];
+}) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const items = tableOrders.orders;
 
   const totalPrice = items
-    .map((item) => +item.price)
+    .map((item) => Number(item.price))
     .reduce((acc, mov) => {
       return acc + mov;
     }, 0);

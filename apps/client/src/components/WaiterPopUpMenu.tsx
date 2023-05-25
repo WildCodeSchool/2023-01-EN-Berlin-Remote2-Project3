@@ -1,5 +1,6 @@
 import "../scss/_waiterPopUpMenu.scss";
 import Menu from "../routes/Menu";
+import { Category } from "../api";
 
 const WaiterPopUpMenu = ({
   showPopUp,
@@ -8,7 +9,7 @@ const WaiterPopUpMenu = ({
 }: {
   showPopUp: boolean;
   setShowPopUp: React.Dispatch<React.SetStateAction<boolean>>;
-  menuData: any;
+  menuData: Category[];
 }) => {
   return (
     <div>
