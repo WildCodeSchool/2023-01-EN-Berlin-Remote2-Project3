@@ -68,10 +68,19 @@
   display: flex;
   justify-content: space-around;
 
-  p {
-    @include general.button;
-    padding: 10px 25px;
-    font-size: 10px;
+  img {
+    width: 50px;
+    cursor: pointer;
+    transition: general.$transition;
+
+    &:hover {
+      border-bottom: 1px solid colors.$primary;
+      border-radius: 50%;
+    }
+
+    &:active {
+      transform: translateY(-3px);
+    }
   }
 }
 

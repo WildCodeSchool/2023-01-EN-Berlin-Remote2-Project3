@@ -8,7 +8,7 @@ import WaiterOrderView from "./WaiterOrderView";
 const WaiterView = ({ token }: { token: string }) => {
   const [tableDataApi, setTableDataApi] = useState([] as TableInterface[]);
   const [selectedTable, setSelectedTable] = useState({});
-  const [hideTables, setHideTables] = useState(false);
+  const [hideTables, setHideTables] = useState(true);
 
   const navigator = useNavigate();
 
@@ -28,7 +28,6 @@ const WaiterView = ({ token }: { token: string }) => {
     setSelectedTable(!table);
     // navigator("/menu");
     setHideTables(true);
-    return <div></div>;
   };
 
   return (

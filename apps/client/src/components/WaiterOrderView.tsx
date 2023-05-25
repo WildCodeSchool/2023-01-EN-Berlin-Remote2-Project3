@@ -1,9 +1,12 @@
 import "../scss/_waiterOrderView.scss";
+import menuAddIcon from "../assets/menuIcon.svg";
 import { fetchMyTables, TableWithOrders } from "../api";
 import { useState, useEffect } from "react";
+import WaiterPopUpMenu from "./WaiterPopUpMenu";
 
 const WaiterOrderView = ({ token }: { token: string }) => {
   const [myTables, setMyTables] = useState([] as TableWithOrders[]);
+  const [showPopUp, setShowPopUp] = useState(false);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -59,12 +62,16 @@ const WaiterOrderView = ({ token }: { token: string }) => {
             </div>
 
             <div className="itemOrder--btn">
-              <p className="itemOrder--menuBtn">Menu</p>
-              <p className="itemOrder--orderBtn">Order</p>
+              <img
+                onClick={() => setShowPopUp(!showPopUp)}
+                src={menuAddIcon}
+                alt="addItemIcon"
+              />
             </div>
           </div>
         );
       })}
+      <WaiterPopUpMenu showPopUp={showPopUp} setShowPopUp={setShowPopUp} />
     </div>
   );
 };
