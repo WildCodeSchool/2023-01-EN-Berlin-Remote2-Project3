@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from "express";
 import { RequestTableId, RequestUserInfo } from "../types";
 import { queryMyTablesWithOrders, mapMyTablesWithOrders } from "prisma-queries";
 import { unconfirmedOrders } from "../unconfirmedOrders";
-import { isArray } from "util";
 
 export const getAllTables = async (_: Request, res: Response) => {
   prisma.tablePhysical
@@ -122,45 +121,73 @@ export const getTableWithOrders = async (
     });
 };
 
-export const validateOrder = async (
+export const receiveOrders = async (
   req: Request & RequestUserInfo,
   res: Response,
   next: NextFunction
 ) => {
   const requestOrders = req.body?.orders;
-  
   //validate itemId - array of menu ids
-  const validateOrders = (thing: any) =>
-    Array.isArray(thing) && thing.every((order) => Number.isInteger(order));
-  
   if (
-    Array.isArray(orders) &&
-    orders.every((order) => Number.isInteger(order))
+    Array.isArray(requestOrders) &&
+    requestOrders.every((order) => Number.isInteger(order))
   ) {
-    // itemId     Int           @map("item_id")       request body - array!
-    // orderTime  DateTime      @map("order_time")    added automatically?
-    // statusId   Int           @map("status_id")     default value
-    // waiterId   Int           @map("waiter_id")     token (stored in req)
-    // tableId    Int           @map("table_id")      param (stored in req)
-
-    // ALSO ADD THE UNIQUE IDENTIFIER
-    orders.map((order) => ({
-      itemId: order,
-      statusId: 123, //CHECK THE ID OF THE DEFAULT STATUS
-      waiterId: req.userInfo.id,
-      tableId: req.tableId,
-    }));
-    unconfirmedOrders.push(orders);
-    res.json({ success: true /*ADD IDENTIFIER*/ });
+    const validOrders: number[] = requestOrders;
+    const order = {
+      unique: Math.floor(Math.random() * 1000000),
+      orders: validOrders.map((order) => ({
+        itemId: order,
+        statusId: 1,
+        waiterId: req.userInfo.id,
+        tableId: req.tableId,
+      })),
+    };
+    unconfirmedOrders.push(order);
+    res.status(202).json({ code: order.unique });
   } else {
-    res.status(400).send("Wrong email or password");
+    res.status(400).send("Invalid order request");
   }
 };
 
-export const postOrders = async (
-  req: Request,
+export const postOrdersToDB = async (
+  req: Request & RequestUserInfo,
   res: Response,
   next: NextFunction
 ) => {
-  //
+  const code = req.body?.code;
+  if (Number.isInteger(code) && code >= 0 && code.toString().length <= 6) {
+    const validCode: number = code;
+    const orderIndex = unconfirmedOrders.findIndex(
+      (orders) => orders.unique === validCode
+    );
+    if (orderIndex > -1) {
+      const ordersFound = unconfirmedOrders[orderIndex].orders;
+      prisma.order
+        .createMany({ data: ordersFound })
+        .then((created) => {
+          //remove the unconfirmed order from the server database
+          unconfirmedOrders.splice(orderIndex, 1);
+          if (created.count === ordersFound.length) {
+            //add the link to the created resources?
+            res.status(201).send(`${created.count} records were updated`);
+          } else {
+            res
+              .status(500)
+              .send("Error updating the database: not all items were ordered");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send("Error updating the database");
+        });
+    } else {
+      res
+        .status(409)
+        .send(
+          "No such order present on the server: either it has already been confirmed or it has never been initialized"
+        );
+    }
+  } else {
+    res.status(400).send("Invalid confirmation code");
+  }
 };

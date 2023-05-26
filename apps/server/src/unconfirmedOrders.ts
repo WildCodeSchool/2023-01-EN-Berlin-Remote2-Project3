@@ -1,9 +1,3 @@
-export interface Order {
-    itemId: Number[];
-    statusId: Number;
-    waiterId: Number;
-    tableId: Number;
-    // AND THE IDENTIFIER
-  }
+import { UnconfirmedOrder } from "./types";
 
-export const unconfirmedOrders: Order[] = [];
+export const unconfirmedOrders: UnconfirmedOrder[] = [];
