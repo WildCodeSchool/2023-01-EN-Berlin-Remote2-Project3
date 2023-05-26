@@ -13,7 +13,7 @@ const WaiterView = ({
   menuData: Category[];
 }) => {
   const [tableDataApi, setTableDataApi] = useState([] as TableInterface[]);
-  const [selectedTable, setSelectedTable] = useState({});
+  const [selectedTable, setSelectedTable] = useState([] as TableInterface[]);
   const [hideTables, setHideTables] = useState(true);
 
   // const navigator = useNavigate();
@@ -34,8 +34,9 @@ const WaiterView = ({
     // navigator("/menu");
     setHideTables(true);
 
-    // showing the correct table on click
-    setSelectedTable(table);
+    // storing all selected tables in state!
+    const updateClickedItem = [...selectedTable, table];
+    setSelectedTable(updateClickedItem);
   };
 
   return (
@@ -56,6 +57,7 @@ const WaiterView = ({
         token={token}
         menuData={menuData}
         selectedTable={selectedTable}
+        setSelectedTable={setSelectedTable}
       />
     </div>
   );

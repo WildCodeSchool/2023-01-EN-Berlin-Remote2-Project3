@@ -24,3 +24,22 @@ a {
 ul {
   list-style-type: none;
 }
+
+.logoSpiner {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 130px;
+    animation: logoSpin 2s infinite linear;
+  }
+
+  @keyframes logoSpin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

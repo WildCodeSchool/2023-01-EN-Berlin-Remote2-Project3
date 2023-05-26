@@ -4,6 +4,7 @@ import KitchenView from "./KitchenView";
 import WaiterView from "./WaiterView";
 import BarView from "./BarView";
 import FoodRunnerView from "./FoodRunnerView";
+import Spinner from "./Spinner";
 
 const Dashboard = ({
   userInfo,
@@ -25,7 +26,7 @@ const Dashboard = ({
       return <BarView />;
 
     default:
-      return <div>Unknow {userInfo.typeId}</div>;
+      return <Spinner />;
   }
 };
 
