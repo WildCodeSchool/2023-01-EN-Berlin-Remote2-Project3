@@ -45,8 +45,6 @@ tasks:
     command: "prisma migrate dev --create-only --name"
   migrate-end:
     command: "prisma migrate dev"
-  deploy:
-    command: "prisma migrate deploy"
   status:
     command: "prisma migrate status"
   reset:

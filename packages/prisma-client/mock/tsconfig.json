@@ -1,0 +1,18 @@
+{
+    "include": ["./*.ts"],
+    "exclude": [],
+    "compilerOptions": {
+      "target": "ES2015",
+      "module": "CommonJS",
+      "moduleResolution": "node",
+      "lib": ["ES2020.BigInt", "ES2015", "DOM"],
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "declaration": true,
+      "outDir": "./"
+    },
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Recommended"
+  }

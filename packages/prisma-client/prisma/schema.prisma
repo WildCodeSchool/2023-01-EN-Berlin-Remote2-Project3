@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Category {
-  id              Int        @id @db.SmallInt @default(autoincrement()) @map("category_id")
+  id              Int        @id @default(autoincrement()) @map("category_id")
   name            String     @unique(map: "category_name") @map("category_name") @db.VarChar(30)
   parentId        Int?       @map("parent_id")
   parentCategory  Category?  @relation("categoriesTocategories", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "categories_ibfk_1")
@@ -20,7 +20,7 @@ model Category {
 }
 
 model MenuItem {
-  id         Int      @id @db.SmallInt @default(autoincrement()) @map("item_id")
+  id         Int      @id @default(autoincrement()) @map("item_id")
   name       String   @unique(map: "item_name") @map("item_name") @db.VarChar(50)
   price      Decimal? @db.Decimal(7, 2)
   categoryId Int      @map("category_id")
@@ -35,7 +35,7 @@ model MenuItem {
 }
 
 model Order {
-  id         Int           @id @db.SmallInt @default(autoincrement()) @map("order_id")
+  id         Int           @id @default(autoincrement()) @map("order_id")
   itemId     Int           @map("item_id")
   orderTime  DateTime      @map("order_time") @default(now())
   servedTime DateTime?     @map("served_time")
@@ -52,7 +52,7 @@ model Order {
 }
 
 model OrderStatus {
-  id     Int     @id @db.SmallInt @default(autoincrement()) @map("orderstatus_id")
+  id     Int     @id @default(autoincrement()) @map("orderstatus_id")
   name   String  @unique(map: "orderstatus_name") @map("orderstatus_name") @db.VarChar(30)
   orders Order[]
 
@@ -60,7 +60,7 @@ model OrderStatus {
 }
 
 model Station {
-  id        Int        @id @db.SmallInt @default(autoincrement()) @map("station_id")
+  id        Int        @id @default(autoincrement()) @map("station_id")
   name      String     @unique(map: "station_name") @map("station_name") @db.VarChar(30)
   menuItems MenuItem[]
 
@@ -68,7 +68,7 @@ model Station {
 }
 
 model TablePhysical {
-  id          Int         @id @db.SmallInt @default(autoincrement()) @map("table_id")
+  id          Int         @id @default(autoincrement()) @map("table_id")
   name        String      @unique(map: "table_name") @map("table_name") @db.VarChar(30)
   statusId    Int         @map("tablestatus_id")
   tableStatus TableStatus @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tables_ibfk_1")
@@ -79,7 +79,7 @@ model TablePhysical {
 }
 
 model TableStatus {
-  id     Int             @id @db.SmallInt @default(autoincrement()) @map("tablestatus_id")
+  id     Int             @id @default(autoincrement()) @map("tablestatus_id")
   name   String          @unique(map: "tablestatus_name") @map("tablestatus_name") @db.VarChar(30)
   tables TablePhysical[]
 
@@ -87,7 +87,7 @@ model TableStatus {
 }
 
 model User {
-  id       Int      @id @db.SmallInt @default(autoincrement()) @map("user_id")
+  id       Int      @id @default(autoincrement()) @map("user_id")
   typeId   Int      @map("usertype_id")
   name     String   @unique @map("username") @db.VarChar(50)
   password String   @map("userpassword") @db.VarChar(255)
@@ -100,7 +100,7 @@ model User {
 }
 
 model UserType {
-  id    Int    @id @db.SmallInt @default(autoincrement()) @map("usertype_id")
+  id    Int    @id @default(autoincrement()) @map("usertype_id")
   name  String @unique(map: "usertype_name") @map("usertype_name") @db.VarChar(30)
   users User[]
 
