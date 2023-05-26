@@ -87,6 +87,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.0
         version: 9.0.0
+      prisma-client:
+        specifier: workspace:*
+        version: link:../../packages/prisma-client
       prisma-queries:
         specifier: workspace:*
         version: link:../../packages/prisma-queries

@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { RequestTableId, RequestUserInfo } from "../types";
 import { queryMyTablesWithOrders, mapMyTablesWithOrders } from "prisma-queries";
 import { unconfirmedOrders } from "../unconfirmedOrders";
+import { isArray } from "util";
 
 export const getAllTables = async (_: Request, res: Response) => {
   prisma.tablePhysical
@@ -112,9 +113,11 @@ export const validateOrder = async (
   res: Response,
   next: NextFunction
 ) => {
-  const menuId = req.body?.menuId;
+  const orders = req.body?.orders;
   //validate itemId - array of menu ids
-  if (true) {
+  const validateOrders = (thing : any) => (Array.isArray(thing) && thing.every((order => Number.isInteger(order))))
+
+  if (Array.isArray(orders) && orders.every((order => Number.isInteger(order)))) {
     // itemId     Int           @map("item_id")       request body - array!
     // orderTime  DateTime      @map("order_time")    added automatically?
     // statusId   Int           @map("status_id")     default value
@@ -122,6 +125,7 @@ export const validateOrder = async (
     // tableId    Int           @map("table_id")      param (stored in req)
 
     // ALSO ADD THE UNIQUE IDENTIFIER
+    orders
     const order = {
       itemId: menuId,
       statusId: 123, //CHECK THE ID OF THE DEFAULT STATUS

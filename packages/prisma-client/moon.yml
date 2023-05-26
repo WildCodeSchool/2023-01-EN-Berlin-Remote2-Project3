@@ -38,6 +38,7 @@ tasks:
       - "~:build-client"
   studio:
     command: "prisma studio"
+    local: true
   migrate:
     command: "prisma migrate dev --name"
   migrate-start:
