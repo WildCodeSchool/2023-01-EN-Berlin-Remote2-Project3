@@ -1,0 +1,27 @@
+.menuOrder--container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.orderedItems {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 50px;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  img {
+    width: 16px;
+    cursor: pointer;
+  }
+}

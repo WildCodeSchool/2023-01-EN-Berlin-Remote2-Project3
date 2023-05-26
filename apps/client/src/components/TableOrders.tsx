@@ -53,18 +53,12 @@ const TableOrders = ({
       </div>
 
       <div className="itemOrder--btn">
-        <img
-          onClick={() => setShowPopUp(!showPopUp)}
-          src={menuAddIcon}
-          alt="addItem - Icon"
-        />
+        <img onClick={() => setShowPopUp((x) => !x)} src={menuAddIcon} alt="addItem - Icon" />
       </div>
 
-      <WaiterPopUpMenu
-        menuData={menuData}
-        showPopUp={showPopUp}
-        setShowPopUp={setShowPopUp}
-      />
+      {showPopUp === true ? (
+        <WaiterPopUpMenu menuData={menuData} hidePopUp={() => { setShowPopUp(false) }} />
+      ) : null}
     </div>
   );
 };
