@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "orders" ALTER COLUMN "order_time" SET DEFAULT CURRENT_TIMESTAMP;
