@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken, getUserByIdAndNext } from "../handlers/login";
+import { verifyToken, getUserByIdAndNext, checkWaiter } from "../handlers/login";
 import {
   getAllTables,
   getMyTablesWithOrders,
@@ -10,13 +10,13 @@ import {
 // Base URL for this router is "/api/tables/" (check: index.ts)
 export const tablesRouter = express.Router();
 
+// GET "/api/tables/" resturns Table[]
+tablesRouter.get("/", getAllTables);
+
 // All endpoints below require authorization and rely on the presence of
 // a perperty "userInfo" that is attached to the request object.
 // @ts-expect-error
-tablesRouter.use(verifyToken, getUserByIdAndNext);
-
-// GET "/api/tables/" resturns Table[]
-tablesRouter.get("/", getAllTables);
+tablesRouter.use(verifyToken, getUserByIdAndNext, checkWaiter);
 
 // GET "/api/tables/mine" returns TableWithOrders[]
 // @ts-expect-error

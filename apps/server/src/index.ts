@@ -14,6 +14,11 @@ const app = express();
 expressOasGenerator.init(app, {});
 app.use(cors());
 
+export const jwtSecretKey = process.env.JWT_SECRET ?? "";
+if (jwtSecretKey === "") {
+  throw new Error("No JWT_SECRET defined in .env file");
+}
+
 export const prisma = new PrismaClient();
 
 app.use(express.json());

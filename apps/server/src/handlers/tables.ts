@@ -1,8 +1,8 @@
-import { UserInfo } from "os";
 import { prisma } from "..";
 import { NextFunction, Request, Response } from "express";
 import { RequestTableId, RequestUserInfo } from "../types";
 import { queryMyTablesWithOrders, mapMyTablesWithOrders } from "prisma-queries";
+import { unconfirmedOrders } from "../unconfirmedOrders";
 
 export const getAllTables = async (_: Request, res: Response) => {
   prisma.tablePhysical
@@ -105,4 +105,40 @@ export const getTableWithOrders = async (req: Request & RequestTableId, res: Res
       console.log(err);
       res.status(500).send("Error retrieving data from the database");
     });
+};
+
+export const validateOrder = async (
+  req: Request & RequestUserInfo,
+  res: Response,
+  next: NextFunction
+) => {
+  const menuId = req.body?.menuId;
+  //validate itemId - array of menu ids
+  if (true) {
+    // itemId     Int           @map("item_id")       request body - array!
+    // orderTime  DateTime      @map("order_time")    added automatically?
+    // statusId   Int           @map("status_id")     default value
+    // waiterId   Int           @map("waiter_id")     token (stored in req)
+    // tableId    Int           @map("table_id")      param (stored in req)
+
+    // ALSO ADD THE UNIQUE IDENTIFIER
+    const order = {
+      itemId: menuId,
+      statusId: 123, //CHECK THE ID OF THE DEFAULT STATUS
+      waiterId: req.userInfo.id,
+      tableId: req.tableId,
+    };
+    unconfirmedOrders.push(order);
+    res.json({ success : true /*ADD IDENTIFIER*/})
+  } else {
+    res.status(400).send("Wrong email or password");
+  }
+};
+
+export const postOrders = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //
 };
