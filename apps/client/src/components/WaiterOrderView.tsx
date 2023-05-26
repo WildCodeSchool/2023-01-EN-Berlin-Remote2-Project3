@@ -1,5 +1,5 @@
 import "../scss/_waiterOrderView.scss";
-import { fetchMyTables, TableWithOrders, Category } from "../api";
+import { fetchMyTables, TableWithOrders, Category, tableData } from "../api";
 import { useState, useEffect } from "react";
 import TableOrders from "./TableOrders";
 import EmptyTableOrder from "./EmptyTableOrder";
@@ -17,6 +17,7 @@ const WaiterOrderView = ({
 }) => {
   const [myTables, setMyTables] = useState([] as TableWithOrders[]);
 
+
   useEffect(() => {
     const validateToken = async () => {
       const res = await fetchMyTables(token);
@@ -30,11 +31,18 @@ const WaiterOrderView = ({
     validateToken();
   }, []);
 
+
+
   return (
     <div className="waiterOrderview">
       {myTables.map((data) => {
         return (
-          <TableOrders tableOrders={data} key={data.id} menuData={menuData} />
+          <TableOrders
+            tableOrders={data}
+            key={data.id}
+            menuData={menuData}
+            tableId={data.id}
+          />
         );
       })}
 

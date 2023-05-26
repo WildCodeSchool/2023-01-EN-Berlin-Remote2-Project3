@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 const WaiterPopUpMenu = ({
   hidePopUp,
   menuData,
+  tableId,
 }: {
   hidePopUp: () => void;
   menuData: Category[];
+  tableId: number;
 }) => {
   const navigator = useNavigate();
 
@@ -20,7 +22,7 @@ const WaiterPopUpMenu = ({
   return (
     <div>
       <div className="popUpWindow">
-        <Menu menuData={menuData} />
+        <Menu menuData={menuData} tableId={tableId} />
       </div>
 
       <div onClick={closePopUp} className="overlay"></div>

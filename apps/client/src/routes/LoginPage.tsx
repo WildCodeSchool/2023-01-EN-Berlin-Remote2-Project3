@@ -19,7 +19,6 @@ export const LoginPage = ({
   ) : (
     <div>
       <Header userInfo={userInfo} setToken={setToken} />
-
       <Outlet />
     </div>
   );

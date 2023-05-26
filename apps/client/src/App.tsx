@@ -74,22 +74,17 @@ const App = () => {
                 />
               }
             >
-              <Route
-                path=":menuCategory"
-                element={<MenuContent data={menuDataApi} />}
-                errorElement={<h1>yet another error</h1>}
-              />
-            </Route>
-            <Route
-              path="menu"
-              errorElement={<h1>Error in menu</h1>}
-              element={<Menu menuData={menuDataApi} />}
-            >
-              <Route
-                path=":menuCategory"
-                element={<MenuContent data={menuDataApi} />}
-                errorElement={<h1>yet another error</h1>}
-              />
+              {/* <Route
+                path="menu"
+                errorElement={<h1>Error in menu</h1>}
+                element={<Menu menuData={menuDataApi} />}
+              >
+                <Route
+                  path=":tableId/:menuCategory?"
+                  element={<MenuContent data={menuDataApi} />}
+                  errorElement={<h1>yet another error</h1>}
+                />
+              </Route> */}
             </Route>
           </Route>
         )

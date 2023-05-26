@@ -24,7 +24,6 @@ const Dashboard = ({
       return <KitchenView />;
     case 4:
       return <BarView />;
-
     default:
       return <Spinner />;
   }

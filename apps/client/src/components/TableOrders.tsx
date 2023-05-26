@@ -7,9 +7,11 @@ import { Category, TableWithOrders } from "../api";
 const TableOrders = ({
   tableOrders,
   menuData,
+  tableId
 }: {
   tableOrders: TableWithOrders;
   menuData: Category[];
+  tableId: number;
 }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const items = tableOrders.orders;
@@ -53,11 +55,20 @@ const TableOrders = ({
       </div>
 
       <div className="itemOrder--btn">
-        <img onClick={() => setShowPopUp((x) => !x)} src={menuAddIcon} alt="addItem - Icon" />
+        <img
+          onClick={() => setShowPopUp((x) => !x)}
+          src={menuAddIcon}
+          alt="addItem - Icon"
+        />
       </div>
 
       {showPopUp === true ? (
-        <WaiterPopUpMenu menuData={menuData} hidePopUp={() => { setShowPopUp(false) }} />
+        <WaiterPopUpMenu tableId={tableId}
+          menuData={menuData}
+          hidePopUp={() => {
+            setShowPopUp(false);
+          }}
+        />
       ) : null}
     </div>
   );
