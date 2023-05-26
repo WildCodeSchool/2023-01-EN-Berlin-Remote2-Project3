@@ -9,3 +9,5 @@ export type {
   User,
   UserType,
 } from "@prisma/client";
+
+export type { TableWithOrders } from "prisma-queries";

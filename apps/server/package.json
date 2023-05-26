@@ -1,13 +1,14 @@
 {
   "dependencies": {
-    "@prisma/client": "workspace:prisma@*",
+    "@prisma/client": "workspace:prisma-client@*",
     "argon2": "^0.30.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-oas-generator": "^1.0.46",
     "jsonwebtoken": "^9.0.0",
-    "prisma": "workspace:*"
+    "prisma-client": "workspace:*",
+    "prisma-queries": "workspace:*"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

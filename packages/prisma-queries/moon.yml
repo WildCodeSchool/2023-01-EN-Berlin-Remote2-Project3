@@ -1,0 +1,31 @@
+type: "tool"
+language: "typescript"
+
+project:
+  name: "Prisma Queries"
+  description: "The prisma queries are the objects we need to query the database for the backend endpoints."
+  channel: "#0109-REMOTE-JS-Project3"
+  owner: "diraneyya"
+  maintainers: ["diraneyya"]
+
+fileGroups:
+  indexFile:
+    - "./src/index.ts"
+  exportFiles:
+    - "./index.js"
+    - "./index.d.ts"
+
+tasks:
+  build:
+    command: "tsc"
+    inputs:
+      - "@group(indexFile)"
+    outputs:
+      - "@group(exportFiles)"
+  dev:
+    command: "tsc --watch"
+    local: true
+    inputs:
+      - "@group(indexFile)"
+    outputs:
+      - "@group(exportFiles)"

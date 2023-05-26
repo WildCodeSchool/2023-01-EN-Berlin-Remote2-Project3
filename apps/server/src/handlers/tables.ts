@@ -1,6 +1,10 @@
-import { prisma } from ".";
+import { UserInfo } from "os";
+import { prisma } from "..";
+import { NextFunction, Request, Response } from "express";
+import { RequestTableId, RequestUserInfo } from "../types";
+import { queryMyTablesWithOrders, mapMyTablesWithOrders } from "prisma-queries";
 
-export const getPhysicalTables = async (_, res) => {
+export const getAllTables = async (_: Request, res: Response) => {
   prisma.tablePhysical
     .findMany()
     .then((tableData) => {
@@ -12,69 +16,15 @@ export const getPhysicalTables = async (_, res) => {
     });
 };
 
-export const getAllOrdersSortedByTable = async (req, res) => {
+export const getMyTablesWithOrders = async (req: Request & RequestUserInfo, res: Response) => {
   const prismaQuery = {
-    where: {
-      orders: {
-        some: {
-          waiterId: req.userInfo.id,
-        },
-      },
-    },
-    select: {
-      id: true,
-      name: true,
-      statusId: true,
-      tableStatus: {
-        select: {
-          name: true,
-        },
-      },
-      orders: {
-        select: {
-          id: true,
-          menuItem: {
-            select: {
-              name: true,
-              price: true,
-            },
-          },
-          orderTime: true,
-          statusId: true,
-          status: {
-            select: {
-              name: true,
-            },
-          },
-          waiterId: true,
-          waiter: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
+    ...queryMyTablesWithOrders(req.userInfo.id)
   };
+  const resultMapping = mapMyTablesWithOrders;
   prisma.tablePhysical
     .findMany(prismaQuery)
-    .then((found) => {
-      const result = found.map((table) => ({
-        id: table.id,
-        name: table.name,
-        statusId: table.statusId,
-        status: table.tableStatus.name,
-        orders: table.orders.map((order) => ({
-          id: order.id,
-          name: order.menuItem.name,
-          price: order.menuItem.price,
-          orderTime: order.orderTime,
-          statusId: order.statusId,
-          status: order.status.name,
-          waiterId: order.waiterId,
-          waiter: order.waiter.name,
-        })),
-      }));
+    .then(resultMapping)
+    .then((result) => {
       res.json(result);
     })
     .catch((err) => {
@@ -83,7 +33,7 @@ export const getAllOrdersSortedByTable = async (req, res) => {
     });
 };
 
-export const validateParamTableId = async (req, res, next) => {
+export const validateParamTableId = async (req: Request & RequestTableId, res: Response, next: NextFunction) => {
   const { id: idParam } = req.params;
   const id = Number.parseInt(idParam);
   if (Number.isNaN(id)) {
@@ -98,11 +48,7 @@ export const validateParamTableId = async (req, res, next) => {
         } else if (count === 0) {
           res.status(404).send("No table exists for the provided id");
         } else {
-          res
-            .status(500)
-            .send(
-              "Corrupted database records: multiple tables for the provided id"
-            );
+          res.status(500).send("Corrupted database records: multiple tables for the provided id");
         }
       })
       .catch((err) => {
@@ -112,7 +58,7 @@ export const validateParamTableId = async (req, res, next) => {
   }
 };
 
-export const getOrdersByTable = async (req, res) => {
+export const getTableWithOrders = async (req: Request & RequestTableId, res: Response) => {
   const prismaQuery = {
     where: {
       tableId: req.tableId,

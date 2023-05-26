@@ -1,6 +1,7 @@
-import { prisma } from ".";
+import { prisma } from "..";
+import { Request, Response } from "express";
 
-export const getMenuItemsSortedByCategory = async (req, res) => {
+export const getMenuItemsSortedByCategory = async (req : Request, res : Response) => {
     const prismaQuery = {
       select: {
         id: true,

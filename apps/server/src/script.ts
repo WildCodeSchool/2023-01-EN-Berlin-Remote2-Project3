@@ -8,12 +8,11 @@ const fetchMenuItems = async () => {
 const fetchCategories = async () => {
     return await prisma.category.findMany({
       include: {
-        menuitems:{}
+        menuItems: {}
       }
     });
   }
 
-  
   fetchCategories().then(res => {
     res.forEach(category => {
       console.log(category);

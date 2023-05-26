@@ -14,7 +14,7 @@ fileGroups:
   prismaSchema:
     - "prisma/schema.prisma"
   indexFile:
-    - "index.ts"
+    - "./src/index.ts"
   exportFiles:
     - "./index.js"
     - "./index.d.ts"
