@@ -17,9 +17,12 @@ export const getAllTables = async (_: Request, res: Response) => {
     });
 };
 
-export const getMyTablesWithOrders = async (req: Request & RequestUserInfo, res: Response) => {
+export const getMyTablesWithOrders = async (
+  req: Request & RequestUserInfo,
+  res: Response
+) => {
   const prismaQuery = {
-    ...queryMyTablesWithOrders(req.userInfo.id)
+    ...queryMyTablesWithOrders(req.userInfo.id),
   };
   const resultMapping = mapMyTablesWithOrders;
   prisma.tablePhysical
@@ -34,7 +37,11 @@ export const getMyTablesWithOrders = async (req: Request & RequestUserInfo, res:
     });
 };
 
-export const validateParamTableId = async (req: Request & RequestTableId, res: Response, next: NextFunction) => {
+export const validateParamTableId = async (
+  req: Request & RequestTableId,
+  res: Response,
+  next: NextFunction
+) => {
   const { id: idParam } = req.params;
   const id = Number.parseInt(idParam);
   if (Number.isNaN(id)) {
@@ -49,7 +56,11 @@ export const validateParamTableId = async (req: Request & RequestTableId, res: R
         } else if (count === 0) {
           res.status(404).send("No table exists for the provided id");
         } else {
-          res.status(500).send("Corrupted database records: multiple tables for the provided id");
+          res
+            .status(500)
+            .send(
+              "Corrupted database records: multiple tables for the provided id"
+            );
         }
       })
       .catch((err) => {
@@ -59,7 +70,10 @@ export const validateParamTableId = async (req: Request & RequestTableId, res: R
   }
 };
 
-export const getTableWithOrders = async (req: Request & RequestTableId, res: Response) => {
+export const getTableWithOrders = async (
+  req: Request & RequestTableId,
+  res: Response
+) => {
   const prismaQuery = {
     where: {
       tableId: req.tableId,
@@ -113,11 +127,16 @@ export const validateOrder = async (
   res: Response,
   next: NextFunction
 ) => {
-  const orders = req.body?.orders;
+  const requestOrders = req.body?.orders;
+  
   //validate itemId - array of menu ids
-  const validateOrders = (thing : any) => (Array.isArray(thing) && thing.every((order => Number.isInteger(order))))
-
-  if (Array.isArray(orders) && orders.every((order => Number.isInteger(order)))) {
+  const validateOrders = (thing: any) =>
+    Array.isArray(thing) && thing.every((order) => Number.isInteger(order));
+  
+  if (
+    Array.isArray(orders) &&
+    orders.every((order) => Number.isInteger(order))
+  ) {
     // itemId     Int           @map("item_id")       request body - array!
     // orderTime  DateTime      @map("order_time")    added automatically?
     // statusId   Int           @map("status_id")     default value
@@ -125,15 +144,14 @@ export const validateOrder = async (
     // tableId    Int           @map("table_id")      param (stored in req)
 
     // ALSO ADD THE UNIQUE IDENTIFIER
-    orders
-    const order = {
-      itemId: menuId,
+    orders.map((order) => ({
+      itemId: order,
       statusId: 123, //CHECK THE ID OF THE DEFAULT STATUS
       waiterId: req.userInfo.id,
       tableId: req.tableId,
-    };
-    unconfirmedOrders.push(order);
-    res.json({ success : true /*ADD IDENTIFIER*/})
+    }));
+    unconfirmedOrders.push(orders);
+    res.json({ success: true /*ADD IDENTIFIER*/ });
   } else {
     res.status(400).send("Wrong email or password");
   }
