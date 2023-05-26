@@ -1,9 +1,15 @@
 import express from "express";
-import { verifyToken, getUserByIdAndNext, checkWaiter } from "../handlers/login";
+import {
+  verifyToken,
+  getUserByIdAndNext,
+  checkWaiter,
+} from "../handlers/login";
 import {
   getAllTables,
   getMyTablesWithOrders,
   getTableWithOrders,
+  postOrdersToDB,
+  receiveOrders,
   validateParamTableId,
 } from "../handlers/tables";
 
@@ -31,9 +37,7 @@ tablesRouter
   .route("/:id")
   // @ts-expect-error
   .get(getTableWithOrders)
-  .post(async (req, res) => {
-    res.send("Items are ordered");
-  })
-  .put(async (req, res) => {
-    res.send("Order is confirmed");
-  });
+  // @ts-expect-error
+  .post(receiveOrders)
+  // @ts-expect-error
+  .put(postOrdersToDB);

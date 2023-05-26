@@ -1,7 +1,11 @@
 import { prisma } from "..";
 import { NextFunction, Request, Response } from "express";
 import { RequestTableId, RequestUserInfo } from "../types";
-import { queryMyTablesWithOrders, mapMyTablesWithOrders } from "prisma-queries";
+import {
+  queryMyTablesWithOrders,
+  mapMyTablesWithOrders,
+  queryGetTablesById,
+} from "prisma-queries";
 import { unconfirmedOrders } from "../unconfirmedOrders";
 
 export const getAllTables = async (_: Request, res: Response) => {
@@ -73,33 +77,7 @@ export const getTableWithOrders = async (
   req: Request & RequestTableId,
   res: Response
 ) => {
-  const prismaQuery = {
-    where: {
-      tableId: req.tableId,
-    },
-    select: {
-      id: true,
-      menuItem: {
-        select: {
-          name: true,
-          price: true,
-        },
-      },
-      orderTime: true,
-      statusId: true,
-      status: {
-        select: {
-          name: true,
-        },
-      },
-      waiterId: true,
-      waiter: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  };
+  const prismaQuery = queryGetTablesById(req.tableId);
   prisma.order
     .findMany(prismaQuery)
     .then((found) => {
@@ -122,7 +100,7 @@ export const getTableWithOrders = async (
 };
 
 export const receiveOrders = async (
-  req: Request & RequestUserInfo,
+  req: Request & RequestUserInfo & RequestTableId,
   res: Response,
   next: NextFunction
 ) => {
@@ -143,20 +121,24 @@ export const receiveOrders = async (
       })),
     };
     unconfirmedOrders.push(order);
-    res.status(202).json({ code: order.unique });
+    res.status(202).json({ uniqueCode: order.unique });
   } else {
     res.status(400).send("Invalid order request");
   }
 };
 
 export const postOrdersToDB = async (
-  req: Request & RequestUserInfo,
+  req: Request & RequestUserInfo & RequestTableId,
   res: Response,
   next: NextFunction
 ) => {
-  const code = req.body?.code;
-  if (Number.isInteger(code) && code >= 0 && code.toString().length <= 6) {
-    const validCode: number = code;
+  const unique = req.body?.uniqueCode;
+  if (
+    Number.isInteger(unique) &&
+    unique >= 0 &&
+    unique.toString().length <= 6
+  ) {
+    const validCode: number = unique;
     const orderIndex = unconfirmedOrders.findIndex(
       (orders) => orders.unique === validCode
     );
