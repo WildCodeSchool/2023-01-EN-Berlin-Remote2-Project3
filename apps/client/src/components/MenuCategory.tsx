@@ -1,11 +1,15 @@
-import { useState } from "react";
 import { MenuItem } from "../api";
-import MenuOrder from "./MenuOrder";
 import "../scss/_menuCategory.scss";
 
-const MenuCategory = ({ dataArr }: { dataArr: MenuItem[] }) => {
-  const [selectedMenuItems, setSelectedMenuItems] = useState([]);
-
+const MenuCategory = ({
+  dataArr,
+  selectedMenuItems,
+  setSelectedMenuItems,
+}: {
+  dataArr: MenuItem[];
+  selectedMenuItems: any;
+  setSelectedMenuItems: any;
+}) => {
   const selectItemHandle = (item) => {
     const selectedOrder = [...selectedMenuItems, item];
     setSelectedMenuItems(selectedOrder);
@@ -21,11 +25,6 @@ const MenuCategory = ({ dataArr }: { dataArr: MenuItem[] }) => {
           </li>
         ))}
       </ul>
-
-      <MenuOrder
-        selectedMenuItems={selectedMenuItems}
-        setSelectedMenuItems={setSelectedMenuItems}
-      />
     </div>
   );
 };

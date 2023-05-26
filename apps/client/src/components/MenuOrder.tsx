@@ -1,3 +1,6 @@
+import "../scss/_MenuOrder.scss";
+import deleteIcon from "../assets/deleteIcon.svg";
+
 const MenuOrder = ({
   selectedMenuItems,
   setSelectedMenuItems,
@@ -5,8 +8,6 @@ const MenuOrder = ({
   selectedMenuItems: any;
   setSelectedMenuItems: any;
 }) => {
-  console.log(selectedMenuItems);
-
   const totalPrice = selectedMenuItems
     .map((item) => +item.price)
     .reduce((acc, mov) => {
@@ -22,19 +23,20 @@ const MenuOrder = ({
   };
 
   return (
-    <div>
-      <h3>your order</h3>
-      {selectedMenuItems.map((item) => {
+    <div className="menuOrder--container">
+      <h4>current order</h4>
+      {selectedMenuItems.map((item, i) => {
         return (
-          <div>
+          <div className="orderedItems" key={i}>
             <ul onClick={() => handleDelete(item.name)}>
               <li>{item.name}</li>
               <li>{item.price}</li>
+              <img src={deleteIcon} alt="" />
             </ul>
           </div>
         );
       })}
-      <p>current price:{totalPrice}.00 €</p>
+      <h5>current total price: {totalPrice}.00 €</h5>
     </div>
   );
 };

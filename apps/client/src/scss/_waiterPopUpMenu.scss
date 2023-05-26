@@ -11,8 +11,11 @@
   height: 90vh;
   z-index: 2;
   border-radius: 30px;
-  color: white;
-  border: 1px solid white;
+  overflow: scroll;
+  background-color: #fff;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .overlay {

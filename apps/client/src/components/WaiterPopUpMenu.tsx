@@ -4,31 +4,26 @@ import { Category } from "../api";
 import { useNavigate } from "react-router-dom";
 
 const WaiterPopUpMenu = ({
-  showPopUp,
-  setShowPopUp,
+  hidePopUp,
   menuData,
 }: {
-  showPopUp: boolean;
-  setShowPopUp: React.Dispatch<React.SetStateAction<boolean>>;
+  hidePopUp: () => void;
   menuData: Category[];
 }) => {
   const navigator = useNavigate();
 
   const closePopUp = () => {
-    setShowPopUp(false);
+    hidePopUp();
     navigator("/dashboard");
   };
 
   return (
     <div>
-      <div className={showPopUp ? "popUpWindow" : "hidden"}>
+      <div className="popUpWindow">
         <Menu menuData={menuData} />
       </div>
 
-      <div
-        onClick={closePopUp}
-        className={showPopUp ? "overlay" : "hidden"}
-      ></div>
+      <div onClick={closePopUp} className="overlay"></div>
     </div>
   );
 };
