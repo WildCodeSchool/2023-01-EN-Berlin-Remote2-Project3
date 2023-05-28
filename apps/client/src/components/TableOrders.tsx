@@ -7,7 +7,7 @@ import { Category, TableWithOrders } from "../api";
 const TableOrders = ({
   tableOrders,
   menuData,
-  tableId
+  tableId,
 }: {
   tableOrders: TableWithOrders;
   menuData: Category[];
@@ -63,7 +63,8 @@ const TableOrders = ({
       </div>
 
       {showPopUp === true ? (
-        <WaiterPopUpMenu tableId={tableId}
+        <WaiterPopUpMenu
+          tableId={tableId}
           menuData={menuData}
           hidePopUp={() => {
             setShowPopUp(false);

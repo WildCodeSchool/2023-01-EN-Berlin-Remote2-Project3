@@ -1,5 +1,5 @@
 import "../scss/_waiterOrderView.scss";
-import { fetchMyTables, TableWithOrders, Category, tableData } from "../api";
+import { fetchMyTables, TableWithOrders, Category, TableInterface } from "../api";
 import { useState, useEffect } from "react";
 import TableOrders from "./TableOrders";
 import EmptyTableOrder from "./EmptyTableOrder";
@@ -12,8 +12,8 @@ const WaiterOrderView = ({
 }: {
   token: string;
   menuData: Category[];
-  selectedTable: any;
-  setSelectedTable: any;
+  selectedTable: TableInterface[];
+  setSelectedTable: React.Dispatch<React.SetStateAction<TableInterface[]>>
 }) => {
   const [myTables, setMyTables] = useState([] as TableWithOrders[]);
 

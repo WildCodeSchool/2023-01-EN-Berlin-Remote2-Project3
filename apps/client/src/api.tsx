@@ -1,4 +1,5 @@
 import { UserInfo } from "./App";
+import ErrorDisplayView from "./components/ErrorDisplayView";
 
 export const fetchMenuData = async () => {
   try {

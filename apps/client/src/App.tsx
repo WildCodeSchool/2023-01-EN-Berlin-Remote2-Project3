@@ -11,6 +11,7 @@ import { fetchMenuData, fetchTokenValidation, Category } from "./api";
 import { LoginPage } from "./routes/LoginPage";
 import MenuContent from "./components/MenuContent";
 import Dashboard from "./components/Dashboard";
+import ErrorDisplayView from "./components/ErrorDisplayView";
 
 export interface UserInfo {
   id: number;
@@ -54,7 +55,7 @@ const App = () => {
         createRoutesFromElements(
           <Route
             path="/"
-            errorElement={<h1>Error in root page</h1>}
+            errorElement={<ErrorDisplayView />}
             element={
               <LoginPage
                 setToken={setToken}
@@ -66,6 +67,7 @@ const App = () => {
           >
             <Route
               path="dashboard"
+              errorElement={<ErrorDisplayView />}
               element={
                 <Dashboard
                   token={token}
