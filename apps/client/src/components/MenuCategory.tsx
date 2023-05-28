@@ -7,10 +7,10 @@ const MenuCategory = ({
   setSelectedMenuItems,
 }: {
   dataArr: MenuItem[];
-  selectedMenuItems: any;
-  setSelectedMenuItems: any;
+  selectedMenuItems: MenuItem[];
+  setSelectedMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
 }) => {
-  const selectItemHandle = (item) => {
+  const selectItemHandle = (item: MenuItem) => {
     const selectedOrder = [...selectedMenuItems, item];
     setSelectedMenuItems(selectedOrder);
   };

@@ -1,5 +1,5 @@
 @use "./colors";
-
+@use "./general";
 @import "./main";
 
 .menuTabs__container {
@@ -12,25 +12,26 @@
 
 .menuTabs {
   margin: 2px;
-  padding: 10px 10px;
+  padding: 13px 10px;
   text-align: center;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  border: 1px solid colors.$primary-darker;
+  border-radius: 10px;
+  transition: general.$transition;
 
-  color: #fff;
-  background-color: colors.$tabBackground;
+  &:hover {
+    background-color: colors.$primary-darker;
+  }
 }
 
 .active {
-  background-color: white;
-  color: black;
-  border: 2px solid colors.$primary;
+  background-color: colors.$tabBackground;
+  color: #fff;
+  border: 2px solid colors.$primary-darker;
   border-bottom: 0;
   border-radius: 10px 10px 0 0;
-
-  .pending {
-    background-color: white;
-  }
+  letter-spacing: 1px;
 }

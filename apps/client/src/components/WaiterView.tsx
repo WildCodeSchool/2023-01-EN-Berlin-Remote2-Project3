@@ -39,20 +39,32 @@ const WaiterView = ({
     setSelectedTable(updateClickedItem);
   };
 
+  const handelToggleTables = () => {
+    setHideTables(!hideTables);
+  };
+
   return (
-    <div className="button">
-      <button onClick={() => setHideTables(!hideTables)}>
-        {hideTables ? "table show" : "table hide"}
-      </button>
-      <div className={hideTables ? "hidden" : "waiterViewTables "}>
-        {tableDataApi.map((table) => {
-          return (
-            <ul key={table.id}>
-              <li onClick={() => tableHandler(table)}>{table.name}</li>
-            </ul>
-          );
-        })}
+    <div className="waiterView-container">
+      <div className="togglebuttonContainer ">
+        {!hideTables ? "Table Visibility On" : "Table Visibility Off"}
+        <label className="container">
+          <input onClick={handelToggleTables} type="checkbox" className="cB" />
+          <div className="line-toggle">
+            <div className="lineCircle-toggle"></div>
+          </div>
+        </label>
       </div>
+      {!hideTables && (
+        <div className="waiterViewTables">
+          {tableDataApi.map((table) => {
+            return (
+              <ul key={table.id}>
+                <li onClick={() => tableHandler(table)}>{table.name}</li>
+              </ul>
+            );
+          })}
+        </div>
+      )}
       <WaiterOrderView
         token={token}
         menuData={menuData}

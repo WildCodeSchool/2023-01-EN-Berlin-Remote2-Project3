@@ -1,17 +1,19 @@
-import { Category } from "../api";
+import { Category, MenuItem } from "../api";
 import MenuCategory from "./MenuCategory";
 
 const MenuContent = ({
   data,
   activeCategory,
   selectedMenuItems,
-  setSelectedMenuItems
+  setSelectedMenuItems,
 }: {
   data: Category[];
   activeCategory: number | undefined;
-  selectedMenuItems: any;
-  setSelectedMenuItems: any;
+  selectedMenuItems: MenuItem[];
+  setSelectedMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
 }) => {
+  console.log(selectedMenuItems);
+
   const activeCat =
     typeof activeCategory === "number"
       ? data.find((category) => category.id === activeCategory)
@@ -27,7 +29,7 @@ const MenuContent = ({
         />
         {activeCat.childCategories.map((category) => (
           <div key={category.id}>
-            <h3>{category.name}</h3>
+            <h5>{category.name}</h5>
             <MenuCategory
               dataArr={category.menuItems}
               selectedMenuItems={selectedMenuItems}
@@ -38,7 +40,9 @@ const MenuContent = ({
       </ul>
     </>
   ) : (
-    <h1>No active category</h1>
+    <h5 className="menuContentMessage">
+      In order to proceed, please indicate your desired category:
+    </h5>
   );
 };
 

@@ -1,11 +1,18 @@
+@use "./general";
+@use "./colors";
 .menuOrder--container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 20px;
   overflow: scroll;
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  h4 {
+    color: colors.$fadetTextColor;
   }
 }
 
@@ -18,10 +25,31 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
+    color: colors.$fadetTextColor;
   }
 
   img {
     width: 16px;
     cursor: pointer;
   }
+}
+
+.menuOrder__btn--container {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.sendOrderBtn {
+  @include general.button;
+}
+
+.sendOrderBtn {
+  padding: 7px;
+  width: 100px;
+}
+
+.menuContentMessage {
+  color: #999595;
+  margin-top: 6em;
 }

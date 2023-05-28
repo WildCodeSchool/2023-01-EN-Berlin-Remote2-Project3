@@ -1,5 +1,5 @@
 import MenuTabs from "../components/MenuTabs";
-import { Category } from "../api";
+import { Category, MenuItem } from "../api";
 import "../scss/_menuTabs.scss";
 import MenuContent from "../components/MenuContent";
 import MenuOrder from "../components/MenuOrder";
@@ -12,7 +12,7 @@ const Menu = ({
   menuData: Category[];
   tableId: number;
 }) => {
-  const [selectedMenuItems, setSelectedMenuItems] = useState([]);
+  const [selectedMenuItems, setSelectedMenuItems] = useState([] as MenuItem[]);
   const [activeCategory, setActiveCategory] = useState<number | undefined>();
 
   if (Array.isArray(menuData))
@@ -24,11 +24,7 @@ const Menu = ({
             id: category.id,
           }))}
           setActiveCategory={setActiveCategory}
-        />
-        <MenuOrder
-          selectedMenuItems={selectedMenuItems}
-          setSelectedMenuItems={setSelectedMenuItems}
-          tableId={tableId}
+          activeCategory={activeCategory}
         />
         <MenuContent
           data={menuData}
@@ -36,6 +32,14 @@ const Menu = ({
           selectedMenuItems={selectedMenuItems}
           setSelectedMenuItems={setSelectedMenuItems}
         />
+
+        {activeCategory && (
+          <MenuOrder
+            selectedMenuItems={selectedMenuItems}
+            setSelectedMenuItems={setSelectedMenuItems}
+            tableId={tableId}
+          />
+        )}
       </div>
     );
 
