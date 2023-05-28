@@ -8,9 +8,11 @@ import { useState } from "react";
 const Menu = ({
   menuData,
   tableId,
+  token,
 }: {
   menuData: Category[];
   tableId: number;
+  token: string;
 }) => {
   const [selectedMenuItems, setSelectedMenuItems] = useState([] as MenuItem[]);
   const [activeCategory, setActiveCategory] = useState<number | undefined>();
@@ -38,6 +40,7 @@ const Menu = ({
             selectedMenuItems={selectedMenuItems}
             setSelectedMenuItems={setSelectedMenuItems}
             tableId={tableId}
+            token={token}
           />
         )}
       </div>

@@ -1,5 +1,10 @@
 import "../scss/_waiterOrderView.scss";
-import { fetchMyTables, TableWithOrders, Category, TableInterface } from "../api";
+import {
+  fetchMyTables,
+  TableWithOrders,
+  Category,
+  TableInterface,
+} from "../api";
 import { useState, useEffect } from "react";
 import TableOrders from "./TableOrders";
 import EmptyTableOrder from "./EmptyTableOrder";
@@ -13,10 +18,9 @@ const WaiterOrderView = ({
   token: string;
   menuData: Category[];
   selectedTable: TableInterface[];
-  setSelectedTable: React.Dispatch<React.SetStateAction<TableInterface[]>>
+  setSelectedTable: React.Dispatch<React.SetStateAction<TableInterface[]>>;
 }) => {
   const [myTables, setMyTables] = useState([] as TableWithOrders[]);
-
 
   useEffect(() => {
     const validateToken = async () => {
@@ -31,8 +35,6 @@ const WaiterOrderView = ({
     validateToken();
   }, []);
 
-
-
   return (
     <div className="waiterOrderview">
       {myTables.map((data) => {
@@ -42,6 +44,7 @@ const WaiterOrderView = ({
             key={data.id}
             menuData={menuData}
             tableId={data.id}
+            token={token}
           />
         );
       })}

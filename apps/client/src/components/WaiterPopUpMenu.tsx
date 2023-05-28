@@ -6,10 +6,12 @@ const WaiterPopUpMenu = ({
   hidePopUp,
   menuData,
   tableId,
+  token,
 }: {
   hidePopUp: () => void;
   menuData: Category[];
   tableId: number;
+  token: string;
 }) => {
   const closePopUp = () => {
     hidePopUp();
@@ -18,7 +20,7 @@ const WaiterPopUpMenu = ({
   return (
     <div>
       <div className="popUpWindow">
-        <Menu menuData={menuData} tableId={tableId} />
+        <Menu menuData={menuData} tableId={tableId} token={token} />
       </div>
 
       <div onClick={closePopUp} className="overlay"></div>

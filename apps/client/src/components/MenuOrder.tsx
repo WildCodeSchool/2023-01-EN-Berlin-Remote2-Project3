@@ -1,16 +1,21 @@
 import "../scss/_MenuOrder.scss";
 import deleteIcon from "../assets/deleteIcon.svg";
 import { MenuItem } from "../api";
+import { useState } from "react";
 
 const MenuOrder = ({
   selectedMenuItems,
   setSelectedMenuItems,
   tableId,
+  token,
 }: {
   selectedMenuItems: MenuItem[];
   setSelectedMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
   tableId: number;
+  token: string;
 }) => {
+  const [orderSendMessage, setOrderSendMessage] = useState(false);
+
   const totalPrice: number = selectedMenuItems
     .map((item) => +item.price)
     .reduce((acc, mov) => {
@@ -25,17 +30,60 @@ const MenuOrder = ({
     if (result) setSelectedMenuItems(deleteItem);
   };
 
-  const handleSendOrder = () => {
-    // const response = await fetch(`http://localhost:4000/api/tables/${tableId}`, {
-    //   method: "POST",
-    //   headers: {
-    //   },
-    //   body: JSON.stringify(credentials),
-    // });
+  const handleSendOrder = async () => {
+    const itemsId = selectedMenuItems.map((item) => item.id);
+    const requestBody = {
+      orders: itemsId,
+    };
 
-    setSelectedMenuItems([]);
-    console.dir(selectedMenuItems);
-    console.log(tableId);
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/tables/${tableId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const code = {
+          uniqueCode: data.uniqueCode,
+        };
+
+        const putResponse = await fetch(
+          `http://localhost:4000/api/tables/${tableId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(code), // Pass the code in the body of the PUT request
+          }
+        );
+
+        if (putResponse.ok) {
+          setSelectedMenuItems([]);
+          setOrderSendMessage(true);
+        } else {
+          throw new Error("uniqe code error, please try again");
+        }
+      } else {
+        throw new Error("faild to send order");
+      }
+
+      // Reload the page after 2 seconds to show the results from mineTables!
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    } catch (err) {
+      console.error("error", err);
+    }
   };
 
   return (
@@ -57,15 +105,28 @@ const MenuOrder = ({
             </div>
           );
         })}
-        <h5>
-          {selectedMenuItems.length !== 0 ? (
-            `current total price: ${totalPrice}.00 €`
-          ) : (
-            <p style={{ color: "#636363" }}>
-              Take your pick from the menu items.
-            </p>
-          )}
-        </h5>
+        {orderSendMessage ? (
+          <h4
+            style={
+              orderSendMessage ? { color: " #00FF00" } : { color: "#FF0000 " }
+            }
+          >
+            {" "}
+            {orderSendMessage
+              ? "Order Successful"
+              : "Failed to send the order. Please try again."}
+          </h4>
+        ) : (
+          <h5>
+            {selectedMenuItems.length !== 0 ? (
+              `current total price: ${totalPrice}.00 €`
+            ) : (
+              <p style={{ color: "#636363" }}>
+                Take your pick from the menu items.
+              </p>
+            )}
+          </h5>
+        )}
       </div>
       <div className="menuOrder__btn--container">
         <p onClick={handleSendOrder} className="sendOrderBtn">

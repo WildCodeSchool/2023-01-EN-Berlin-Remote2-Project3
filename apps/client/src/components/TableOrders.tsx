@@ -8,10 +8,12 @@ const TableOrders = ({
   tableOrders,
   menuData,
   tableId,
+  token,
 }: {
   tableOrders: TableWithOrders;
   menuData: Category[];
   tableId: number;
+  token: string;
 }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const items = tableOrders.orders;
@@ -65,6 +67,7 @@ const TableOrders = ({
       {showPopUp === true ? (
         <WaiterPopUpMenu
           tableId={tableId}
+          token={token}
           menuData={menuData}
           hidePopUp={() => {
             setShowPopUp(false);

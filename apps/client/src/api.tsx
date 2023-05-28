@@ -71,6 +71,7 @@ export const fetchMyTables = async (token: string) => {
     });
 
     const data = await res.json();
+
     return data;
   } catch (err) {
     console.log("error happen fetchMyTables API");
