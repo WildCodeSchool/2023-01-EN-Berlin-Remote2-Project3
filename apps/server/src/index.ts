@@ -1,13 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import expressOasGenerator from "express-oas-generator";
 import cors from "cors";
 import { loginRouter } from "./routes/login";
 import { tablesRouter } from "./routes/tables";
 import { PrismaClient } from "@prisma/client";
-import { verifyToken, getUserByIdAndNext, sendUserInfo } from "./handlers/login";
 import { getMenuItemsSortedByCategory } from "./handlers/menu";
 
 const app = express();
@@ -32,9 +31,10 @@ app.get("/api/menu", getMenuItemsSortedByCategory);
 app.use("/api/login", loginRouter);
 app.use("/api/tables", tablesRouter);
 
-// app.use((err, req, res, next) => {
-//   console.error(err)
-// })
+app.use((err, req: Request, res: Response, next: NextFunction) => {
+  console.error(err);
+  res.status(500).send("An unknown error has occured on the server");
+});
 
 const port = process.env.PORT ?? 4500;
 app.listen(port, () => {
