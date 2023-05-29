@@ -1,4 +1,7 @@
 import { TablePhysical } from "@prisma/client";
+import "../scss/_emptyTableOrder.scss";
+import menuAddIcon from "../assets/menuIcon.svg";
+import { useState } from "react";
 
 const EmptyTableOrder = ({
   selectedTable,
@@ -7,25 +10,24 @@ const EmptyTableOrder = ({
   selectedTable: TablePhysical[];
   setSelectedTable: React.Dispatch<React.SetStateAction<TablePhysical[]>>;
 }) => {
-  const handleDelete = (table: string) => {
-    const deleteTable = selectedTable.filter((te) => {
-      return te.name !== table;
-    });
-    const result = confirm(`Are you sure you want to delete table ${table} ?`);
-    if (result) setSelectedTable(deleteTable);
-  };
+  const [showPopUp, setShowPopUp] = useState(false);
 
-  return (
-    <div>
-      {selectedTable.map((table) => {
-        return (
-          <h5 key={table.id} onClick={() => handleDelete(table.name)}>
-            {table.name}
-          </h5>
-        );
-      })}
+  return selectedTable.length !== 0 ? (
+    <div className="cardContainer">
+      <div className="cardHeader">
+        <p>{selectedTable.name}</p>
+      </div>
+
+      <p className="emptyCard--message">please add your order</p>
+      <div className="itemOrder--btn">
+        <img
+          onClick={() => setShowPopUp((x) => !x)}
+          src={menuAddIcon}
+          alt="addItem - Icon"
+        />
+      </div>
     </div>
-  );
+  ) : null;
 };
 
 export default EmptyTableOrder;

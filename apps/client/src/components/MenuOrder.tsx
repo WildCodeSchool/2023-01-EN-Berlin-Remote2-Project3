@@ -111,7 +111,6 @@ const MenuOrder = ({
               orderSendMessage ? { color: " #00FF00" } : { color: "#FF0000 " }
             }
           >
-            {" "}
             {orderSendMessage
               ? "Order Successful"
               : "Failed to send the order. Please try again."}

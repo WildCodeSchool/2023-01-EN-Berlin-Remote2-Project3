@@ -1,0 +1,7 @@
+@use "./colors";
+@import "./waiterOrderView";
+
+.emptyCard--message {
+  text-align: center;
+  color: colors.$fadetTextColor;
+}

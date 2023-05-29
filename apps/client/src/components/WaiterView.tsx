@@ -31,13 +31,12 @@ const WaiterView = ({
     data();
   }, []);
 
-  const tableHandler = (table: TablePhysical) => {
+  const tableHandler = (table: TablePhysical[]) => {
     // navigator("/menu");
     setHideTables(true);
 
     // storing all selected tables in state!
-    const updateClickedItem = [...selectedTable, table];
-    setSelectedTable(updateClickedItem);
+    setSelectedTable(table);
   };
 
   const handleToggleTables = () => {
