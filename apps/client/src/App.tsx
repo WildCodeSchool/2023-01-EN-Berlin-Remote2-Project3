@@ -6,11 +6,11 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useToken from "./useToken";
-import Menu from "./routes/Menu";
 import { fetchMenuData, fetchTokenValidation, Category } from "./api";
 import { LoginPage } from "./routes/LoginPage";
-import MenuContent from "./components/MenuContent";
-import Dashboard from "./components/Dashboard";
+// import Menu from "./routes/Menu";
+// import MenuContent from "./components/MenuContent";
+import Dashboard from "./routes/Dashboard";
 import ErrorDisplayView from "./components/ErrorDisplayView";
 
 export interface UserInfo {
@@ -29,7 +29,7 @@ const App = () => {
     // Load menu data on startup
     const data = async () => {
       const res = await fetchMenuData();
-      if (res) {
+      if (res !== undefined) {
         setMenuDataApi(res);
       } else {
         throw Error("failed to fetch menu data from server");
@@ -70,7 +70,7 @@ const App = () => {
               errorElement={<ErrorDisplayView />}
               element={
                 <Dashboard
-                  token={token}
+                  token={token ?? ""}
                   userInfo={userInfo}
                   menuData={menuDataApi}
                 />
