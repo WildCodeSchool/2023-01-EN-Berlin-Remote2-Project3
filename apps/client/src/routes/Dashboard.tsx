@@ -1,10 +1,10 @@
 import { UserInfo } from "../App";
 import { Category } from "../api";
-import KitchenView from "./KitchenView";
-import WaiterView from "./WaiterView";
-import BarView from "./BarView";
-import FoodRunnerView from "./FoodRunnerView";
-import Spinner from "./Spinner";
+import KitchenView from "../components/KitchenView";
+import WaiterView from "../components/WaiterView";
+import BarView from "../components/BarView";
+import FoodRunnerView from "../components/FoodRunnerView";
+import Spinner from "../components/Spinner";
 
 const Dashboard = ({
   userInfo,

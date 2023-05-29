@@ -30,8 +30,6 @@ app.get("/", async (req, res) => {
 app.get("/api/menu", getMenuItemsSortedByCategory);
 
 app.use("/api/login", loginRouter);
-// @ts-expect-error
-app.get("/api/verification", verifyToken, getUserByIdAndNext, sendUserInfo);
 app.use("/api/tables", tablesRouter);
 
 // app.use((err, req, res, next) => {

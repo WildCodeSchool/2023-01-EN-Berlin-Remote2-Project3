@@ -1,6 +1,5 @@
 import { ResponseGetTablesMine } from "prisma-queries";
 import { UserInfo } from "./App";
-import ErrorDisplayView from "./components/ErrorDisplayView";
 import { TablePhysical } from "@prisma/client";
 
 export const fetchMenuData = async () => {
@@ -19,7 +18,7 @@ export const fetchMenuData = async () => {
 // if the token is valid, this will return the user information
 export const fetchTokenValidation = async (token: string) => {
   try {
-    const res = await fetch("http://localhost:4000/api/verification", {
+    const res = await fetch("http://localhost:4000/api/login", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -29,7 +28,7 @@ export const fetchTokenValidation = async (token: string) => {
     if (data.success === true) return data.payload as UserInfo;
     else return null;
   } catch (err) {
-    console.log(err, "Token validation failed (Endpoint: /api/validation).");
+    console.log(err, "Token validation failed (Endpoint: /api/login).");
   }
 };
 
