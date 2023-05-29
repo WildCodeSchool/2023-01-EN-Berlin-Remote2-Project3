@@ -40,7 +40,7 @@ const WaiterView = ({
     setSelectedTable(updateClickedItem);
   };
 
-  const handelToggleTables = () => {
+  const handleToggleTables = () => {
     setHideTables(!hideTables);
   };
 
@@ -49,7 +49,7 @@ const WaiterView = ({
       <div className="togglebuttonContainer ">
         {!hideTables ? "Table Visibility On" : "Table Visibility Off"}
         <label className="container">
-          <input onClick={handelToggleTables} type="checkbox" className="cB" />
+          <input onClick={handleToggleTables} type="checkbox" className="cB" />
           <div className="line-toggle">
             <div className="lineCircle-toggle"></div>
           </div>
