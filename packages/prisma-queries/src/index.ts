@@ -24,7 +24,7 @@ import { Prisma } from "@prisma/client";
 
 // (1) Extract and export the query parameter object (as a function in this case, since
 //     it depends on user-supplied waiter ID)
-export const queryMyTablesWithOrders = (id: number) => ({
+export const queryGetTablesMine = (id: number) => ({
   where: {
     orders: {
       some: {
@@ -70,15 +70,14 @@ export const queryMyTablesWithOrders = (id: number) => ({
 
 // (2) Compute the type to be returned by the Prisma query (using findMany on the
 //     TablePhysical model in this case)
-const tablesWithOrders = Prisma.validator<Prisma.TablePhysicalFindManyArgs>()(
-  queryMyTablesWithOrders(0)
-);
-type TableWithOrdersQuery = Prisma.TablePhysicalGetPayload<
-  typeof tablesWithOrders
+const dbResponseGetTablesMine =
+  Prisma.validator<Prisma.TablePhysicalFindManyArgs>()(queryGetTablesMine(0));
+type DbResponseGetTablesMine = Prisma.TablePhysicalGetPayload<
+  typeof dbResponseGetTablesMine
 >;
 
 // (3) Extract and export the mapper function and type it using the above
-export const mapMyTablesWithOrders = (results: TableWithOrdersQuery[]) =>
+export const mapGetTablesMine = (results: DbResponseGetTablesMine[]) =>
   results.map((table) => ({
     id: table.id,
     name: table.name,
@@ -97,7 +96,7 @@ export const mapMyTablesWithOrders = (results: TableWithOrdersQuery[]) =>
   }));
 
 // This is the final type to be returned from the endpoint, which is exported
-export type TableWithOrders = ReturnType<typeof mapMyTablesWithOrders>;
+export type ResponseGetTablesMine = ReturnType<typeof mapGetTablesMine>;
 
 export const queryGetTablesById = (id: number) => ({
   where: {
@@ -127,9 +126,23 @@ export const queryGetTablesById = (id: number) => ({
   },
 });
 
-const tableWithOrders = Prisma.validator<Prisma.OrderFindManyArgs>()(
+const dbResponseGetTablesById = Prisma.validator<Prisma.OrderFindManyArgs>()(
   queryGetTablesById(0)
 );
-type ResponseGetTablesById = Prisma.OrderGetPayload<
-  typeof tablesWithOrders
+type DbResponseGetTablesById = Prisma.OrderGetPayload<
+  typeof dbResponseGetTablesById
 >;
+
+export const mapGetTablesById = (results: DbResponseGetTablesById[]) =>
+  results.map((order) => ({
+    id: order.id,
+    name: order.menuItem.name,
+    price: order.menuItem.price,
+    orderTime: order.orderTime,
+    statusId: order.statusId,
+    status: order.status.name,
+    waiterId: order.waiterId,
+    waiter: order.waiter.name,
+  }));
+
+export type ResponseGetTablesById = ReturnType<typeof mapGetTablesById>;

@@ -2,7 +2,8 @@ import { useState } from "react";
 import menuAddIcon from "../assets/menuIcon.svg";
 import "../scss/_waiterOrderView.scss";
 import WaiterPopUpMenu from "./WaiterPopUpMenu";
-import { Category, TableWithOrders } from "../api";
+import { Category } from "../api";
+import { ResponseGetTablesMine } from "prisma-queries";
 
 const TableOrders = ({
   tableOrders,
@@ -10,7 +11,7 @@ const TableOrders = ({
   tableId,
   token,
 }: {
-  tableOrders: TableWithOrders;
+  tableOrders: ResponseGetTablesMine[0];
   menuData: Category[];
   tableId: number;
   token: string;

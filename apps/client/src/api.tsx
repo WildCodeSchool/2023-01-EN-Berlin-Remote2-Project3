@@ -1,5 +1,7 @@
+import { ResponseGetTablesMine } from "prisma-queries";
 import { UserInfo } from "./App";
 import ErrorDisplayView from "./components/ErrorDisplayView";
+import { TablePhysical } from "@prisma/client";
 
 export const fetchMenuData = async () => {
   try {
@@ -47,7 +49,7 @@ export interface Category {
 export const tableData = async () => {
   try {
     const res = await fetch("http://localhost:4000/api/tables");
-    const data: TableInterface[] = await res.json();
+    const data: TablePhysical[] = await res.json();
     if (!res.ok) return;
 
     return data;
@@ -56,13 +58,9 @@ export const tableData = async () => {
   }
 };
 
-export interface TableInterface {
-  id: number;
-  name: string;
-  statusId: number;
-}
-
-export const fetchMyTables = async (token: string) => {
+export const fetchMyTables = async (
+  token: string
+): Promise<ResponseGetTablesMine | undefined> => {
   try {
     const res = await fetch("http://localhost:4000/api/tables/mine", {
       headers: {
@@ -77,21 +75,3 @@ export const fetchMyTables = async (token: string) => {
     console.log("error happen fetchMyTables API");
   }
 };
-
-export interface Order {
-  id: number;
-  name: string;
-  status: string;
-  statusId: number;
-  price: number;
-  waiter: string;
-  waiterId: number;
-  orderTime: string;
-}
-export interface TableWithOrders {
-  id: number;
-  name: string;
-  status: string;
-  statusId: number;
-  orders: Order[];
-}

@@ -2,8 +2,9 @@ import { tableData } from "../api";
 import { useEffect, useState } from "react";
 import "../scss/_WaiterView.scss";
 // import { useNavigate } from "react-router-dom";
-import { TableInterface, Category } from "../api";
+import { Category } from "../api";
 import WaiterOrderView from "./WaiterOrderView";
+import { TablePhysical } from "@prisma/client";
 
 const WaiterView = ({
   token,
@@ -12,8 +13,8 @@ const WaiterView = ({
   token: string;
   menuData: Category[];
 }) => {
-  const [tableDataApi, setTableDataApi] = useState([] as TableInterface[]);
-  const [selectedTable, setSelectedTable] = useState([] as TableInterface[]);
+  const [tableDataApi, setTableDataApi] = useState([] as TablePhysical[]);
+  const [selectedTable, setSelectedTable] = useState([] as TablePhysical[]);
   const [hideTables, setHideTables] = useState(true);
 
   // const navigator = useNavigate();
@@ -30,7 +31,7 @@ const WaiterView = ({
     data();
   }, []);
 
-  const tableHandler = (table: TableInterface) => {
+  const tableHandler = (table: TablePhysical) => {
     // navigator("/menu");
     setHideTables(true);
 

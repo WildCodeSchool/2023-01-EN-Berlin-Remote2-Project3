@@ -8,7 +8,7 @@ import {
   getAllTables,
   getMyTablesWithOrders,
   getTableWithOrders,
-  postOrdersToDB,
+  sendOrdersToDB,
   receiveOrders,
   validateParamTableId,
 } from "../handlers/tables";
@@ -24,7 +24,7 @@ tablesRouter.get("/", getAllTables);
 // @ts-expect-error
 tablesRouter.use(verifyToken, getUserByIdAndNext, checkWaiter);
 
-// GET "/api/tables/mine" returns TableWithOrders[]
+// GET "/api/tables/mine" returns ResponseGetTablesMine[]
 // @ts-expect-error
 tablesRouter.get("/mine", getMyTablesWithOrders);
 
@@ -40,4 +40,4 @@ tablesRouter
   // @ts-expect-error
   .post(receiveOrders)
   // @ts-expect-error
-  .put(postOrdersToDB);
+  .put(sendOrdersToDB);

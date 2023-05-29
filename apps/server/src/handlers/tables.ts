@@ -2,9 +2,10 @@ import { prisma } from "..";
 import { NextFunction, Request, Response } from "express";
 import { RequestTableId, RequestUserInfo } from "../types";
 import {
-  queryMyTablesWithOrders,
-  mapMyTablesWithOrders,
+  queryGetTablesMine,
+  mapGetTablesMine,
   queryGetTablesById,
+  mapGetTablesById,
 } from "prisma-queries";
 import { unconfirmedOrders } from "../unconfirmedOrders";
 
@@ -24,10 +25,8 @@ export const getMyTablesWithOrders = async (
   req: Request & RequestUserInfo,
   res: Response
 ) => {
-  const prismaQuery = {
-    ...queryMyTablesWithOrders(req.userInfo.id),
-  };
-  const resultMapping = mapMyTablesWithOrders;
+  const prismaQuery = queryGetTablesMine(req.userInfo.id);
+  const resultMapping = mapGetTablesMine;
   prisma.tablePhysical
     .findMany(prismaQuery)
     .then(resultMapping)
@@ -78,19 +77,11 @@ export const getTableWithOrders = async (
   res: Response
 ) => {
   const prismaQuery = queryGetTablesById(req.tableId);
+  const resultMapping = mapGetTablesById;
   prisma.order
     .findMany(prismaQuery)
-    .then((found) => {
-      const result = found.map((order) => ({
-        id: order.id,
-        name: order.menuItem.name,
-        price: order.menuItem.price,
-        orderTime: order.orderTime,
-        statusId: order.statusId,
-        status: order.status.name,
-        waiterId: order.waiterId,
-        waiter: order.waiter.name,
-      }));
+    .then(resultMapping)
+    .then((result) => {
       res.json(result);
     })
     .catch((err) => {
@@ -112,7 +103,7 @@ export const receiveOrders = async (
   ) {
     const validOrders: number[] = requestOrders;
     const order = {
-      unique: Math.floor(Math.random() * 1000000),
+      unique: Math.floor(Math.random() * 1_000_000_000_000),
       orders: validOrders.map((order) => ({
         itemId: order,
         statusId: 1,
@@ -127,7 +118,7 @@ export const receiveOrders = async (
   }
 };
 
-export const postOrdersToDB = async (
+export const sendOrdersToDB = async (
   req: Request & RequestUserInfo & RequestTableId,
   res: Response,
   next: NextFunction

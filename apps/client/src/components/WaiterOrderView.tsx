@@ -1,13 +1,13 @@
 import "../scss/_waiterOrderView.scss";
 import {
   fetchMyTables,
-  TableWithOrders,
   Category,
-  TableInterface,
 } from "../api";
 import { useState, useEffect } from "react";
 import TableOrders from "./TableOrders";
 import EmptyTableOrder from "./EmptyTableOrder";
+import { TablePhysical } from "@prisma/client";
+import { ResponseGetTablesMine } from "prisma-queries";
 
 const WaiterOrderView = ({
   token,
@@ -17,10 +17,10 @@ const WaiterOrderView = ({
 }: {
   token: string;
   menuData: Category[];
-  selectedTable: TableInterface[];
-  setSelectedTable: React.Dispatch<React.SetStateAction<TableInterface[]>>;
+  selectedTable: TablePhysical[];
+  setSelectedTable: React.Dispatch<React.SetStateAction<TablePhysical[]>>;
 }) => {
-  const [myTables, setMyTables] = useState([] as TableWithOrders[]);
+  const [myTables, setMyTables] = useState([] as ResponseGetTablesMine);
 
   useEffect(() => {
     const validateToken = async () => {

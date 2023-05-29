@@ -1,11 +1,11 @@
-import { TableInterface } from "../api";
+import { TablePhysical } from "@prisma/client";
 
 const EmptyTableOrder = ({
   selectedTable,
   setSelectedTable,
 }: {
-  selectedTable: TableInterface[];
-  setSelectedTable: React.Dispatch<React.SetStateAction<TableInterface[]>>;
+  selectedTable: TablePhysical[];
+  setSelectedTable: React.Dispatch<React.SetStateAction<TablePhysical[]>>;
 }) => {
   const handleDelete = (table: string) => {
     const deleteTable = selectedTable.filter((te) => {
@@ -17,9 +17,9 @@ const EmptyTableOrder = ({
 
   return (
     <div>
-      {selectedTable.map((table, i) => {
+      {selectedTable.map((table) => {
         return (
-          <h5 key={i} onClick={() => handleDelete(table.name)}>
+          <h5 key={table.id} onClick={() => handleDelete(table.name)}>
             {table.name}
           </h5>
         );
