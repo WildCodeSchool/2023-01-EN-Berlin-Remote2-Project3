@@ -127,7 +127,7 @@ export const sendOrdersToDB = async (
   if (
     Number.isInteger(unique) &&
     unique >= 0 &&
-    unique.toString().length <= 6
+    unique.toString().length <= 12
   ) {
     const validCode: number = unique;
     const orderIndex = unconfirmedOrders.findIndex(
