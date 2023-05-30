@@ -49,7 +49,7 @@ const TableOrders = ({
           <ul>
             price
             {items.map((item) => (
-              <li key={item.id}>{item.price} €</li>
+              <li key={item.id}>{item.price ? `${item.price} €` : "Unknown"}</li>
             ))}
           </ul>
         </div>
