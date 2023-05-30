@@ -1,4 +1,6 @@
+import { ResponseGetTablesMine } from "prisma-queries";
 import { UserInfo } from "./App";
+import { TablePhysical } from "@prisma/client";
 
 export const fetchMenuData = async () => {
   try {
@@ -16,7 +18,7 @@ export const fetchMenuData = async () => {
 // if the token is valid, this will return the user information
 export const fetchTokenValidation = async (token: string) => {
   try {
-    const res = await fetch("http://localhost:4000/api/verification", {
+    const res = await fetch("http://localhost:4000/api/login", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -26,7 +28,7 @@ export const fetchTokenValidation = async (token: string) => {
     if (data.success === true) return data.payload as UserInfo;
     else return null;
   } catch (err) {
-    console.log(err, "Token validation failed (Endpoint: /api/validation).");
+    console.log(err, "Token validation failed (Endpoint: /api/login).");
   }
 };
 
@@ -46,7 +48,7 @@ export interface Category {
 export const tableData = async () => {
   try {
     const res = await fetch("http://localhost:4000/api/tables");
-    const data: TableInterface[] = await res.json();
+    const data: TablePhysical[] = await res.json();
     if (!res.ok) return;
 
     return data;
@@ -55,13 +57,9 @@ export const tableData = async () => {
   }
 };
 
-export interface TableInterface {
-  id: number;
-  name: string;
-  statusId: number;
-}
-
-export const fetchMyTables = async (token: string) => {
+export const fetchMyTables = async (
+  token: string
+): Promise<ResponseGetTablesMine | undefined> => {
   try {
     const res = await fetch("http://localhost:4000/api/tables/mine", {
       headers: {
@@ -70,26 +68,9 @@ export const fetchMyTables = async (token: string) => {
     });
 
     const data = await res.json();
+
     return data;
   } catch (err) {
     console.log("error happen fetchMyTables API");
   }
 };
-
-export interface Order {
-  id: number;
-  name: string;
-  status: string;
-  statusId: number;
-  price: number;
-  waiter: string;
-  waiterId: number;
-  orderTime: string;
-}
-export interface TableWithOrders {
-  id: number;
-  name: string;
-  status: string;
-  statusId: number;
-  orders: Order[];
-}

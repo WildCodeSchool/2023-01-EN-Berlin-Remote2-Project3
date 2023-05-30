@@ -1,27 +1,48 @@
-import { Category } from "../api";
+import { Category, MenuItem } from "../api";
 import MenuCategory from "./MenuCategory";
-import { useParams } from "react-router-dom";
 
-const MenuContent = ({ data }: { data: Category[] }) => {
-  const { menuCategory } = useParams();
-  
-  const activeCat = data.find((category) => {
-    if (typeof menuCategory === 'string') {
-      return category.id === parseInt(menuCategory);
-    }
-    return false;
-  });
+const MenuContent = ({
+  data,
+  activeCategory,
+  selectedMenuItems,
+  setSelectedMenuItems,
+}: {
+  data: Category[];
+  activeCategory: number | undefined;
+  selectedMenuItems: MenuItem[];
+  setSelectedMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+}) => {
+  console.log(selectedMenuItems);
 
-  return ( activeCat ?
-    <ul>
-      <MenuCategory dataArr={activeCat.menuItems} />
-      {activeCat.childCategories.map((category) => (
-        <div key={category.id}> 
-          <h3>{category.name}</h3>
-          <MenuCategory  dataArr={category.menuItems} />
-        </div>
-      ))}
-    </ul> : <h1>No active category {menuCategory ?? "undefined"}</h1>
+  const activeCat =
+    typeof activeCategory === "number"
+      ? data.find((category) => category.id === activeCategory)
+      : undefined;
+
+  return activeCat ? (
+    <>
+      <ul>
+        <MenuCategory
+          dataArr={activeCat.menuItems}
+          selectedMenuItems={selectedMenuItems}
+          setSelectedMenuItems={setSelectedMenuItems}
+        />
+        {activeCat.childCategories.map((category) => (
+          <div key={category.id}>
+            <h5>{category.name}</h5>
+            <MenuCategory
+              dataArr={category.menuItems}
+              selectedMenuItems={selectedMenuItems}
+              setSelectedMenuItems={setSelectedMenuItems}
+            />
+          </div>
+        ))}
+      </ul>
+    </>
+  ) : (
+    <h5 className="menuContentMessage">
+      In order to proceed, please indicate your desired category:
+    </h5>
   );
 };
 

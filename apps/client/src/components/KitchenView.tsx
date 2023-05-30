@@ -1,5 +1,9 @@
 const KitchenView = () => {
-  return <div>KitchenView</div>;
+  return (
+    <div>
+      <h1>Kitchen</h1>
+    </div>
+  );
 };
 
 export default KitchenView;

@@ -1,17 +1,51 @@
 import MenuTabs from "../components/MenuTabs";
-import { Category } from "../api";
-import { Outlet } from "react-router-dom";
+import { Category, MenuItem } from "../api";
 import "../scss/_menuTabs.scss";
+import MenuContent from "../components/MenuContent";
+import MenuOrder from "../components/MenuOrder";
+import { useState } from "react";
 
-const Menu = ({ menuData }: { menuData: Category[] }) => {
+const Menu = ({
+  menuData,
+  tableId,
+  token,
+}: {
+  menuData: Category[];
+  tableId: number;
+  token: string;
+}) => {
+  const [selectedMenuItems, setSelectedMenuItems] = useState([] as MenuItem[]);
+  const [activeCategory, setActiveCategory] = useState<number | undefined>();
+
   if (Array.isArray(menuData))
     return (
       <div className="menu">
-        <MenuTabs data={menuData.map((category) => category.name)} />
-        <Outlet />
+        <MenuTabs
+          data={menuData.map((category) => ({
+            name: category.name,
+            id: category.id,
+          }))}
+          setActiveCategory={setActiveCategory}
+          activeCategory={activeCategory}
+        />
+        <MenuContent
+          data={menuData}
+          activeCategory={activeCategory}
+          selectedMenuItems={selectedMenuItems}
+          setSelectedMenuItems={setSelectedMenuItems}
+        />
+
+        {activeCategory && (
+          <MenuOrder
+            selectedMenuItems={selectedMenuItems}
+            setSelectedMenuItems={setSelectedMenuItems}
+            tableId={tableId}
+            token={token}
+          />
+        )}
       </div>
     );
-  
+
   return <h3>Menu data is not an array.</h3>;
 };
 

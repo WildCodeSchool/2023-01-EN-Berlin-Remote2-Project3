@@ -1,9 +1,24 @@
 import "../scss/_waiterOrderView.scss";
-import { fetchMyTables, TableWithOrders } from "../api";
+import { fetchMyTables, Category } from "../api";
 import { useState, useEffect } from "react";
+import TableOrders from "./TableOrders";
+import EmptyTableOrder from "./EmptyTableOrder";
+import { TablePhysical } from "@prisma/client";
+import { ResponseGetTablesMine } from "prisma-queries";
 
-const WaiterOrderView = ({ token }: { token: string }) => {
-  const [myTables, setMyTables] = useState([] as TableWithOrders[]);
+const WaiterOrderView = ({
+  token,
+  menuData,
+  selectedTable,
+  setSelectedTable,
+}: {
+  token: string;
+  menuData: Category[];
+  selectedTable: TablePhysical;
+  setSelectedTable: React.Dispatch<React.SetStateAction<TablePhysical>>;
+}) => {
+  const [myTables, setMyTables] = useState([] as ResponseGetTablesMine);
+  const selectedTableId = selectedTable.id;
 
   useEffect(() => {
     const validateToken = async () => {
@@ -20,51 +35,25 @@ const WaiterOrderView = ({ token }: { token: string }) => {
 
   return (
     <div className="waiterOrderview">
-      {myTables.map((data, i) => {
-        const items = data.orders;
-        let totalPrice = 0;
-        items.forEach((item) => {
-          totalPrice += Number(item.price); // Add item price to total price
-        });
+      {myTables.map((data) => {
         return (
-          <div key={i} className="cardContainer">
-            <div className="cardHeader">
-              <p>{data.name}</p>
-            </div>
-            <div className="itemOrder">
-              <p className="itemOrder--title">Item Order:</p>
-
-              <div className="itemOrder--items">
-                <ul>
-                  item
-                  {items.map((item) => (
-                    <li key={item.id}>{item.name} </li>
-                  ))}
-                </ul>
-                <ul>
-                  status
-                  {items.map((item) => (
-                    <li key={item.id}>{item.status} </li>
-                  ))}
-                </ul>
-                <ul>
-                  price
-                  {items.map((item) => (
-                    <li key={item.id}>{item.price} €</li>
-                  ))}
-                </ul>
-              </div>
-
-              <p className="totalPrice">total price: {totalPrice}.00 €</p>
-            </div>
-
-            <div className="itemOrder--btn">
-              <p className="itemOrder--menuBtn">Menu</p>
-              <p className="itemOrder--orderBtn">Order</p>
-            </div>
-          </div>
+          <TableOrders
+            tableOrders={data}
+            key={data.id}
+            menuData={menuData}
+            tableId={data.id}
+            token={token}
+          />
         );
       })}
+
+      <EmptyTableOrder
+        selectedTable={selectedTable}
+        setSelectedTable={setSelectedTable}
+        menuData={menuData}
+        token={token}
+        tableId={selectedTableId}
+      />
     </div>
   );
 };

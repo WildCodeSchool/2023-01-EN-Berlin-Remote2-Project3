@@ -1,0 +1,65 @@
+.errorContainer {
+  background-color: #efefef;
+  width: 100%;
+  height: 100vh;
+}
+
+.wrapper {
+  left: 50%;
+  perspective: 50em;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.message {
+  background-color: #fff;
+  color: #b01720;
+  padding: 10%;
+  border-radius: 13px;
+
+  text-align: center;
+  transform-origin: center top;
+  transform-style: preserve-3d;
+  animation: sign 2s linear;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+@keyframes sign {
+  0% {
+    transform: rotateX(-70deg);
+  }
+
+  30% {
+    transform: rotateX(70deg);
+  }
+
+  50% {
+    transform: rotateX(-60deg);
+  }
+
+  70% {
+    transform: rotateX(50deg);
+  }
+
+  80% {
+    transform: rotateX(-40deg);
+  }
+
+  90% {
+    transform: rotateX(30deg);
+  }
+
+  95% {
+    transform: rotateX(-10deg);
+  }
+
+  98% {
+    transform: rotateX(10deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}

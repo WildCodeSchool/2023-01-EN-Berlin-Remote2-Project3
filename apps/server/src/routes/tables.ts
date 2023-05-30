@@ -1,94 +1,43 @@
 import express from "express";
-import { verifyToken, getUserByIdAndNext } from "../auth";
-import { prisma } from "../index";
+import {
+  verifyToken,
+  getUserByIdAndNext,
+  checkWaiter,
+} from "../handlers/login";
+import {
+  getAllTables,
+  getMyTablesWithOrders,
+  getTableWithOrders,
+  sendOrdersToDB,
+  receiveOrders,
+  validateParamTableId,
+} from "../handlers/tables";
 
+// Base URL for this router is "/api/tables/" (check: index.ts)
 export const tablesRouter = express.Router();
 
-const getPhysicalTables = async (_, res) => {
-  prisma.tablePhysical
-    .findMany()
-    .then((tableData) => {
-      res.json(tableData);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error retrieving data from the database");
-    });
-};
+// GET "/api/tables/" resturns Table[]
+tablesRouter.get("/", getAllTables);
 
-tablesRouter.get("/", getPhysicalTables);
+// All endpoints below require authorization and rely on the presence of
+// a perperty "userInfo" that is attached to the request object.
+// @ts-expect-error
+tablesRouter.use(verifyToken, getUserByIdAndNext, checkWaiter);
 
-tablesRouter.use(verifyToken, getUserByIdAndNext);
+// GET "/api/tables/mine" returns ResponseGetTablesMine[]
+// @ts-expect-error
+tablesRouter.get("/mine", getMyTablesWithOrders);
 
-const getOrdersSortedByTable = async (req, res) => {
-  const prismaQuery = {
-    where: {
-      orders: {
-        some: {
-          waiterId: req.userInfo.id,
-        },
-      },
-    },
-    select: {
-      id: true,
-      name: true,
-      statusId: true,
-      tableStatus: {
-        select: {
-          name: true,
-        },
-      },
-      orders: {
-        select: {
-          id: true,
-          menuItem: {
-            select: {
-              name: true,
-              price: true,
-            },
-          },
-          orderTime: true,
-          statusId: true,
-          status: {
-            select: {
-              name: true,
-            },
-          },
-          waiterId: true,
-          waiter: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
-  };
-  prisma.tablePhysical
-    .findMany(prismaQuery)
-    .then((found) => {
-      const result = found.map((table) => ({
-        id: table.id,
-        name: table.name,
-        statusId: table.statusId,
-        status: table.tableStatus.name,
-        orders: table.orders.map((order) => ({
-          id: order.id,
-          name: order.menuItem.name,
-          price: order.menuItem.price,
-          orderTime: order.orderTime,
-          statusId: order.statusId,
-          status: order.status.name,
-          waiterId: order.waiterId,
-          waiter: order.waiter.name,
-        })),
-      }));
-      res.json(result);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send("Error retrieving data from the database");
-    });
-};
+// Path param validator for any param called "id" (appears in paths as ":id")
+// @ts-expect-error
+tablesRouter.param("id", validateParamTableId);
 
-tablesRouter.get("/mine", getOrdersSortedByTable);
+// GET/POST/PUT "api/tables/:id"
+tablesRouter
+  .route("/:id")
+  // @ts-expect-error
+  .get(getTableWithOrders)
+  // @ts-expect-error
+  .post(receiveOrders)
+  // @ts-expect-error
+  .put(sendOrdersToDB);

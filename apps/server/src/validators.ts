@@ -1,10 +1,8 @@
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-export  const validateEmail = (email : any) => {
-    if (email && typeof email === "string") return true;
+export  const validateEmail = (email : unknown) => {
+    if (typeof email === "string" && email !== "") return true;
     return false;
 };
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-export  const validatePassword = (password : any) => {
-    if (password && typeof password === "string") return true;
+export  const validatePassword = (password : unknown) => {
+    if (typeof password === "string" && password !== "") return true;
     return false;
 };

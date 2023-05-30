@@ -37,7 +37,7 @@ model MenuItem {
 model Order {
   id         Int           @id @default(autoincrement()) @map("order_id")
   itemId     Int           @map("item_id")
-  orderTime  DateTime      @map("order_time")
+  orderTime  DateTime      @map("order_time") @default(now())
   servedTime DateTime?     @map("served_time")
   statusId   Int           @map("status_id")
   waiterId   Int           @map("waiter_id")

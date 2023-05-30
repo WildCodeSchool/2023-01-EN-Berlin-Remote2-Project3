@@ -3,17 +3,26 @@ import {
   validateRequestEmailPassword,
   getUserByEmailPassword,
   verifyPassword,
-} from "../auth";
+  verifyToken,
+  getUserByIdAndNext,
+  sendUserInfo,
+} from "../handlers/login";
 
 export const loginRouter = express.Router();
 
-loginRouter.post(
-  "/",
-  validateRequestEmailPassword,
-  getUserByEmailPassword,
-  // verifyPassword middleware expects a user property
-  // and the previous middleware does always add that property
-  // but it isn't seen by typescript, so
-  // @ts-expect-error
-  verifyPassword
-);
+loginRouter
+  .route("/")
+  .post(
+    validateRequestEmailPassword,
+    getUserByEmailPassword,
+    // incompatible request error
+    // @ts-expect-error
+    verifyPassword
+  )
+  .get(
+    // incompatible request error
+    // @ts-expect-error
+    verifyToken,
+    getUserByIdAndNext,
+    sendUserInfo
+  );

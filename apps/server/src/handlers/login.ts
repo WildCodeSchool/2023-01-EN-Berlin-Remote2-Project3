@@ -1,11 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import * as argon2 from "argon2";
-import { prisma } from "./index";
-import { validateEmail, validatePassword } from "./validators";
-import { LoginRequest, LoginRequestWithData } from "./types";
-
-const jwtSecretKey = process.env.JWT_SECRET ?? "";
+import { prisma, jwtSecretKey } from "../index";
+import { validateEmail, validatePassword } from "../validators";
+import {
+  LoginRequest,
+  LoginRequestWithData,
+  RequestDecodedToken,
+  RequestUserInfo,
+} from "../types";
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -62,9 +65,6 @@ export const verifyPassword = async (
   req: LoginRequestWithData,
   res: Response
 ) => {
-  if (jwtSecretKey === "") {
-    throw new Error("No JWT_SECRET defined in .env file");
-  }
   const pass = req.body.password;
   const hash = req.user.password;
   // if (pass === hash) {
@@ -102,7 +102,7 @@ export const verifyPassword = async (
 };
 
 export const verifyToken = async (
-  req: Request,
+  req: Request & RequestDecodedToken,
   res: Response,
   next: NextFunction
 ) => {
@@ -112,21 +112,17 @@ export const verifyToken = async (
       res.status(401).send("Authorization header is missing");
     } else {
       const [type, token] = authorizationHeader.split(" ");
-      if (type !== "Bearer") {
+      if (type === "Bearer") {
+        try {
+          req.decodedToken = jwt.verify(token, jwtSecretKey);
+          next();
+        } catch (err) {
+          res.status(401).json({ success: false, payload: "Invalid token" });
+        }
+      } else {
         res
           .status(401)
           .send("Authorization header is not of the 'Bearer' type");
-      } else {
-        if (jwtSecretKey === "") {
-          throw new Error("No JWT_SECRET defined in .env file");
-        } else {
-          try {
-            req.decodedToken = jwt.verify(token, jwtSecretKey);
-            next();
-          } catch (err) {
-            res.status(401).json({ success: false, payload: "Invalid token" });
-          }
-        }
       }
     }
   } catch (err) {
@@ -136,13 +132,13 @@ export const verifyToken = async (
 };
 
 export const getUserByIdAndNext = async (
-  req: Request,
+  req: Request & RequestUserInfo & RequestDecodedToken,
   res: Response,
   next: NextFunction
 ) => {
   prisma.user
     .findUniqueOrThrow({
-      where: { id: req.decodedToken.sub },
+      where: { id: +(req.decodedToken.sub ?? 0) },
       select: {
         id: true,
         name: true,
@@ -165,7 +161,22 @@ export const getUserByIdAndNext = async (
     });
 };
 
-export const sendUserInfo = async (req: Request, res: Response) => {
+export const checkWaiter = async (
+  req: Request & RequestUserInfo,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.userInfo.type === "waiter") {
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+};
+
+export const sendUserInfo = async (
+  req: Request & RequestUserInfo,
+  res: Response
+) => {
   res.json({
     success: true,
     payload: req.userInfo,

@@ -1,0 +1,31 @@
+@use "./colors";
+@use "./general";
+
+.popUpWindow {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 90vh;
+  z-index: 2;
+  border-radius: 30px;
+  overflow: scroll;
+  background-color: #fff;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  transition: all 0.5s;
+}

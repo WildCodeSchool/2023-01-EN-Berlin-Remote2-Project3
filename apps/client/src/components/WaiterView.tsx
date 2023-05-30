@@ -1,16 +1,23 @@
 import { tableData } from "../api";
 import { useEffect, useState } from "react";
 import "../scss/_WaiterView.scss";
-import { useNavigate } from "react-router-dom";
-import { TableInterface } from "../api";
+// import { useNavigate } from "react-router-dom";
+import { Category } from "../api";
 import WaiterOrderView from "./WaiterOrderView";
+import { TablePhysical } from "@prisma/client";
 
-const WaiterView = ({ token }: { token: string }) => {
-  const [tableDataApi, setTableDataApi] = useState([] as TableInterface[]);
-  const [selectedTable, setSelectedTable] = useState({});
-  const [hideTables, setHideTables] = useState(false);
+const WaiterView = ({
+  token,
+  menuData,
+}: {
+  token: string;
+  menuData: Category[];
+}) => {
+  const [tableDataApi, setTableDataApi] = useState([] as TablePhysical[]);
+  const [selectedTable, setSelectedTable] = useState([] as TablePhysical[]);
+  const [hideTables, setHideTables] = useState(true);
 
-  const navigator = useNavigate();
+  // const navigator = useNavigate();
 
   useEffect(() => {
     const data = async () => {
@@ -24,44 +31,46 @@ const WaiterView = ({ token }: { token: string }) => {
     data();
   }, []);
 
-  const tableHandler = (table: TableInterface) => {
-    setSelectedTable(!table);
+  const tableHandler = (table: TablePhysical[]) => {
     // navigator("/menu");
     setHideTables(true);
-    return <div></div>;
+
+    // storing all selected tables in state!
+    setSelectedTable(table);
+  };
+
+  const handleToggleTables = () => {
+    setHideTables(!hideTables);
   };
 
   return (
-    <div className="button">
-      <button onClick={() => setHideTables(!hideTables)}>
-        {hideTables ? "table show" : "table hide"}
-      </button>
-      <div className={hideTables ? "hidden" : "waiterViewTables "}>
-        {tableDataApi.map((table) => {
-          return (
-            <ul key={table.id}>
-              <li
-                // className={
-                //   // Just for testing
-                //   table.statusId === 1
-                //     ? "tableStatusId1"
-                //     : table.statusId === 2
-                //     ? "tableStatusId2"
-                //     : table.statusId === 3
-                //     ? "tableStatusId3"
-                //     : table.statusId === 4
-                //     ? "tableStatusId4"
-                //     : ""
-                // }
-                onClick={() => tableHandler(table)}
-              >
-                {table.name}
-              </li>
-            </ul>
-          );
-        })}
+    <div className="waiterView-container">
+      <div className="togglebuttonContainer ">
+        {!hideTables ? "Table Visibility On" : "Table Visibility Off"}
+        <label className="container">
+          <input onClick={handleToggleTables} type="checkbox" className="cB" />
+          <div className="line-toggle">
+            <div className="lineCircle-toggle"></div>
+          </div>
+        </label>
       </div>
-      <WaiterOrderView token={token} />
+      {!hideTables && (
+        <div className="waiterViewTables">
+          {tableDataApi.map((table) => {
+            return (
+              <ul key={table.id}>
+                <li onClick={() => tableHandler(table)}>{table.name}</li>
+              </ul>
+            );
+          })}
+        </div>
+      )}
+      <WaiterOrderView
+        token={token}
+        menuData={menuData}
+        selectedTable={selectedTable}
+        setSelectedTable={setSelectedTable}
+      />
     </div>
   );
 };
