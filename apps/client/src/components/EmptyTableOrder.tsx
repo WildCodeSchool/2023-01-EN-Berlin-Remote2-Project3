@@ -1,14 +1,22 @@
+import { useState } from "react";
+import menuAddIcon from "../assets/menuIcon.svg";
+import WaiterPopUpMenu from "./WaiterPopUpMenu";
+import { Category } from "../api";
 import { TablePhysical } from "@prisma/client";
 import "../scss/_emptyTableOrder.scss";
-import menuAddIcon from "../assets/menuIcon.svg";
-import { useState } from "react";
 
 const EmptyTableOrder = ({
   selectedTable,
   setSelectedTable,
+  menuData,
+  tableId,
+  token,
 }: {
-  selectedTable: TablePhysical[];
-  setSelectedTable: React.Dispatch<React.SetStateAction<TablePhysical[]>>;
+  selectedTable: TablePhysical;
+  setSelectedTable: React.Dispatch<React.SetStateAction<TablePhysical>>;
+  menuData: Category[];
+  tableId: number;
+  token: string;
 }) => {
   const [showPopUp, setShowPopUp] = useState(false);
 
@@ -26,6 +34,16 @@ const EmptyTableOrder = ({
           alt="addItem - Icon"
         />
       </div>
+      {showPopUp === true ? (
+        <WaiterPopUpMenu
+          tableId={tableId}
+          token={token}
+          menuData={menuData}
+          hidePopUp={() => {
+            setShowPopUp(false);
+          }}
+        />
+      ) : null}
     </div>
   ) : null;
 };

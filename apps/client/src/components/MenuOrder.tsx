@@ -83,6 +83,9 @@ const MenuOrder = ({
       }, 2000);
     } catch (err) {
       console.error("error", err);
+
+      // just for test
+      setOrderSendMessage(false);
     }
   };
 
@@ -106,14 +109,14 @@ const MenuOrder = ({
           );
         })}
         {orderSendMessage ? (
-          <h4
-            style={
-              orderSendMessage ? { color: " #00FF00" } : { color: "#FF0000 " }
-            }
-          >
-            {orderSendMessage
-              ? "Order Successful"
-              : "Failed to send the order. Please try again."}
+          <h4>
+            {orderSendMessage ? (
+              <h4 style={{ color: " #00FF00" }}>Order Successful</h4>
+            ) : (
+              <h4 style={{ color: "#FF0000" }}>
+                Failed to send the order. Please try again.
+              </h4>
+            )}
           </h4>
         ) : (
           <h5>
