@@ -21,9 +21,9 @@ Before running the application, please ensure that you have completed the follow
 
 1. Install Moonrepo by visiting the official [Moonrepo website](https://moonrepo.dev/docs/install) and following the provided instructions.
 2. Clone this project repository.
-3. Create a `.env` file in 2 locations
-    * Create a .env file in the `packages/prisma-client` directory.
-    * Create a .env file in the `apps/server` directory.
+3. Create two `.env` files:
+   - in the `packages/prisma-client` directory
+   - in the `apps/server` directory
 
 ## Instructions
 
