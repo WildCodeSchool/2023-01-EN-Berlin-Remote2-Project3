@@ -22,14 +22,37 @@ Before running the application, please ensure that you have completed the follow
 1. Install Moonrepo by visiting the official [Moonrepo website](https://moonrepo.dev/docs/install) and following the provided instructions.
 2. Clone this project repository.
 3. Create a `.env` file in 2 locations
-
-   - Create a .env file in the `packages/prisma-client` directory.
-   - Create a .env file in the `apps/server` directory.
+    * Create a .env file in the `packages/prisma-client` directory.
+    * Create a .env file in the `apps/server` directory.
 
 ## Instructions
 
-TODO: a description of commands needed to run, build, migrate and launch other features of the repository, without explaining in detail how to install moon, just while mentioning that the `moon` monorepo and task runner command was used to scaffold this application and set it up
+ To run the Restaurant POS Fullstack Application, follow the steps below:
 
+1. Open a terminal or command prompt.
+2. Navigate to the project directory.
+3. Run the following commands to start the project:
+    * To run the frontend and backend run the following comand 
+    ```bash 
+    moon run :dev
+    ```
+    This command will automatically fetch and install all the necessary dependencies for both the frontend and backend
+    - To run only the backend, use the following command:
+    ```bash
+    moon run server:dev
+    ```
+    - To run only the frontend, use the following command:
+    ```bash
+    moon run client:dev
+    ```
+
+
+   - To access the Prisma database studio, which provides a visual interface for managing your database, run the following command:
+   ```bash
+   moon run prisma:studio
+   ```
+
+The frontend will be available at `localhost:3000`, while the backend will be accessible at `localhost:4000`.
 ## Organization
 
 TODO: explain the organization of the repository, including the prisma-client and prisma-queries worspaces/projects
