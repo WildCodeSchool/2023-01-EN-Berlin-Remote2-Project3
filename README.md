@@ -1,16 +1,30 @@
 # Restaurant POS (Point-of-Sale) Fullstack Application
 
-This is the monorepo containing both the frontend and the backend of a resturant management application created by [@surmavagit](https://github.com/surmavagit) and [@denigogov](https://github.com/denigogov) as part of their third project in a 5-month coding bootcamp.
+Welcome to the Restaurant POS (Point-of-Sale) Fullstack Application! This repository contains both the frontend and backend components of a comprehensive restaurant management application. It has been developed as the final project for the WildCode School's coding bootcamp.
 
-Their cohort was led by their facilitator, [@diraneyya](https://github.com/diraneyya), and was unfortunately the last cohort by _Wild Code School_ in Germany.
+## Project Details
+
+- Created by [Surmava Git](https://github.com/surmavagit) and [Deni Gogov](https://github.com/denigogov) as part of their third project in a 5-month coding bootcamp.
+- Their cohort was led by their facilitator, [@diraneyya](https://github.com/diraneyya).
+- Unfortunately, their cohort marked the end of Wild Code School in Germany.
+
+
 
 ## Introduction
 
-TODO: the design goals of the application
+The Restaurant POS Fullstack Application is designed to provide restaurants with a modern and efficient solution for accepting remote orders via various devices such as phones and tablets. This fully responsive application offers a user-friendly interface and aims to streamline the ordering process for restaurant staff.
+
 
 ## Setup
 
-TODO: a description of any required installations prior to running parts of the repository. In our case, this includes the installation of moon, and any such steps.
+Before running the application, please ensure that you have completed the following steps:
+
+1. Install Moonrepo by visiting the official [Moonrepo website](https://moonrepo.dev/docs/install) and following the provided instructions.
+2. Clone this project repository.
+3. Create a `.env` file in 2 locations
+
+   - Create a .env file in the `packages/prisma-client` directory.
+   - Create a .env file in the `apps/server` directory.
 
 ## Instructions
 
