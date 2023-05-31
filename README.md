@@ -22,16 +22,18 @@ TODO: explain the organization of the repository, including the prisma-client an
 
 ## Technologies
 
-- TypesScript
-- React
-- PNPM Workspaces
-- Moonrepo
-- Rome (Linter/Formatter)
-- ExpressJS
-- Prisma (ORM, stands for an Object-Relational-Mapper)
-- PostgreSQL
-
-TODO: add to the above and link to projects' homepages
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/)
+- [React Router 6.4](https://reactrouter.com/en/main)
+- [SASS](https://sass-lang.com/)
+- [ExpressJS](expressjs.com)
+- [Prisma](https://www.prisma.io/) ORM, stands for an Object-Relational-Mapper
+- [PostgreSQL](https://www.postgresql.org/)
+- [JSON Web Tokens](https://jwt.io/)
+- [Argon2](https://www.npmjs.com/package//argon2)
+- [PNPM Workspaces](https://pnpm.io/workspaces)
+- [Moonrepo](https://moonrepo.dev/)
+- [Rome](https://rome.tools/) Linter/Formatter
 
 ## Contribution
 
