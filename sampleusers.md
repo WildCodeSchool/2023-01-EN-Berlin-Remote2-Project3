@@ -1,14 +1,14 @@
 Sample user passwords
 
-username    |userpassword|
-------------+------------+
-david       |david123    |
-emilyG      |0017        |
-helper      |00913       |
-chris       |1134        |
-davidBowie  |88212D      |
-kitchenStaff|kitchen123  |
-barStaff    |barMain11   |
-george      |george123   |
-dejan       |dejan123    |
-orwa        |orwa123     |
+username              |userpassword|
+----------------------+------------+
+david@gmail.com       |david123    |
+emilyLove@gmail.com   |0017        |
+manager@gmail.com     |00913       |
+christopher@gmail.com |1134        |
+bowie@gmail.com       |88212D      |
+kitchen@gmail.com     |kitchen123  |
+mainbar@gmail.com     |barMain11   |
+geroge@gmail.com      |george123   |
+dejan@gmail.com       |dejan123    |
+orwa@gmail.com        |orwa123     |
