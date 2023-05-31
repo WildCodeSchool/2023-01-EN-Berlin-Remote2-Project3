@@ -28,7 +28,28 @@ Before running the application, please ensure that you have completed the follow
 
 ## Instructions
 
-TODO: a description of commands needed to run, build, migrate and launch other features of the repository, without explaining in detail how to install moon, just while mentioning that the `moon` monorepo and task runner command was used to scaffold this application and set it up
+ To run the Restaurant POS Fullstack Application, follow the steps below:
+
+1. Open a terminal or command prompt.
+2. Navigate to the project directory.
+3. Run the following command to start both the frontend and backend: **This command will automatically fetch and install all the necessary dependencies for both the frontend and backend**.
+```bash 
+moon run :dev
+```
+4. To run only the backend, use the following command:
+```bash
+moon run server:dev
+```
+5. To run only the frontend, use the following command:
+```bash
+moon run client:dev
+```
+6. To access the Prisma database studio, which provides a visual interface for managing your database, run the following command:
+```bash
+moon run prisma:studio
+```
+
+The frontend will be available at `localhost:3000`, while the backend will be accessible at `localhost:4000`.
 
 ## Organization
 
