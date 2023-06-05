@@ -1,4 +1,8 @@
 {
+  "private": true,
+  "name": "server",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
   "dependencies": {
     "@prisma/client": "workspace:prisma-client@*",
     "argon2": "^0.30.3",

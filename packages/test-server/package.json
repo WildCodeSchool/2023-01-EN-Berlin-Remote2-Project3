@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "test-server",
+  "dependencies": {
+    "server": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/supertest": "^2.0.12",
+    "@vitest/ui": "latest",
+    "supertest": "^6.3.3",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}

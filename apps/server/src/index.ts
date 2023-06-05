@@ -9,7 +9,7 @@ import { tablesRouter } from "./routes/tables";
 import { PrismaClient } from "@prisma/client";
 import { getMenuItemsSortedByCategory } from "./handlers/menu";
 
-const app = express();
+export const app = express();
 expressOasGenerator.init(app, {});
 app.use(cors());
 

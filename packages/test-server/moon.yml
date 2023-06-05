@@ -1,0 +1,13 @@
+type: "tool"
+language: "typescript"
+
+project:
+  name: "Backend Tests"
+  description: "These are the tests we want to run agains the backend to ensure that it is working as designed."
+  channel: "#0109-REMOTE-JS-Project3"
+  owner: "diraneyya"
+  maintainers: ["diraneyya", "denigogov", "surmavagit"]
+
+tasks:
+  test:
+    command: "vitest"

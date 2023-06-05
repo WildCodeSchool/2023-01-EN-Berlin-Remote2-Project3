@@ -14,5 +14,8 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
   }
 }
