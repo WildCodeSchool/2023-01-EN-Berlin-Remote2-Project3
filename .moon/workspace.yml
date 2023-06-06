@@ -17,7 +17,7 @@ projects:
   server: "apps/server"
   prisma: "packages/prisma-client"
   queries: "packages/prisma-queries"
-  serverTests: "packages/test-server"
+  tests: "packages/test-server"
 
 # To enable the test project to depend on the server/client
 constraints:

@@ -8,6 +8,11 @@ project:
   owner: "diraneyya"
   maintainers: ["diraneyya", "denigogov", "surmavagit"]
 
+env:
+  NODE_ENV: "development"
+
 tasks:
   test:
     command: "vitest"
+  runTest:
+    command: "vitest --run"

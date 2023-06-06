@@ -52,10 +52,15 @@
   justify-content: space-between;
   gap: 30px;
   height: 200px;
-  overflow: scroll;
+  overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    display: none;
+    width: 2px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: colors.$primary-darker;
   }
 
   li {
