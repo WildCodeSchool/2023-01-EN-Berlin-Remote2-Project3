@@ -1,4 +1,4 @@
-type: "tool"
+type: "application"
 language: "typescript"
 
 project:

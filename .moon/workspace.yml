@@ -19,6 +19,10 @@ projects:
   queries: "packages/prisma-queries"
   serverTests: "packages/test-server"
 
+# To enable the test project to depend on the server/client
+constraints:
+  enforceProjectTypeRelationships: false
+
 # Configures the version control system to utilize within the workspace. A VCS
 # is required for determining touched (added, modified, etc) files, calculating file hashes,
 # computing affected files, and much more.
