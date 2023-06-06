@@ -9,7 +9,7 @@ project:
   maintainers: ["diraneyya", "denigogov", "surmavagit"]
 
 env:
-  NODE_ENV: "development"
+  NODE_ENV: "test"
 
 tasks:
   test:

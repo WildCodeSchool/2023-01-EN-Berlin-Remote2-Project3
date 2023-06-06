@@ -36,7 +36,7 @@ app.use((err, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send("An unknown error has occured on the server");
 });
 
-const port = process.env.PORT ?? 4500;
+const port = process.env.NODE_ENV === 'test' ? 0 : process.env.PORT ?? 4500;
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}⚡️`);
 });
