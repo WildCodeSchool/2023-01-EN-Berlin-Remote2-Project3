@@ -3,9 +3,9 @@ run-name: ${{ github.actor }} is hopefully not breaking our tests 🙈
 on:
   pull_request:
     branches:
-      - 'main'
+      - "main"
 jobs:
   MoonTestJob:
     runs-on: ubuntu-latest
     steps:
-      - run: lssssss
+      - run: echo:'testing'

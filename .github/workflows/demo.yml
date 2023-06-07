@@ -12,7 +12,3 @@ jobs:
       - uses: moonrepo/setup-moon-action@v1
       - run: moon ci
       - run: moon run tests:test
-
-
-
-
