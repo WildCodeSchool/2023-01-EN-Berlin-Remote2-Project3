@@ -34,8 +34,8 @@ jobs:
     env:
       DATABASE_URL: "postgres://postgres:postgres@localhost/postgres"
       JWT_SECRET: "TESTINGSECRET"
-      EMAIL: "david@gmail.com"
-      PASSWORD: "david123"
+      TEST_EMAIL: "david@gmail.com"
+      TEST_PASSWORD: "david123"
 
     steps:
       - uses: actions/checkout@v3

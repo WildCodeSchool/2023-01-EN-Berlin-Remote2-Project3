@@ -2,15 +2,12 @@ import { test, beforeAll } from "vitest";
 import { server } from "./testserver";
 // import { ResponseGetTablesMine } from 'prisma-queries';
 
-// const email = process.env.EMAIL;
-// const password = process.env.PASSWORD;
-
 let token = "";
 
 beforeAll(async () => {
   await server
     .post("/api/login")
-    .send({ email: 'david@gmail.com', password: 'david123' })
+    .send({ email: process.env.TEST_EMAIL, password: process.env.TEST_PASSWORD })
     .expect(200)
     .expect(async function hasTokenAndUserKeys(res) {
       if (!("token" in res.body && "user" in res.body)) throw new Error("missing token or user key");
