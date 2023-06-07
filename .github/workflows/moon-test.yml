@@ -8,4 +8,4 @@ jobs:
   MoonTestJob:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "A pull request had been created or updated!"
+      - run: lssssss
