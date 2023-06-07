@@ -19,6 +19,8 @@ tasks:
   test-ui:
     command: "vitest --ui"
     local: true
+    options:
+      runDepsInParallel: false
     deps: 
       # Error, this tries to build server (?)
       # - '^:build'
@@ -26,6 +28,8 @@ tasks:
       - "queries:build"
   test:
     command: "vitest --run"
+    options:
+      runDepsInParallel: false
     deps: 
       # Error, this tries to build server (?)
       # - '^:build'
