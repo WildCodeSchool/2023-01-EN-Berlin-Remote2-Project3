@@ -21,57 +21,56 @@ beforeAll(async () => {
 // open endpoints
 
 test("root GET access", async () => {
-  const root = await server.get("/").set("Authorization", `Bearer ${token}`).expect(200);
+  const root = await server.get("/").auth(token, { type: "bearer" }).expect(200);
 });
 
 test("menu GET ednpoint", async () => {
-  const menu = await server.get("/api/menu").set("Authorization", `Bearer ${token}`).expect(200);
+  const menu = await server.get("/api/menu").auth(token, { type: "bearer" }).expect(200);
 });
 
 test("tables GET endpoint", async () => {
-  const tables = await server.get("/api/tables").set("Authorization", `Bearer ${token}`).expect(200);
+  const tables = await server.get("/api/tables").auth(token, { type: "bearer" }).expect(200);
 });
 
 // protected endpoints
 
 test("login GET endpoint", async () => {
-  const login = await server.get("/api/login").set("Authorization", `Bearer ${token}`).expect(200);
+  const login = await server.get("/api/login").auth(token, { type: "bearer" }).expect(200);
 });
 
 test("tablesMine GET endpoint", async () => {
-  const tablesMine = await server.get("/api/tables/mine").set("Authorization", `Bearer ${token}`).expect(200);
+  const tablesMine = await server.get("/api/tables/mine").auth(token, { type: "bearer" }).expect(200);
 });
 
 test("tablesById GET endpoint", async () => {
-  const tablesById = await server.get("/api/tables/5").set("Authorization", `Bearer ${token}`).expect(200);
+  const tablesById = await server.get("/api/tables/5").auth(token, { type: "bearer" }).expect(200);
 });
 
 test("tablesById POST endpoint", async () => {
-  const tablesByIdPOST = await server.post("/api/tables/5").set("Authorization", `Bearer ${token}`).expect(400);
+  const tablesByIdPOST = await server.post("/api/tables/5").auth(token, { type: "bearer" }).expect(400);
 });
 
 test("tablesById PUT endpoint", async () => {
-  const tablesByIdPUT = await server.put("/api/tables/5").set("Authorization", `Bearer ${token}`).expect(400);
+  const tablesByIdPUT = await server.put("/api/tables/5").auth(token, { type: "bearer" }).expect(400);
 });
 
 // placing an order
 
 test("tablesById POST endpoint", async () => {
-  let uniqueCode = -1;
   const testOrder = [1, 2, 3];
   const tablesByIdPOST = await server
     .post("/api/tables/5")
-    .set("Authorization", `Bearer ${token}`)
+    .auth(token, { type: "bearer" })
     .send({ orders: testOrder })
     .expect(202)
     .expect(function hasUniqeCodeKey(res) {
       if (!("uniqueCode" in res.body)) throw new Error("missing uniqueCode");
-      uniqueCode = res.body.uniqueCode;
     })
-    .then(async function confirmOrder() {
+    .then(async function confirmOrder(res) {
+      const uniqueCode = res.body.uniqueCode;
       await server
         .put("/api/tables/5")
-        .set("Authorization", `Bearer ${token}`)
+        .auth(token, { type: "bearer" })
         .send({ uniqueCode })
         .expect(201)
         .expect(async function answer(res) {
