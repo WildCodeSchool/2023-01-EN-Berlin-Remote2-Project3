@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
   res.send("Express + TypeScript Server. This is amayzing 😬😬");
 });
 
-app.get("/api/menu", getMenuItemsSortedByCategory);
+app.get("/api/menuu", getMenuItemsSortedByCategory);
 
 app.use("/api/login", loginRouter);
 app.use("/api/tables", tablesRouter);
