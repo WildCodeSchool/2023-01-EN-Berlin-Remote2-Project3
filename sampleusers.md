@@ -1,7 +1,7 @@
 Sample user passwords
 
 username              |userpassword|
-----------------------+------------+
+----------------------|------------|
 david@gmail.com       |david123    |
 emilyLove@gmail.com   |0017        |
 manager@gmail.com     |00913       |
