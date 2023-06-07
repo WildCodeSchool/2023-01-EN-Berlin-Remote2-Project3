@@ -12,7 +12,7 @@ env:
   NODE_ENV: "test"
 
 tasks:
+  test-ui:
+    command: "vitest --ui"
   test:
-    command: "vitest"
-  runTest:
     command: "vitest --run"
