@@ -1,5 +1,5 @@
 name: Tests
-run-name: Testing the PR from the branch ${{ github.ref_name }} by ${{ github.actor }}
+run-name: Testing the PR from the branch ${{ github.ref }} by ${{ github.actor }}
 on:
   pull_request:
     branches:
@@ -40,4 +40,5 @@ jobs:
         with:
           fetch-depth: 0
       - uses: moonrepo/setup-moon-action@v1
+      - run: moon run prisma:reset
       - run: moon run tests:test

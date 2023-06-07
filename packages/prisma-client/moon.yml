@@ -39,13 +39,25 @@ tasks:
   studio:
     command: "prisma studio"
     local: true
+    deps:
+      - "~:build-client"
   migrate:
     command: "prisma migrate dev --name"
+    deps:
+      - "~:build-client"
   migrate-start:
     command: "prisma migrate dev --create-only --name"
+    deps:
+      - "~:build-client"
   migrate-end:
     command: "prisma migrate dev"
+    deps:
+      - "~:build-client"
   status:
     command: "prisma migrate status"
+    deps:
+      - "~:build-client"
   reset:
     command: "prisma migrate reset"
+    deps:
+      - "~:build-client"
