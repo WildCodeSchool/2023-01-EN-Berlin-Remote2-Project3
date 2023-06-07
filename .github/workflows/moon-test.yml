@@ -1,0 +1,11 @@
+name: Test Application
+run-name: ${{ github.actor }} is hopefully not breaking our tests 🙈
+on:
+  pull_request:
+    branches:
+      - 'main'
+jobs:
+  MoonTestJob:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "A pull request had been created or updated!"
