@@ -1,42 +1,88 @@
-import { test } from "vitest";
+import { test, beforeAll } from "vitest";
 import { server } from "./testserver";
 // import { ResponseGetTablesMine } from 'prisma-queries';
 
-const email = process.env.email ?? "";
-const password = process.env.password ?? "";
+const email = process.env.EMAIL;
+const password = process.env.PASSWORD;
+
+let token = "";
+
+beforeAll(async () => {
+  await server
+    .post("/api/login")
+    .send({ email, password })
+    .expect(200)
+    .expect(async function hasTokenAndUserKeys(res) {
+      if (!("token" in res.body && "user" in res.body)) throw new Error("missing token or user key");
+      token = res.body.token;
+    });
+});
+
+// open endpoints
 
 test("root GET access", async () => {
-  const root = await server.get("/").expect(200);
+  const root = await server.get("/").set("Authorization", `Bearer ${token}`).expect(200);
 });
 
 test("menu GET ednpoint", async () => {
-  const menu = await server.get("/api/menu").expect(200);
+  const menu = await server.get("/api/menu").set("Authorization", `Bearer ${token}`).expect(200);
 });
 
 test("tables GET endpoint", async () => {
-  const tables = await server.get("/api/tables").expect(200);
+  const tables = await server.get("/api/tables").set("Authorization", `Bearer ${token}`).expect(200);
 });
 
-test("login POST endpoint", async () => {
-  const loginPOSTnoBody = await server.post("/api/login").send({ email, password }).expect(200);
-});
+// protected endpoints
 
 test("login GET endpoint", async () => {
-  const login = await server.get("/api/login").expect(401);
+  const login = await server.get("/api/login").set("Authorization", `Bearer ${token}`).expect(200);
 });
 
 test("tablesMine GET endpoint", async () => {
-  const tablesMine = await server.get("/api/tables/mine").expect(401);
+  const tablesMine = await server.get("/api/tables/mine").set("Authorization", `Bearer ${token}`).expect(200);
 });
 
 test("tablesById GET endpoint", async () => {
-  const tablesById = await server.get("/api/tables/5").expect(401);
+  const tablesById = await server.get("/api/tables/5").set("Authorization", `Bearer ${token}`).expect(200);
 });
 
 test("tablesById POST endpoint", async () => {
-  const tablesByIdPOST = await server.post("/api/tables/5").expect(401);
+  const tablesByIdPOST = await server.post("/api/tables/5").set("Authorization", `Bearer ${token}`).expect(400);
 });
 
 test("tablesById PUT endpoint", async () => {
-  const tablesByIdPUT = await server.put("/api/tables/5").expect(401);
+  const tablesByIdPUT = await server.put("/api/tables/5").set("Authorization", `Bearer ${token}`).expect(400);
+});
+
+// placing an order
+
+test("tablesById POST endpoint", async () => {
+  let uniqueCode = -1;
+  const testOrder = [1, 2, 3];
+  const tablesByIdPOST = await server
+    .post("/api/tables/5")
+    .set("Authorization", `Bearer ${token}`)
+    .send({ orders: testOrder })
+    .expect(202)
+    .expect(function hasUniqeCodeKey(res) {
+      if (!("uniqueCode" in res.body)) throw new Error("missing uniqueCode");
+      uniqueCode = res.body.uniqueCode;
+    })
+    .then(async function confirmOrder() {
+      await server
+        .put("/api/tables/5")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ uniqueCode })
+        .expect(201)
+        .expect(async function answer(res) {
+          console.log(res.text);
+          const arrayOfUpdates = res.text.match(/\d+/);
+          if (arrayOfUpdates === null || arrayOfUpdates.length > 1) {
+            throw new Error("unexpected response message from the server");
+          } else {
+            const numberOfUpdates = +arrayOfUpdates[0];
+            if (numberOfUpdates !== testOrder.length) throw new Error("wrong number of updates in the database");
+          }
+        });
+    });
 });

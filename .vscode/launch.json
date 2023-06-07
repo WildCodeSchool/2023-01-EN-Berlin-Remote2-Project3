@@ -4,6 +4,12 @@
     {
       "type": "node-terminal",
       "request": "launch",
+      "name": "Debug Tests",
+      "command": "moon run tests:test"
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
       "name": "Debug Backend",
       "command": "moon run server:dev"
     },
