@@ -40,5 +40,5 @@ jobs:
         with:
           fetch-depth: 0
       - uses: moonrepo/setup-moon-action@v1
-      - run: moon run prisma:reset
+      - run: moon run prisma:reset-force
       - run: moon run tests:test

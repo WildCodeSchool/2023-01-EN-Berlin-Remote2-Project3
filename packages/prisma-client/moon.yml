@@ -61,3 +61,7 @@ tasks:
     command: "prisma migrate reset"
     deps:
       - "~:build-client"
+  reset-force:
+    command: "prisma migrate reset --force"
+    deps:
+      - "~:build-client"
