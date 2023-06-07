@@ -96,6 +96,8 @@ TODO: explain the organization of the repository, including the prisma-client an
 - [PNPM Workspaces](https://pnpm.io/workspaces)
 - [Moonrepo](https://moonrepo.dev/)
 - [Rome](https://rome.tools/) Linter/Formatter
+- [Vitest](https://vitest.dev/)
+- GitHub Actions (runs tests automatically when requesting a pull to main)
 
 ## Contribution
 
