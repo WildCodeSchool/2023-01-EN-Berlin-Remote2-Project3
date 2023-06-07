@@ -1,0 +1,21 @@
+@use "./colors";
+@use "./general";
+
+.line-through {
+  text-decoration: line-through;
+}
+
+table {
+  width: 50%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid colors.$borderLine;
+}
+
+tr:hover {
+  background-color: #e0dbdb36;
+}

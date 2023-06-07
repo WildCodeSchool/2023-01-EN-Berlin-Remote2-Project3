@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "test-server",
+  "dependencies": {
+    "prisma-client": "workspace:*",
+    "prisma-queries": "workspace:*",
+    "server": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/supertest": "^2.0.12",
+    "@vitest/ui": "latest",
+    "supertest": "^6.3.3",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}

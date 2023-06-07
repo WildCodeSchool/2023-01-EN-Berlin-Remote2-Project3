@@ -1,0 +1,37 @@
+type: "application"
+language: "typescript"
+
+project:
+  name: "Backend Tests"
+  description: "These are the tests we want to run agains the backend to ensure that it is working as designed."
+  channel: "#0109-REMOTE-JS-Project3"
+  owner: "diraneyya"
+  maintainers: ["diraneyya", "denigogov", "surmavagit"]
+
+dependsOn:
+  - 'prisma'
+  - 'queries'
+
+env:
+  NODE_ENV: "test"
+
+tasks:
+  test-ui:
+    command: "vitest --ui"
+    local: true
+    options:
+      runDepsInParallel: false
+    deps: 
+      # Error, this tries to build server (?)
+      # - '^:build'
+      - "prisma:build"
+      - "queries:build"
+  test:
+    command: "vitest --run"
+    options:
+      runDepsInParallel: false
+    deps: 
+      # Error, this tries to build server (?)
+      # - '^:build'
+      - "prisma:build"
+      - "queries:build"

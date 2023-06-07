@@ -52,6 +52,32 @@ Before running the application, please ensure that you have completed the follow
 
 The frontend will be available at `localhost:3000`, while the backend will be accessible at `localhost:4000`.
 
+
+
+1. Open a terminal or command prompt.
+2. Navigate to the project directory.
+3. Run the following commands to start the project:
+    * To run the frontend and backend run the following comand 
+    ```bash 
+    moon run :dev
+    ```
+    This command will automatically fetch and install all the necessary dependencies for both the frontend and backend
+    - To run only the backend, use the following command:
+    ```bash
+    moon run server:dev
+    ```
+    - To run only the frontend, use the following command:
+    ```bash
+    moon run client:dev
+    ```
+
+
+   - To access the Prisma database studio, which provides a visual interface for managing your database, run the following command:
+   ```bash
+   moon run prisma:studio
+   ```
+
+The frontend will be available at `localhost:3000`, while the backend will be accessible at `localhost:4000`.
 ## Organization
 
 TODO: explain the organization of the repository, including the prisma-client and prisma-queries worspaces/projects

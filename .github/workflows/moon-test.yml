@@ -1,0 +1,46 @@
+name: Tests
+run-name: Testing the PR from the branch ${{ github.ref }} by ${{ github.actor }}
+on:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  tests:
+    name: Moon Tests
+    runs-on: ubuntu-latest
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    # Instead of relying on a bunch of .env files, we can feed the environemental
+    # variables directly for testing purposes.
+    env:
+      DATABASE_URL: "postgres://postgres:postgres@localhost/postgres"
+      JWT_SECRET: "TESTINGSECRET"
+      TEST_EMAIL: "david@gmail.com"
+      TEST_PASSWORD: "david123"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: moonrepo/setup-moon-action@v1
+      - run: moon run prisma:reset-force
+      - run: moon run tests:test
