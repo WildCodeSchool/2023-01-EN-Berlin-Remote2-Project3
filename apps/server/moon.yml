@@ -29,7 +29,7 @@ tasks:
     outputs:
       - '@group(jsBundle)'
     options:
-      outputStyle: 'hash'
+      outputStyle: 'buffer-only-failure'
   start:
     command: 'node dist/index.js'
     env:

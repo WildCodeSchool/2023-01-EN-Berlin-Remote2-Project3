@@ -2,8 +2,9 @@
   "private": true,
   "name": "test-server",
   "dependencies": {
-    "server": "workspace:*",
-    "prisma-queries": "workspace:*"
+    "prisma-client": "workspace:*",
+    "prisma-queries": "workspace:*",
+    "server": "workspace:*"
   },
   "devDependencies": {
     "@types/supertest": "^2.0.12",

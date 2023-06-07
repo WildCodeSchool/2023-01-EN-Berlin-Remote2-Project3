@@ -8,11 +8,26 @@ project:
   owner: "diraneyya"
   maintainers: ["diraneyya", "denigogov", "surmavagit"]
 
+dependsOn:
+  - 'prisma'
+  - 'queries'
+
 env:
   NODE_ENV: "test"
 
 tasks:
   test-ui:
     command: "vitest --ui"
+    local: true
+    deps: 
+      # Error, this tries to build server (?)
+      # - '^:build'
+      - "prisma:build"
+      - "queries:build"
   test:
     command: "vitest --run"
+    deps: 
+      # Error, this tries to build server (?)
+      # - '^:build'
+      - "prisma:build"
+      - "queries:build"

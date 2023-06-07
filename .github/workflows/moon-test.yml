@@ -30,7 +30,7 @@ jobs:
           - 5432:5432
 
     # Instead of relying on a bunch of .env files, we can feed the environemental
-    # variables directly for testing purposes
+    # variables directly for testing purposes.
     env:
       DATABASE_URL: "postgres://postgres:postgres@localhost/postgres"
       JWT_SECRET: "TESTINGSECRET"
