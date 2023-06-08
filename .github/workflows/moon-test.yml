@@ -1,5 +1,5 @@
 name: Tests
-run-name: Testing the PR from the branch ${{ github.ref }} by ${{ github.actor }}
+run-name: Testing the PR from '${{ github.head_ref }}' by @${{ github.actor }}
 on:
   pull_request:
     branches:
